@@ -1,0 +1,35 @@
+.dashboard-img i{
+    font-size: 50px;
+    color: #0DA487;
+    margin-right: 20px;
+}
+.dashboard-txt h4{
+    font-size: 16px;
+}
+.dashboard-total{
+    font-size: 30px;
+    font-weight: 500;
+}
+.edit a, .change-pass{
+    color: #0DA487;
+}
+.profile-name{
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.editlink a{
+    color: #0DA487;    
+}
+.profie-rating{
+    margin-bottom: 10px;
+}
+.profie-rating i{
+    color: #0DA487;       
+}
+.addressbox {
+    padding-right: 20px;
+}
+
+.profile-about{
+    margin-bottom: 15px;
+}

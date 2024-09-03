@@ -1,0 +1,53 @@
+
+.address-box ul{
+    font-weight: 600;
+}
+.text-content {
+    color: #939393 !important;
+}
+
+.address-box ul li{
+    margin-bottom: 4px;
+}
+.price-box ul{
+    display: flex;
+    justify-content: flex-end;
+}
+.price-box ul li{
+    margin-left: 10px;
+    font-weight: 700;
+}
+.invoice-footer{
+    display: flex;
+    justify-content: space-between;  
+    margin-top: 40px;
+    align-items: end; 
+}
+.button-group ul{
+    display: flex;
+}
+
+.invoice-table{
+    margin: 20px;
+   
+}
+.invoice-table table th{
+    font-weight: 500;
+}
+
+.invoice-table table{
+   
+    border: 1px solid #dee2e6;
+}
+.invoice-table-2 .table-responsive table{
+    border: 1px solid #dee2e6;
+}
+.invoice-table-2 .table-responsive table thead th{
+    background: #0DA487;
+    color: #fff;
+    font-weight: 500;
+}
+.signature-box img{
+    max-width: 140px;
+    margin-bottom: 10px;
+}

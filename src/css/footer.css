@@ -1,0 +1,82 @@
+.footer{
+    background: #F8F8F8;
+}
+.footer-top{
+    border-bottom: 1px dashed #C0BEBE;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.footer-md{
+    border-bottom: 1px dashed #C0BEBE;
+    padding-bottom: 20px; 
+    margin-bottom: 10px;
+}
+.social-media ul{
+    list-style:none;
+    margin: 0;
+    padding: 0;
+}
+.footer-content p{
+    font-size: 13px;
+    color: #828282; 
+}
+
+.footer-content a{
+    font-size: 13px;
+ 
+}
+
+.social-media li{
+    margin-right: 15px;
+}
+
+.social-media li a{
+    font-size: 18px;
+    color: #828282;
+}
+
+
+.footer-link h4{
+text-transform: uppercase;
+font-size: 20px;
+font-weight: 500;
+margin-bottom: 30px;
+}
+.footer-link ul{
+   margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.footer-link ul li{
+    padding-bottom: 10px;
+}
+.footer-link ul li a{
+    font-size: 13px;
+    color: #828282;
+}
+.footer-link ul li a:hover{
+    color: #0DA487; 
+}
+.contact{
+    font-size: 13px;
+    color: #828282;
+}
+.copywrite p{
+    font-size: 13px;
+    color: #828282; 
+}
+.copywrite ul{
+    list-style: none;
+}
+.copywrite ul li{
+    border-right: 1px solid #828282;
+    padding:0 10px;
+}
+.copywrite ul li:last-child{
+    border: none;
+}
+.copywrite ul li a{
+    font-size: 13px;
+    color: #828282;    
+}

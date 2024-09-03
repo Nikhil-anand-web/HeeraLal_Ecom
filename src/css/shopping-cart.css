@@ -1,0 +1,36 @@
+
+.common-padding{
+padding:15px;
+}
+
+.shopping-cart-input .quantity_box .btn{
+    padding: 4px 10px;
+}
+
+.shopping-cart-input .quantity_box .form-control{
+    height: auto;
+    padding: 4px;
+}
+.pro-heading{
+    font-weight: 500;
+}
+.summary-title{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.order-history-active a{
+    background: #0DA487;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: block;
+}
+.order-history-link a{
+    display: block;
+    padding: 10px;
+}
+.icon-shape {
+    max-width: 75px;
+    margin: 10px 0 15px 0;
+}

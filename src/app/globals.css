@@ -1,0 +1,94 @@
+/* @tailwind base;
+@tailwind components; 
+@tailwind utilities; */
+@import '../css/all.css';
+/* @import '../css/bootstrap.min.css'; */
+/* @import '../css/owl.css'; */
+@import '../css/common.css';
+@import '../css/header.css';
+@import '../css/categories.css';
+@import '../css/product-tabs.css';
+@import '../css/product-tabs.css';
+@import '../css/blog.css';
+@import '../css/footer.css';
+@import '../css/product.css';
+@import '../css/product-details.css';
+@import '../css/contact.css';
+@import '../css/login.css';
+@import '../css/shopping-cart.css';
+@import '../css/invoice.css';
+@import '../css/dashboard.css';
+@import '../css/style.css';
+@import '../vendors/font-awesome/css/font-awesome.min.css';
+@import '../vendors/mdi/css/materialdesignicons.min.css';
+@import '../vendors/ti-icons/css/themify-icons.css';
+@import '../vendors/css/vendor.bundle.base.css';
+@import 'react-toastify/dist/ReactToastify.css';
+.hide-scrollbar::-webkit-scrollbar {
+   display: none; /* Chrome, Safari */
+ }
+ 
+ .hide-scrollbar {
+   scrollbar-width: none; /* Firefox */
+   -ms-overflow-style: none; /* Edge */
+ }
+
+.spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: conic-gradient(#0000 10%,#0da487);
+    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 0);
+    animation: spinner-zp9dbg 1s infinite linear;
+ }
+ 
+ @keyframes spinner-zp9dbg {
+    to {
+       transform: rotate(1turn);
+    }
+ }
+ .no-border-children * {
+   border: none !important;
+ }
+ .social-list {
+   list-style-type: none; /* Remove default bullets */
+   padding: 0; /* Remove default padding */
+   margin: 0; /* Remove default margin */
+   font-family: 'Helvetica Neue', Arial, sans-serif; /* Use a clean, modern font */
+   font-size: 18px; /* Adjust font size for readability */
+   color: #999898d7; /* Use a neutral dark color */
+   
+ }
+ .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+
+}
+
+.thumbnail-image {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.product-name {
+  font-size: 20px;
+  color: #333;
+}
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.thumbnail-image:hover {
+  transform: scale(1.05);
+}
+
+
+
+ 

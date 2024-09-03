@@ -1,0 +1,16 @@
+...............................................
+DELIMITER $$
+
+CREATE TRIGGER after_category_status_update
+AFTER UPDATE ON category
+FOR EACH ROW
+BEGIN
+  IF NEW.status = 0 THEN
+    UPDATE category
+    SET status = 0
+    WHERE parentId = NEW.id;
+  END IF;
+END $$
+
+DELIMITER ;
+...................................................

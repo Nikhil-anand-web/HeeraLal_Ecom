@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `cartItem` MODIFY `qty` INTEGER NOT NULL DEFAULT 1;

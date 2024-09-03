@@ -1,0 +1,125 @@
+/************************** body font css ********************/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #333333;
+  
+}
+
+.primary-color{
+    color: #0DA487;
+}
+
+ul, li{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+  color: #333;
+}
+p{
+  color: #A4A1A1;
+  font-size: 14px;
+}
+
+.primary-colorbg{
+    background: #0DA487;
+}
+
+
+.navbar-nav{
+    text-align: right;
+  }
+  .navbar .navbar-nav .nav-link {
+      color: #000000;
+      font-size: 1.1em;
+      padding-right: 1em;
+  }
+  .navbar .navbar-nav .nav-link:hover{
+      color: #808080;
+  }
+
+
+
+  section{
+    padding: 70px 0;
+    position: relative;
+  }
+
+  section.slider{
+    padding: 0;
+  }
+  .gray4{
+    color: #BDBDBD;
+  }
+  .white{
+    color: #fff;
+  }
+
+  .form-control{
+    border: 1px solid #d1d1d1;
+    border-radius: inherit;
+    font-size: 14px;
+    height: 40px;
+  }
+  .form-control:focus{
+    border:1px solid #0DA487;
+   box-shadow:none; 
+  }
+
+  button.btn{
+    background: #0DA487 !important;
+    border: none;
+    border-radius: inherit;
+    color: #fff !important;
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  button.btn.active{
+    background: #0DA487 !important;
+    color: #fff;
+  }
+
+  button.btn:hover{
+    background: #313131 !important;
+    color: #fff;
+  
+  }
+  .select-menu{
+    width: 100%;
+    height: 42px;
+    border: 1px solid #d1d1d1;
+    padding: 10px;
+  }
+  .select-menu:focus{
+    border: 1px solid #0DA487;
+    box-shadow:none; 
+  }
+
+  .cardNumber i{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .pay-now-button{
+    width: 100%;
+  }
+  .total-heading{
+    font-size: 20px;
+  }
+  .total-heading span{
+    font-weight: 700;
+  }
+  .pro-payment{
+    position: sticky;
+    top: 136px;
+  }
+  .pay-now-button{
+    padding: 10px 0;
+  }

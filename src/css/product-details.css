@@ -1,0 +1,113 @@
+.breadcrum ul li:before{
+    content: "\f105";
+    margin: 0 10px;
+    font: 14px / 1em FontAwesome;
+    vertical-align: middle;
+}
+.breadcrum ul li:first-child::before{
+    content: "";
+    margin: 0;
+}
+.graybg{
+    background: #e2e2e2;
+}
+
+.product-detail-page{
+    padding-bottom: 0;
+}
+
+.breadcrum{
+    margin-bottom:20px
+}
+.pro-details h1{
+    font-size: 24px;
+}
+.single-product-price{
+    color: #000;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+.single-product-price-template-product{
+    display: flex;
+    align-items: center;
+}
+.single-product-price .money-heading{
+font-size: 24px;
+color: #000;
+font-weight: 500;
+}
+.money-sale-percent{
+    background: #000;
+    color: #fff;
+    padding: 5px;
+}
+
+.quantity_box{
+    max-width: 150px;
+    margin-bottom: 15px;
+}
+.quantity_box .btn{
+    background: #0DA487;
+    color: #fff;
+    border: 1px solid #0DA487;
+    border-radius: inherit;
+}
+.quantity_box input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .quantity_box input:focus{
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+  }
+  .button_block{
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+  }
+  .button_block button{
+    background: #0DA487;
+    color: #fff;
+    border-radius: inherit;
+    margin-right: 20px;
+
+  }
+  .button_block button:hover{
+    background: #313131;
+    color: #fff;
+  }
+  .single-product-addtocart-template-product i{
+margin-right: 10px;
+  }
+
+  .wishlist_section a{
+    background: #0DA487;
+    color: #fff;
+    border-radius: inherit;
+  
+  }
+  .wishlist_section a:hover{
+    background: #313131;
+    color: #fff;
+  }
+  .products-tabs .nav-tabs{
+    border: none;
+  }
+  .products-tabs .nav-tabs .nav-link {
+    color: #313131;
+  }
+  .products-tabs .nav-tabs .nav-link.active {
+    background: #0DA487;
+    color: #fff;
+    border-radius: inherit;
+    text-transform: uppercase;
+  }
+  .tab-content{
+    margin-top: 15px;
+    border: 1px solid #e2e2e2;
+  }
+  .product-details .owl-prev,   .product-details .owl-next{
+    font-size: 14px;
+  }
+

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `product` ADD COLUMN `stars` INTEGER UNSIGNED NOT NULL DEFAULT 1;

@@ -1,0 +1,74 @@
+.catergoary-box a{
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 10px;
+}
+.catergoary-box a:hover{
+/*    background: #0DA487;*/
+background:#e3d5d0;
+    color: #fff;
+}
+.funfact{
+    background: url(../images/funfact.png) no-repeat;
+    height: 390px;
+    background-size: 100%;
+}
+.funfact-txt {
+    margin-top: 102px;
+}
+.funfact-colum {
+    padding: 0 30px;
+}
+.funfact-colum h3{
+    font-weight: 600;
+}
+
+
+
+
+.top-selling h3{
+   font-size: 23px;
+   font-weight: 500;
+}
+.divider-top-selling{
+    background: #BDBDBD;
+    height: 2px;
+    margin: 30px 0;
+    position: relative;
+}
+
+.divider-top-selling::before{
+    background: #0DA487;
+    height: 2px;
+    width: 40%;
+    position: absolute;
+    top: 0;
+    content: '';
+}
+.top-selling-product{
+    display: flex;
+    margin-bottom: 30px;
+}
+.top-slling-img{
+    margin-right: 13px;
+}
+.product-heding{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.product-rating i{
+    color: #FFB425;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.selling-pro-price{
+color: #828282;
+font-size: 16px;
+margin-bottom: 10px;
+}
+

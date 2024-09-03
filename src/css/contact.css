@@ -1,0 +1,56 @@
+
+  
+  .address {
+ 
+    border-bottom: 1px solid #e2e2e2;
+    padding-bottom: 10px;
+  }
+  .contact-page{
+    padding-top: 0;
+  }
+
+  .contact-page h2{
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 30px;
+  }
+  .address-left{
+    color: #0DA487;
+    font-size: 36px ;
+  }
+  .address-right h3{
+    font-size: 20px;
+    font-weight: 500;
+}
+.map{
+    margin-bottom: 30px;
+}
+.get-in-touch .form-group{
+    margin-bottom: 20px;
+}
+.get-in-touch .formbuttton button.btn{
+    background: #0DA487;
+     border: none;
+     border-radius: inherit;
+     color: #fff;
+     font-size: 14px;
+     padding: 10px 25px;
+
+}
+.get-in-touch .form-group textarea.form-control{
+    height: 110px;
+}
+.social-media li{
+    margin-bottom: 10px;
+    padding: 22px 0 23px 16px;
+    border-bottom: 1px solid rgba(167,167,167,.5);
+    text-transform: uppercase;
+}
+.social-media li i{
+    vertical-align: middle;
+    width: 25px;
+    color: #0DA487;
+}
+.social-media li a:hover{
+    color: #0DA487;
+}
