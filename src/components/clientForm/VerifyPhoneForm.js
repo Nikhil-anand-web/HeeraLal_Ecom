@@ -28,6 +28,10 @@ const VerifyPhoneForm = ({email ,isphoneVerified}) => {
         const fetch = async()=>{
             try {
                 const resObj =  await  sendOtpPhone(decodedEmail);
+                if (!resObj.success) {
+                    throw resObj
+                    
+                }
                  if (resObj.redirect) {
                     rtr.push('/')
                     return
@@ -38,7 +42,7 @@ const VerifyPhoneForm = ({email ,isphoneVerified}) => {
                 toast.success("otp has been sent");
             } catch (error) {
                 console.error(error);
-                toast.warning(error.message);
+                toast.warning("there is some problem in sending otp");
             } finally {
                 setIsLoading(false);
             }}

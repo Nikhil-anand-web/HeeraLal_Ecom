@@ -24,7 +24,7 @@ export default async function sendOtpPhone(identifire) {
             };
         }
 
-        console.log(await twilioI(`this is your otp ${tokenForMessage}`, userAccount.mobile));
+       await twilioI(`this is your otp ${tokenForMessage}`, userAccount.mobile);
    
         return {
             message: "OTP has been sent to your phone",

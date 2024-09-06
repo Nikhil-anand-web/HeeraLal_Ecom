@@ -78,7 +78,7 @@ model blog {
   relatedImages  Json
   author         admin    @relation(fields: [adminId], references: [id])
   adminId        String
-  status       Int
+  status         Int
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -237,7 +237,7 @@ model recipe {
   ingredients  Json
   videoLink    String
   instructions String    @db.LongText
-  status       Boolean @default(true)
+  status       Boolean   @default(true)
   products     product[]
   createdBy    admin     @relation(fields: [adminId], references: [id])
   createdAt    DateTime  @default(now())
@@ -259,3 +259,28 @@ model coupons {
   cart          cart[]
 }
 
+model orders {
+  id             String   @id @default(uuid())
+  orderId        String   @unique
+  customerId     String
+  CustomerMeta   Json?
+  productIds     Json
+  productMeta    Json
+  varientIds     Json
+  varientMeta    Json
+  comboIds       Json
+  comboMeta      Json
+  couponMeta     Json?
+  subTotal       Float
+  taxes          Float
+  finalPrice     Float?
+  shipingCharges Float?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  PaymentMode    String?
+  paymentToken   Json?
+  paymentStatus  Int      @default(0)
+  orderStatus    Int      @default(0)
+  shipingStatus  String   @default("initiated")
+  awb            String?  @unique
+}

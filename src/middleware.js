@@ -56,6 +56,12 @@ export async function middleware(request) {
         return NextResponse.redirect(new URL('/sign-in', request.url))
         
      }
+     if ((!token || token.role !==3)&&url.pathname.startsWith('/checkout/')) {
+        return NextResponse.redirect(new URL('/sign-in', request.url))
+        
+     }
+
+    
    
     return NextResponse.next()
 }
@@ -68,6 +74,7 @@ export const config = {
         '/api/v1/:path*',
          '/sign-in',
          '/account/:path*',
+         '/checkout/:path*'
          
         
     ]

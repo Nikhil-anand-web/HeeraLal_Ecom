@@ -13,6 +13,7 @@ import ComboToCartControl from '@/components/ComboToCartControl'
 import percentOf from '@/lib/percentOf'
 import EmptyCartButton from '@/components/EmptyCartButton'
 import { redirect } from 'next/navigation'
+import CheckOutButton from '@/components/CheckOutButton'
 
 
 const Page = async () => {
@@ -133,6 +134,7 @@ const Page = async () => {
 
         
     }
+    
     
  if (!cart ) {
      return <Image src={'/images/pageNotFound.jpg'} layout='responsive' width={100} height={100} />
@@ -261,9 +263,7 @@ const Page = async () => {
                                 </div>
                             </div>
                             <div className="d-flex row">
-                                <div className="col">
-                                    <button type="button" className="mt-3 pay-now-button btn mr-5">Pay now</button>
-                                </div>
+                                <CheckOutButton/>
                                 <EmptyCartButton/>
                             </div>
                         </div>

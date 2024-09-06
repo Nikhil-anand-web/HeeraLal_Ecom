@@ -12,7 +12,10 @@ const Page = async () => {
         // Redirect to the homepage if the mobile is verified
         redirect('/');
     }
-
+    if (!user.mobile) {
+        redirect('/account/profile');
+        
+    }
     // Render the VerifyPhoneForm if mobile is not verified
     return (
         <>

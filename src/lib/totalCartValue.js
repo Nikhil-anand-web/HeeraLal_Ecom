@@ -3,7 +3,8 @@ import calculateFinalPriceOfComboAndThumbnailArray from "./calculateFinalPriceOf
 
 export default function totalCartValue(cart) {
     var simpleProductValue = 0
-    console.log(cart.cartItem,"item")
+
+    
     for (let i = 0; i < cart.cartItem.length; i++) {
         const varientMrp = cart.cartItem[i].varient.mrp;
         const discount = cart.cartItem[i].varient.discount;
@@ -13,13 +14,16 @@ export default function totalCartValue(cart) {
 
         
     }
+    
+
     var comboMrp = 0
     for (let i = 0; i < cart.cartComboItems.length; i++) {
-        const {actualPrice} = calculateFinalPriceOfComboAndThumbnailArray(cart.cartComboItems[0].combo)
-        comboMrp+=(actualPrice*cart.cartComboItems[0])
+        const {actualPrice} = calculateFinalPriceOfComboAndThumbnailArray(cart.cartComboItems[i].combo)
+        comboMrp+=(actualPrice*cart.cartComboItems[i].qty)
 
         
     }
+    console.log(comboMrp,"simple c")
     return comboMrp+simpleProductValue
     
 }
