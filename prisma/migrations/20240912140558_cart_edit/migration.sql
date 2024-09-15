@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `cart` ADD COLUMN `referalCoins` INTEGER NOT NULL DEFAULT 0;

@@ -6,55 +6,55 @@ import logo from '../../images/logo.png'
 
 import SignOutButton from '../global/SignOutButton'
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 
 
 
 const AdminHeader = () => {
   const { data: user } = useSession();
- 
 
-  
-  const fullName = user?.fullName 
-  
+
+
+  const fullName = user?.fullName
+
   var url = "/images/faces-clipart/pic-1.png"
   var alt = "alt"
 
   if (user && user.profilePic) {
-   const obj =  JSON.parse(user.profilePic)
+    const obj = JSON.parse(user.profilePic)
     url = obj?.url
     alt = obj?.alt
-  
-    
+
+
   }
-  
 
 
 
-   
-  
-  
- 
+
+
+
+
+
 
 
   return (
-    <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start overflow-visible">
+    <nav  className="navbar default-layout-navbar  p-0 fixed-top d-flex flex-row">
+      {/* <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start overflow-visible">
         <a className="navbar-brand brand-logo" href="../../index.html">
           <Image src={logo} alt='logo' height={200} width={100} />
         </a>
         <a className="navbar-brand brand-logo-mini" href="../../index.html">
           <Image src={logo} alt='logo' height={22}  width={100} />
         </a>
-      </div>
+      </div> */}
+      <Link style={{position:"relative",right:"-50%"}} className="navbar-brand" href="/">
+
+        <Image layout='responsive' height={71} width={150} src={logo} alt='logo' />
+      </Link>
       <div className="navbar-menu-wrapper d-flex align-items-stretch">
-        <button
-          className="navbar-toggler navbar-toggler align-self-center"
-          type="button"
-          data-toggle="minimize"
-        >
-          <span className="mdi mdi-menu" />
-        </button>
+
+
 
         <ul className="navbar-nav navbar-nav-right">
           <li className="nav-item d-none d-lg-block full-screen-link">
@@ -66,7 +66,7 @@ const AdminHeader = () => {
             <a
               className="nav-link dropdown-toggle"
               id="profileDropdown"
-              
+
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
@@ -82,7 +82,7 @@ const AdminHeader = () => {
               className="dropdown-menu navbar-dropdown"
               aria-labelledby="profileDropdown"
             >
-             
+
               {/* <div className="dropdown-divider " /> */}
               <SignOutButton className="dropdown-item " >
                 <i className="mdi mdi-logout me-2 text-primary" /> Signout{" "}
@@ -92,14 +92,9 @@ const AdminHeader = () => {
 
 
         </ul>
-        <button
-          className="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
-          type="button"
-          data-toggle="offcanvas"
-        >
-          <span className="mdi mdi-menu" />
-        </button>
+
       </div>
+      
     </nav>
   )
 }

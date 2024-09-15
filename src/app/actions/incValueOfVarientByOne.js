@@ -59,7 +59,7 @@ export default async function incValueOfVarientByOne(ids = '') {
                 }
             })
             revalidatePath('/cart')
-        revalidateTag('cntdis')
+        
             return {
                 success: true,
                 message: "fetched",
@@ -88,6 +88,7 @@ export default async function incValueOfVarientByOne(ids = '') {
 
                 }
             })
+            revalidatePath('/cart')
      
             console.log(nwCartItem)
             return {

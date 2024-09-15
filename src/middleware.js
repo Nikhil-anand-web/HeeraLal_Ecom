@@ -15,6 +15,12 @@ export async function middleware(request) {
 
     const url = request.nextUrl
 
+    if ( token && token.role===3 && token.status!== true ) {
+       
+      
+        return NextResponse.json({success:false,message:"your account is baned"})
+        
+    }
  
     if ( token && token.role!==3 && token.status!==1 && !url.pathname.startsWith('/wah-control-center/suspendedAccount') ) {
        

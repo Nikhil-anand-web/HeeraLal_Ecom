@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import tempLogo from '../../../public/images/faces-clipart/pic-1.png'
 import Image from 'next/image'
@@ -6,10 +7,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
-const UserModal = ({ fullName, email, username, id, urlImg = tempLogo, alt = "", status ,setUsers}) => {
+
+const UserModal = ({ fullName, email, username, id, urlImg = tempLogo, alt = "", status }) => {
   const rtr = useRouter()
   
-  
+
   const [isActive, setIsActive] = useState(status);
   
   const onStatusFlip= async()=>{
@@ -54,15 +56,7 @@ const onClick=()=>{
 
       </div>
 
-      {/* <button onClick={onDelete} type="button" className="btn-danger" style={{
-        margin: "10px",
-        background: "red",
-        border: "none",
-        borderRadius: "inherit",
-        color: "#fff",
-        fontSize: "14px",
-        padding: "8px 15px"
-      }}>Delete</button> */}
+     
       {!isActive ?
         <button onClick={onStatusFlip} type="button"  style={{
           margin: "10px",

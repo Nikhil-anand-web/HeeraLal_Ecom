@@ -23,7 +23,7 @@ const CartCount = () => {
 
     return (
         
-                data
+         data
                
         
     )

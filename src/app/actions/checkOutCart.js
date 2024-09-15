@@ -55,6 +55,8 @@ export default async function checkOutCart() {
                             }
                         }
                     },
+                    refralDiscountAbsolute:true,
+                    referalCoins:true,
                     coupon: {
                         select: {
                             id: true,
@@ -73,6 +75,7 @@ export default async function checkOutCart() {
                             combo: {
                                 select: {
                                     id: true,
+                                    name:true,
                                     productVarients: {
                                         select: {
                                             id: true,
@@ -145,24 +148,29 @@ export default async function checkOutCart() {
                 data: {
                     orderId: generateOrderId().toString(),
                     customerId: user.id,
-                    productIds: productIds,
-                    varientIds: varientIds,
+                    productIds: [...productIds],
+                    varientIds: [...varientIds],
                     varientMeta: varientMeta,
                     comboIds: comboIds,
                     comboMeta: comboMeta,
                     couponMeta: couponMeta,
                     subTotal: Subtotal,
                     taxes: taxValueInPercent,
-                    productMeta:productMeta
+                    productMeta:[...productMeta],
+                    refralDiscountAbsolute:userCart.refralDiscountAbsolute,
+                    referalCoins:userCart.referalCoins
+
 
 
                 }, select: {
-                    orderId: true
+                    orderId: true,
+                    refralDiscountAbsolute:true,
+                    referalCoins:true
                 }
             })
 
 
-
+      console.log(order)
 
 
 

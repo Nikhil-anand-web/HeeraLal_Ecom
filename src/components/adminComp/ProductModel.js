@@ -8,11 +8,12 @@ import Spinner from '../global/Spinner';
 import toggleProductStatus from '@/app/actions/toggleProductStatus';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-const ProductModel = ({ product, setProducts }) => {
+const ProductModel = ({ product,setRefetchComp }) => {
 
     const [isLoading, setIsLoading] = useState(false);
-
+     const qty = product.varient.reduce((acc, current) => acc + current.qty, 0);
+     const mrpTotalinventory  = product.varient.reduce((acc, current) => acc + (current.qty*current.mrp), 0);
+     const tagString = product.tags.join(',')
     const rtr = useRouter()
     const onDelete = async () => {
 
@@ -22,14 +23,8 @@ const ProductModel = ({ product, setProducts }) => {
                 throw resObj
 
             }
-            setProducts((prev) => {
-                return prev.filter((obj) => {
-                    return obj.id != product
-                        .id
-
-                })
-
-            })
+            setRefetchComp((pre)=>!pre)
+          
           
                 toast.success(resObj.message);
           
@@ -47,16 +42,10 @@ const ProductModel = ({ product, setProducts }) => {
                 throw res
 
             }
-            setProducts((prev) => {
-                const nw = prev.filter((obj) => {
-                    return obj.id != product
-                        .id
-
-                })
-                return [...nw, { ...product, status: !product.status }]
-
-            })
-            console.log(res)
+            
+            setRefetchComp((pre)=>!pre)
+           
+     
 
             if (res.success) {
                 toast.success(res.message)
@@ -99,12 +88,17 @@ const ProductModel = ({ product, setProducts }) => {
                         <h6 className="card-title mb-1">Product Name :- {product.name}</h6>
                         <p className="card-text mb-1"><small className="text-muted">HighLights :- {product.highLights}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Product Slug :- {product.slug}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Products in inventory:- {qty}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Category Slug :- {product.category.slug}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">cost of inventory{"(MRP)"}:- ₹{mrpTotalinventory}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Description :- {product.description}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Stars :- {product.stars}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">tagString :- {tagString}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">varients :- {product._count.varient}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Recipe :- {product._count.recipe}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Show on Home :- {product.showOnHome === true ? <span className="badge badge-success">{" True "}</span> : <span className="badge badge-danger">{" False "}</span>}</small></p>
-                        <p className="card-text mb-1"><small className="text-muted">Featured :- {product.isFeatured === true ? <span className="badge badge-success">{" True "}</span> : <span className="badge badge-danger">{" False "}</span>}</small></p>
-                        <p className="card-text mb-1"><small className="text-muted">BestSeller :- {product.isBestSeller === true ? <span className="badge badge-success">{" True "}</span> : <span className="badge badge-danger">{" False "}</span>}</small></p>
+                        {/* <p className="card-text mb-1"><small className="text-muted">Featured :- {product.isFeatured === true ? <span className="badge badge-success">{" True "}</span> : <span className="badge badge-danger">{" False "}</span>}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">BestSeller :- {product.isBestSeller === true ? <span className="badge badge-success">{" True "}</span> : <span className="badge badge-danger">{" False "}</span>}</small></p> */}
                         <p className="card-text mb-1"><small className="text-muted">last updated :- {product.updatedAt.toString()}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">created By:- {product.createdBy.userName}</small></p>
 

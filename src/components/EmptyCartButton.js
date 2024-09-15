@@ -3,8 +3,10 @@
 import emptyCart from '@/app/actions/emptyCart'
 import React from 'react'
 import { toast } from 'react-toastify'
+import { useSWRConfig } from 'swr'
 
 const EmptyCartButton = () => {
+  const{mutate} = useSWRConfig()
     const ondel = async()=>{
         try {
             const res = await emptyCart()
@@ -12,6 +14,8 @@ const EmptyCartButton = () => {
                 throw res
                 
             }
+            mutate('/action/getCartCount')
+            
           toast.success(res.message)
 
 

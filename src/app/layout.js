@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
           src="https://code.jquery.com/jquery-3.6.0.min.js"
           integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
           crossOrigin="anonymous"></script>
+          
     <script async src="http://localhost:3000/js/misc.js"></script>
     <script async src="http://localhost:3000/js/settings.js"></script>
     <script async src="http://localhost:3000/js/off-canvas.js"></script>

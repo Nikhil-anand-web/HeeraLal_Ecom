@@ -1,5 +1,6 @@
 import AdminHeader from "@/components/adminComp/AdminHeader";
 import AdminNavbar from "@/components/adminComp/AdminNavbar";
+import TestNavBar from "@/components/TestNavBar";
 import { Suspense } from "react";
 import { Spinner } from "react-bootstrap";
 
@@ -20,7 +21,8 @@ export default function AdminLayout({ children }) {
                 <div className="container-fluid page-body-wrapper">
                     {/* partial:../../partials/_sidebar.html */}
 
-                    <AdminNavbar />
+                    {/* <AdminNavbar /> */}
+                    <TestNavBar/>
                     {/* partial */}
                     <div className="main-panel">
                         <div style={{

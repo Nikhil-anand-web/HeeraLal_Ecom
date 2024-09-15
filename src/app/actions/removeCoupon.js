@@ -3,7 +3,7 @@ import db from "@/lib/db"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]/options"
 import { revalidatePath } from "next/cache"
-import totalCartValue from "@/lib/totalCartValue"
+
 
 export default async function removeCoupon() {
     const user = await getServerSession(authOptions)
@@ -23,7 +23,7 @@ export default async function removeCoupon() {
                     couponId:null
                 }
             })
-            console.log(cart)
+      
 
 
 

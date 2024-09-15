@@ -6,7 +6,9 @@ import  { useEffect } from 'react'
 const BootstrapClient = () => {
     useEffect(()=>{
 
-        require('bootstrap/dist/js/bootstrap.bundle.min.js'); 
+  require('bootstrap/dist/js/bootstrap.bundle.min.js'); 
+
+ 
        
         
     },[]);

@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import percentOf from "@/lib/percentOf";
 import updateStockAfterOrder from "@/lib/updateStockAfterOrder";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -52,8 +53,84 @@ export async function POST(req) {
 
                 }
             })
+            const orderCount  = await db.orders.count({
+                where:{
+                    customerId : updatedOrder.customerId,
+                    AND:[{paymentStatus:1},{customerId : updatedOrder.customerId}]
+                }
+            })
+            if (orderCount===1) {
+                const customer = await db.user.findUnique({
+                    where:{
+                        id:updatedOrder.customerId
+                    },select:{
+                        referedById:true
+                    }
+                })
+                const referalConstrain = await db.globalSettings.findFirst({
+                    where:{
+                        settingName:"refralDiscount"
+                    }
+                })
+                const earnedCoin =  Math.floor(percentOf(updatedOrder.finalPrice,referalConstrain.value))
+
+                const updatedReferal  = await db.referal.update({
+                    where:{
+                        userId:customer.referedById
+                    },data:{
+                        coins:{
+                            increment: earnedCoin
+                        }
+                    }
+                })
+                
+            }
+
+
+            if (updatedOrder.refralDiscountAbsolute > 0) {
+
+                await db.referal.update({
+                    where: {
+                        userId: updatedOrder.customerId
+                    }, data: {
+                        coins: {
+                            decrement: updatedOrder.referalCoins
+                        }
+                    }
+                })
+
+            }
+            const cartId = await db.cart.findUnique({
+                where: {
+                    userId: updatedOrder.customerId
+                }, select: {
+                    id: true
+                }
+            })
+
+            await db.cartItem.deleteMany({
+                where: {
+                    cartId: cartId.id
+                }
+            })
+            await db.cartComboItems.deleteMany({
+                where: {
+                    cartId: cartId.id
+                }
+            })
+            const cart = await db.cart.update({
+                where: {
+                    id: cartId.id
+
+                }, data: {
+                    couponId: null,
+                    refralDiscountAbsolute: 0,
+                    referalCoins: 0
+
+                }
+            })
             updateStockAfterOrder(updatedOrder.orderId)
-            return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/payment/success`,303);// whenever redirect happens it do the same request 303 is to tell boruser that we have to do a get requst
+            return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/invoice/${updatedOrder.orderId}`, 303);// whenever redirect happens it do the same request 303 is to tell boruser that we have to do a get requst
 
 
 
@@ -80,6 +157,9 @@ export async function POST(req) {
         }
 
 
+
+    } else {
+        return NextResponse({ success: false, message: "internal server error" }, { status: 400 })
 
     }
 

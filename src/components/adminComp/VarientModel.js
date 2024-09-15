@@ -134,11 +134,16 @@ const VarientModel = ({ varient, setvarient }) => {
                     <Image alt={"product image"} width={500} height={500} style={{ height: "100px", width: "100px" }} src={varient.product.thumbNail[0]?.url} />
                     <div className="card-body py-2 px-3">
                         <h6 className="card-title mb-1">Slug:- {varient.slug}</h6>
-                        <p className="card-text mb-1"><small className="text-muted">Weight :- {varient.weight}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Weight :- {varient.weight} gm</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Size :- {varient.size}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Category Slug :- {varient.qty}</small></p>
-                        <p className="card-text mb-1"><small className="text-muted">Price INR :- {varient.price}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Max Quantity For Few Available :- {varient.maxQuantityForFewAvailable}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">MRP :- {varient.mrp}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Discount :- {varient.discount}%</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">No of combo available :- {varient._count.combo}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Cost of Inventory{"(MRP)"} :- ₹{varient.mrp*varient.qty}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Bulk Varient :- {varient.isBulk === true ? <span className="badge badge-success">{" True "}</span> : <span className="badge badge-danger">{" False "}</span>}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Varients in inventory:- {varient.qty}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Default:- {varient.isDefault === true ? <span className="badge badge-success">{" True "}</span> : <span className="badge badge-danger">{" False "}</span>}</small></p>
 
                         <p className="card-text mb-1"><small className="text-muted">Whole Sale Price:- {varient.wholeSalePrice}</small></p>

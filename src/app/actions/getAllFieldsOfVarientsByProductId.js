@@ -37,15 +37,24 @@ async function getAllFieldsOfVarientsByProductId(ids) {
                             size:true,
                             qty:true,
                             status:true,
-                           
+                            maxQuantityForFewAvailable:true,
                             mrp:true,
                             wholeSalePrice:true,
                             minQtyForBulkOrder:true,
                             isDefault:true,
-                            combo: {
-                                select: {
-                                  name: true, // Assuming 'name' is a field in the 'combo' model
-                                }},
+                            qty:true,
+                            isBulk:true,
+                            discount:true,
+                            _count:{
+                                select:{
+                                    combo:true
+                                }
+
+                            },
+                            // combo: {
+                            //     select: {
+                            //       name: true, // Assuming 'name' is a field in the 'combo' model
+                            //     }},
                             createdBy:{
                                 select:{
                                     userName:true

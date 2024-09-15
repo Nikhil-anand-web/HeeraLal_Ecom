@@ -49,6 +49,7 @@ const ComboToCartControl = ({ comboId = '', style }) => {
 
             }
             mutate('/action/getCartCount')
+            mutate('/action/applyReferalPoint')
 
             setNoOfComboInCart(res.nwCartComboItem.qty)
 
@@ -68,6 +69,7 @@ const ComboToCartControl = ({ comboId = '', style }) => {
 
             }
             mutate('/action/getCartCount')
+            mutate('/action/applyReferalPoint')
             setNoOfComboInCart(res.nwCartComboItem.qty)
 
         } catch (error) {

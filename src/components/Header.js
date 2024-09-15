@@ -8,13 +8,25 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import CartCount from './global/CartCount';
 import CustomSearchBar from './CustomSearchBar';
 import CustomSearchButton from './CustomSearchButton';
+import ShareTheSiteButton from './ShareTheSiteButton';
+import CoinThumbnail from './CoinThumbnail';
 
 
 const Header = async (props) => {
   const user = await getServerSession(authOptions)
-
-
-
+  var referal=null
+  if (user) {
+     referal = await db.referal.findUnique({
+      where: {
+        userId: user?.id
+  
+      },select:{
+        coins:true
+      }
+    })
+    
+  }
+  
 
   return (
     <header className="sticky-top shadow">
@@ -29,7 +41,7 @@ const Header = async (props) => {
           <div className="icons-group d-block d-lg-none">
             <ul className="d-flex">
               <li>
-                <CustomSearchButton/>
+                <CustomSearchButton />
               </li>
               <li>
                 <Link href="/account/dashboard"></Link> <Link href="/account/dashboard">{user?.googleProfilePic ? <Image style={{ borderRadius: "60px", height: "50px", width: "50px" }} src={user?.googleProfilePic} alt={"pic"} height={100} width={100} /> : <i className="fa-solid fa-user"></i>}</Link>
@@ -71,10 +83,10 @@ const Header = async (props) => {
                 <Link className="nav-link" href="/blogs">Blog</Link>
               </li>
 
-             
-               <CustomSearchBar/>
 
-              
+              <CustomSearchBar />
+
+
               <li className="userlink d-none  d-lg-block">
                 <Link href="/account/dashboard"></Link> <Link href="/account/dashboard">{user?.googleProfilePic ? <Image style={{ borderRadius: "60px" }} src={user?.googleProfilePic} alt={"pic"} height={50} width={50} /> : <i className="fa-solid fa-user"></i>}</Link>
               </li>
@@ -83,6 +95,12 @@ const Header = async (props) => {
                   <span className="number" name={"cntdis"}><CartCount /></span>
                   <i className="fa-solid fa-bag-shopping"></i></Link>
               </li>
+              <li className="nav-item">
+                <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
+              </li>
+              {referal && <li  className="nav-item">
+                <CoinThumbnail coins = {referal.coins} />
+              </li>}
 
 
 

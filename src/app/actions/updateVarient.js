@@ -71,7 +71,6 @@ async function updateVarient(formData) {
                     });
 
 
-                    console.log(newProduct)
 
 
 

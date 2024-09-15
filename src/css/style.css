@@ -25638,7 +25638,7 @@ dl li {
 
 /* Sidebar */
 .sidebar {
-  min-height: calc(100vh - 70px);
+  min-height: 91vh;
   background: #ffffff;
   font-family: "ubuntu-regular", sans-serif;
   padding: 0;
@@ -25990,7 +25990,7 @@ dl li {
     content: "\f0143";
   }
   .sidebar-mini .main-panel {
-    width: calc(100% - 185px);
+    width: calc(100% );
   }
   .sidebar-mini:not(.sidebar-icon-only) .sidebar .nav:not(.sub-menu) > .nav-item {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -26269,7 +26269,8 @@ dl li {
 
 .main-panel {
   transition: width 0.25s ease, margin 0.25s ease;
-  width: calc(100% - 260px);
+  width: calc(100% );
+  border-radius: 21px;
   min-height: calc(100vh - 70px);
   display: -webkit-flex;
   display: flex;
@@ -26286,6 +26287,7 @@ dl li {
 .content-wrapper {
   background: #f2edf3;
   padding: 2.75rem 2.25rem;
+  border-radius: 21px;
   width: 100%;
   -webkit-flex-grow: 1;
   flex-grow: 1;

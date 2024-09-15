@@ -35,7 +35,7 @@ export const authOptions = {
                         });
 
                         if (!user) {
-                            console.log("not user found")
+                        
                             throw new Error("No registered User Found")
 
                         }
@@ -170,6 +170,11 @@ export const authOptions = {
                                     user:{connect:{id:user.id}}
                                 }
                             })
+                            const refral = await db.referal.create({
+                                data:{
+                                    user:{connect:{id:user.id}}
+                                }
+                            })
                             
                         }
                     }
@@ -184,19 +189,48 @@ export const authOptions = {
         async jwt(props) {
          
             var { token, user } =props
+          
+            
             if (props.account?.provider==='google') {
                 const us=await db.user.findUnique({
                     where:{
                         email:props.profile.email
                     }
                 })
+
+                
                 user = {...us,sourceUrl:'/sign-in'}
 
                 
+            }else if(!user && token){
+                if (token.sourceUrl==='/sign-in') {
+                    user = await db.user.findUnique({
+                        where:{
+                            id : token.id
+    
+                        }
+                    })
+                    user = {...user,sourceUrl:'/sign-in'}
+                    
+                }else{
+                    user = await db.admin.findUnique({
+                        where:{
+                            id : token.id
+    
+                        },include: {
+                            permissions: true  // This will include the related permissions data
+                        }
+                    })
+                    user = {...user,sourceUrl:'/wah-control-center/sign-in'}
+                    
+
+                }
+               
+              
             }
-
-            if (user && user.sourceUrl === '/sign-in') {
-
+            
+            if (user && (user.sourceUrl === '/sign-in' || user.role ===3)) {
+                
                 token.id = user.id
                 token.firstName = user.firstName
                 token.lastName = user.lastName
@@ -212,11 +246,14 @@ export const authOptions = {
                 token.sourceUrl = user.sourceUrl
                 token.mobileVerified=user.mobileVerified
                 token.emailVerified=user.emailVerified
+               
 
 
 
 
-            } else if (user && user.sourceUrl === '/wah-control-center/sign-in') {
+            } else if (user && (user.sourceUrl === '/wah-control-center/sign-in' || user.role ===1 || user.role===2)) {
+               
+
                 token.id = user.id
                 token.role = user.role
                 token.email = user.email
@@ -234,13 +271,17 @@ export const authOptions = {
 
             }
             
+            
          
 
             return token
         },
         async session({ session, token }) {
+            
+         
 
-            if (token && token.sourceUrl === '/sign-in') {
+            if (token && (token.sourceUrl === '/sign-in'   || token.role ===3)) {
+               
                 session.id = token.id
                 session.firstName = token.firstName
                 session.lastName = token.lastName
@@ -259,7 +300,8 @@ export const authOptions = {
 
 
 
-            } else if (token && token.sourceUrl === '/wah-control-center/sign-in') {
+            } else if (token && (token.sourceUrl === '/wah-control-center/sign-in' || user.role ===1 || user.role===2)) {
+                
                 session.id = token.id
                 session.role = token.role
                 session.email = token.email

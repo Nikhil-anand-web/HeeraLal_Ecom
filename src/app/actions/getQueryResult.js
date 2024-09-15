@@ -8,7 +8,7 @@ export default async function getQueryResult(searchTerm) {
     const user = await getServerSession(authOptions)
 
 
-    if (user) {
+    if (true) {
 
         
         
@@ -26,23 +26,27 @@ export default async function getQueryResult(searchTerm) {
             
             const products = await db.product.findMany({
                 where: {
-                  OR: [
-                    { name: { contains: searchTerm } },
-                    { description: { contains: searchTerm} },
-                    { highLights: { contains: searchTerm } },
-                    { slug: { contains: searchTerm } },
-                    
-                    { category: { categoryName: { contains: searchTerm } } },
-                  ],
-                },select:{
-                    name:true,
-                    slug:true,
-                    id:true,
-                    thumbNail:true
-
+                  AND: [
+                    {
+                      OR: [
+                        { name: { contains: searchTerm, mode: 'insensitive' } },
+                        { description: { contains: searchTerm, mode: 'insensitive' } },
+                        { highLights: { contains: searchTerm, mode: 'insensitive' } },
+                        { slug: { contains: searchTerm, mode: 'insensitive' } },
+                        { category: { categoryName: { contains: searchTerm, mode: 'insensitive' } } },
+                      ]
+                    },
+                    { status: true }
+                  ]
+                },
+                select: {
+                  name: true,
+                  slug: true,
+                  id: true,
+                  thumbNail: true
                 }
-                
               });
+              
           
 
 

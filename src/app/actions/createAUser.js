@@ -26,14 +26,14 @@ export async function createAUser(formData) {
 
       }
       const requestData = {}
-      formData.forEach(  (value, key) => {
-      
-         if(key!=='cnfPassword'){
+      formData.forEach((value, key) => {
+
+         if (key !== 'cnfPassword') {
             requestData[key] = value
 
          }
 
-         
+
 
 
       });
@@ -45,26 +45,31 @@ export async function createAUser(formData) {
             message: "enter a valid phone number"
          }
 
-      }else{
-         requestData.mobile=validatePhoneNumber(requestData.mobile)
+      } else {
+         requestData.mobile = validatePhoneNumber(requestData.mobile)
 
       }
-     
+
       const newuser = await db.user.create({
          data: requestData
 
       })
       if (newuser) {
-                            
-         const cart = await db.cart.create({
-             data:{
-                 user:{connect:{id:newuser.id}}
-             }
-         })
-         
-     }
 
-       console.log(newuser)
+         const cart = await db.cart.create({
+            data: {
+               user: { connect: { id: newuser.id } }
+            }
+         })
+         const refral = await db.referal.create({
+            data: {
+               user: { connect: { id: newuser.id } }
+            }
+         })
+
+      }
+
+      console.log(newuser)
 
 
       return {

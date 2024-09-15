@@ -30,13 +30,14 @@ model admin {
   combo          combo[]
   recipe         recipe[]
   coupons        coupons[]
+  user           user[]
 }
 
 model user {
-  id               String   @id @default(uuid())
+  id               String    @id @default(uuid())
   firstName        String
   lastName         String
-  email            String   @unique
+  email            String    @unique
   password         String?
   address          String?
   pinCode          Int?
@@ -44,17 +45,22 @@ model user {
   state            String?
   googleId         String?
   googleProfilePic String?
-  mobile           String?
-  status           Boolean  @default(true)
+  mobile           String?   @unique
+  status           Boolean   @default(true)
   otpMobile        String?
   otpEmail         String?
-  role             Int      @default(3)
-  emailVerified    Boolean  @default(false)
-  mobileVerified   Boolean  @default(false)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-
-  cart cart[]
+  role             Int       @default(3)
+  emailVerified    Boolean   @default(false)
+  mobileVerified   Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  referedBy        user?     @relation("referedBy", fields: [referedById], references: [id])
+  cart             cart[]
+  lastEditedBy     admin?    @relation(fields: [adminId], references: [id])
+  referedTo        user[]    @relation("referedBy")
+  referedById      String?
+  referal          referal[]
+  adminId          String?
 }
 
 model globalSettings {
@@ -100,6 +106,7 @@ model permissions {
   complementaryContentManagment Boolean @default(false)
   globalSetting                 Boolean @default(false)
   siteManagement                Boolean @default(false)
+  consumerAndOrderManagement    Boolean @default(false)
 }
 
 model category {
@@ -198,15 +205,17 @@ model banners {
 }
 
 model cart {
-  id             String           @id @default(uuid())
-  user           user             @relation(fields: [userId], references: [id])
-  userId         String           @unique
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  coupon         coupons?         @relation(fields: [couponId], references: [id], onDelete: Cascade)
-  cartItem       cartItem[]
-  couponId       String?
-  cartComboItems cartComboItems[]
+  id                     String           @id @default(uuid())
+  user                   user             @relation(fields: [userId], references: [id])
+  userId                 String           @unique
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  coupon                 coupons?         @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  cartItem               cartItem[]
+  couponId               String?
+  cartComboItems         cartComboItems[]
+  referalCoins           Int              @default(0)
+  refralDiscountAbsolute Float            @default(0)
 }
 
 model cartItem {
@@ -260,27 +269,42 @@ model coupons {
 }
 
 model orders {
-  id             String   @id @default(uuid())
-  orderId        String   @unique
-  customerId     String
-  CustomerMeta   Json?
-  productIds     Json
-  productMeta    Json
-  varientIds     Json
-  varientMeta    Json
-  comboIds       Json
-  comboMeta      Json
-  couponMeta     Json?
-  subTotal       Float
-  taxes          Float
-  finalPrice     Float?
-  shipingCharges Float?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  PaymentMode    String?
-  paymentToken   Json?
-  paymentStatus  Int      @default(0)
-  orderStatus    Int      @default(0)
-  shipingStatus  String   @default("initiated")
-  awb            String?  @unique
+  id                     String   @id @default(uuid())
+  orderId                String   @unique
+  customerId             String
+  CustomerMeta           Json?
+  productIds             Json
+  productMeta            Json
+  varientIds             Json
+  varientMeta            Json
+  comboIds               Json
+  refralDiscountAbsolute Float    @default(0)
+  comboMeta              Json
+  couponMeta             Json?
+  subTotal               Float
+  taxes                  Float
+  finalPrice             Float?
+  shipingCharges         Float?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  PaymentMode            String?
+  paymentToken           Json?
+  referalCoins           Int      @default(0)
+  paymentStatus          Int      @default(0)
+  orderStatus            Int      @default(0)
+  shipingStatus          String   @default("initiated")
+  awb                    String?  @unique
+}
+
+model staticInfo {
+  id    String @id @default(uuid())
+  key   String @unique
+  value Json
+}
+
+model referal {
+  id     String @id @default(uuid())
+  user   user   @relation(fields: [userId], references: [id])
+  userId String @unique
+  coins  Int    @default(0)
 }

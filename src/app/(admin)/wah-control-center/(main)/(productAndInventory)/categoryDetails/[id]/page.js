@@ -43,7 +43,12 @@ const page = async (prop) => {
             children:{select:{
                 id:true,
                 slug:true
-            }}
+            }},
+            _count:{
+                select:{
+                    product:true
+                }
+            }
         }
     })
     console.log(requestedCategory)
@@ -94,6 +99,12 @@ const page = async (prop) => {
                                                     <div className="p-2">{requestedCategory.parent?.slug || "Root"}</div>
                                                 </div>
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                    <div className="p-2">Number of Product Under Category</div>
+                                                </div>
+                                                <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                    <div className="p-2">{requestedCategory._count.product }</div>
+                                                </div>
+                                                <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Status</div>
                                                 </div>
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
@@ -130,7 +141,7 @@ const page = async (prop) => {
                                                 </div>
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                                     
-                                                    {requestedCategory.children.map((child)=><div key={child.id} className="p-2">{child.slug}</div>)}
+                                                    {requestedCategory.children.length===0? "No children": requestedCategory.children.map((child)=><div key={child.id} className="p-2">{child.slug}</div>)}
                                                 </div>
                                             </div>
                                         </div>

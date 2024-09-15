@@ -48,6 +48,7 @@ const ProductToCartControl = ({ varientId = '' ,style }) => {
                 
             }
             mutate('/action/getCartCount')
+            mutate('/action/applyReferalPoint')
 
             setNoOfVarientInCart(res.nwCartItem.qty)
 
@@ -67,6 +68,7 @@ const ProductToCartControl = ({ varientId = '' ,style }) => {
                 
             }
             mutate('/action/getCartCount')
+            mutate('/action/applyReferalPoint')
 
             setNoOfVarientInCart(res.nwCartItem.qty)
 

@@ -17,7 +17,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
     const [city, setCity] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [wantToUseDefault, setWantToUseDefault] = useState(false)
-    const rtr = useRouter()
+    
 
     useEffect(() => {
         setisMounted(true);
@@ -34,12 +34,23 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
 
     const pinCode = watch('pinCode');
 
+
     const fetchResults = useCallback(
-        debounce(async (pinCode) => {
-            if (pinCode) {
+        debounce(async (pinCode,wantToUseDefault,userHaveAddress,userPinCode) => {
+            if (pinCode ||(wantToUseDefault  && userHaveAddress) ) {
                 try {
                     const response = await axios.get(`https://api.postalpincode.in/pincode/${pinCode}`);
-                    const shiping = await getShipingCharges(pinCode)
+                    var shiping =null
+                    if (wantToUseDefault  && userHaveAddress) {
+                        shiping = await getShipingCharges(userPinCode)
+                        console.log(shiping)
+
+                        
+                    }else{
+                        shiping =await getShipingCharges(pinCode)
+
+                    }
+                   
                     setShipingCharges(shiping.charges)
 
                     if (response.data[0].PostOffice) {
@@ -52,6 +63,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
                     console.error('Error fetching data:', error);
                 }
             } else {
+                setShipingCharges(0)
                 setCity([]); // Clear the city list if the pinCode is empty
             }
         }, 500),
@@ -59,13 +71,11 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
     );
 
     useEffect(() => {
-        fetchResults(pinCode);
-    }, [pinCode, fetchResults]);
+        fetchResults(pinCode,wantToUseDefault,userHaveAddress,userPinCode);
+    }, [pinCode, fetchResults,userPinCode,wantToUseDefault]);
 
     const onSubmit = async (e) => {
 
-        // const formData = objectToFormData(data);
-        // formData.set("wantToUseDefault",wantToUseDefault)
         e.wantToUseDefault = wantToUseDefault
         e.orderId = order.orderId
         e.customer = order.customerId
@@ -113,7 +123,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
     return (
         <div>
 
-            {userHaveAddress && <><input value={wantToUseDefault} name='addressMode' onChange={(e) => setWantToUseDefault((pre) => !pre)} className="form-check-input" type="checkbox" id={"addressMode"} /> use profile address</>}
+            {userHaveAddress && <div style={{margin:"50px"}}><input style={{width:"25px",height:"25px"}} value={wantToUseDefault} name='addressMode' onChange={(e) => setWantToUseDefault((pre) => !pre)} className="form-check-input" type="checkbox" id={"addressMode"} /> <label htmlFor='addressMode'>use profile address</label></div>}
             <form onSubmit={handleSubmit(onSubmit)}>
 
                 {(!wantToUseDefault || !userHaveAddress) && <><div className="form-group">
@@ -162,9 +172,10 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
                         <label htmlFor="state">State</label>
                         <input disabled {...register("state")} type="text" className="form-control" id="state" placeholder="State" />
                     </div></>}
+                    
 
                 <button type="submit" className="btn me-2 btn-gradient-primary" disabled={isLoading}>
-                    {isLoading ? "Submitting" : "Pay"}
+                    {isLoading ? "Submitting" : "Procide To Payment"}
                 </button>
             </form>
         </div>

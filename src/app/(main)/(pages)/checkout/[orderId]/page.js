@@ -63,7 +63,7 @@ const page = async ({params}) => {
                     </div>
                 </div>
 
-                <CheckOutContent  absoluteCouponDiscount={getcouponDiscount()} userInfo={userInfo} userHaveAddress={userHaveAddress} order={order}/>
+                <CheckOutContent   absoluteCouponDiscount={getcouponDiscount()} userInfo={userInfo} userHaveAddress={userHaveAddress} order={order}/>
 
                 
             </div>

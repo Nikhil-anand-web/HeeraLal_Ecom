@@ -32,6 +32,16 @@ export default async function emptyCart() {
                    cartId:cartId.id
                 }
             })
+            const cart = await db.cart.update({
+                where:{
+                    id:cartId.id
+                    
+                },data:{
+                    couponId:null,
+                    refralDiscountAbsolute:0,
+                    referalCoins :0
+                }
+            })
             revalidatePath('/cart')
 
 

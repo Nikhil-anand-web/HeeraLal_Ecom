@@ -4,7 +4,6 @@ import percentOf from '@/lib/percentOf';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import PaytmChecksum from 'paytmchecksum';
-import { v4 as uuidv4 } from 'uuid';
 const getcouponDiscount = (order) => {
 
 
@@ -24,7 +23,7 @@ const getcouponDiscount = (order) => {
 export async function POST(req) {
     const reqObj = await req.json()
     const user = await getServerSession(authOptions)
-    console.log(reqObj, "ds")
+ 
 
     if (reqObj.wantToUseDefault === true) {
         const userInfo = await db.user.findUnique({
@@ -65,15 +64,20 @@ export async function POST(req) {
 
             }
         })
-        const subTotal = order.subTotal
+        
         const absoluteCouponDiscount = getcouponDiscount(order)
         const res = await getShipingCharges(userInfo.pinCode)
         const shipingCharge = res.charges
-        const taxes = percentOf((order.subTotal - absoluteCouponDiscount), order.taxes)
+        const taxes = percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute), order.taxes)
 
-        const finalPrice = parseFloat((subTotal - absoluteCouponDiscount)) + parseFloat((taxes + shipingCharge))
+        const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute)) + parseFloat((taxes + shipingCharge).toPrecision(5))
 
-
+       console.log({
+        subTotal : order.subTotal,
+        shipingCharge,
+        taxes,
+        finalPrice
+       })
 
 
         const updatedOrder = await db.orders.update({
@@ -97,14 +101,14 @@ export async function POST(req) {
             CUST_ID: updatedOrder.customerId,
             INDUSTRY_TYPE_ID: process.env.NEXT_PUBLIC_PAYTM_INDUSTRY_TYPE_ID,
             CHANNEL_ID: process.env.NEXT_PUBLIC_PAYTM_CHANNEL_ID,
-            TXN_AMOUNT: "1",
+            TXN_AMOUNT: process.env.APP_ENV==="TEST"?"1":Math.round(updatedOrder.finalPrice).toString(),
             // TXN_AMOUNT: Math.round(updatedOrder.finalPrice).toString(),
             WEBSITE: process.env.NEXT_PUBLIC_PAYTM_WEBSITE,
             CALLBACK_URL: process.env.NEXT_PUBLIC_PAYTM_CALLBACK_URL,
             MOBILE_NO: updatedOrder.CustomerMeta.mobile,
             EMAIL: updatedOrder.CustomerMeta.email || "no email present",
         };
-        console.log(paytmParams)
+        // console.log(paytmParams)
 
         const paytmChecksum = await PaytmChecksum.generateSignature(
             paytmParams,
@@ -112,7 +116,7 @@ export async function POST(req) {
         );
 
         paytmParams['CHECKSUMHASH'] = paytmChecksum;
-        console.log(paytmChecksum)
+        // console.log(paytmChecksum)
 
 
         return NextResponse.json({
@@ -158,7 +162,7 @@ export async function POST(req) {
                     address: reqObj.address,
                     state: reqObj.state,
                     city: reqObj.city,
-                    pinCode: reqObj.pinCode
+                    pinCode: parseInt(reqObj.pinCode)
 
 
                 }, select: {
@@ -186,14 +190,14 @@ export async function POST(req) {
 
             }
         })
-        const subTotal = order.subTotal
+    
         const absoluteCouponDiscount = getcouponDiscount(order)
         const res = await getShipingCharges(userInfo.pinCode)
         const shipingCharge = res.charges
-        const taxes = percentOf((order.subTotal - absoluteCouponDiscount), order.taxes)
+        const taxes = percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute), order.taxes)
 
-        const finalPrice = parseFloat((subTotal - absoluteCouponDiscount)) + parseFloat((taxes + shipingCharge))
-
+        const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute)) + parseFloat((taxes + shipingCharge).toPrecision(5))
+       console.log(finalPrice,"final priced")
         const customerMeta = {
             firstName: reqObj.firstName,
             lastName:reqObj.lastName,
@@ -226,13 +230,13 @@ export async function POST(req) {
             CUST_ID: updatedOrder.customerId,
             INDUSTRY_TYPE_ID: process.env.NEXT_PUBLIC_PAYTM_INDUSTRY_TYPE_ID,
             CHANNEL_ID: process.env.NEXT_PUBLIC_PAYTM_CHANNEL_ID,
-            TXN_AMOUNT: Math.round(updatedOrder.finalPrice).toString(),
+            TXN_AMOUNT:   process.env.APP_ENV==="TEST"?"1":Math.round(updatedOrder.finalPrice).toString(),
             WEBSITE: process.env.NEXT_PUBLIC_PAYTM_WEBSITE,
             CALLBACK_URL: process.env.NEXT_PUBLIC_PAYTM_CALLBACK_URL,
             MOBILE_NO: updatedOrder.CustomerMeta.mobile,
             EMAIL: updatedOrder.CustomerMeta.email || "no email present",
         };
-        console.log(paytmParams)
+        // console.log(paytmParams)
 
         const paytmChecksum = await PaytmChecksum.generateSignature(
             paytmParams,
@@ -240,7 +244,7 @@ export async function POST(req) {
         );
 
         paytmParams['CHECKSUMHASH'] = paytmChecksum;
-        console.log(paytmChecksum)
+        // console.log(paytmChecksum)
 
 
         return NextResponse.json({
