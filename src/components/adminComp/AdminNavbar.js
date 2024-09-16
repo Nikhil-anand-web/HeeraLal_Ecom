@@ -264,6 +264,23 @@ const AdminNavbar = () => {
 
                 </Accordion.Body>
               </Accordion.Item> : ''}
+              {user?.permissions[0].consumerAndOrderManagement ? <Accordion.Item eventKey="5">
+                <Accordion.Header>Customer and Order Management</Accordion.Header>
+                <Accordion.Body>
+
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/customers">
+                      Customers
+                    </Link>
+
+
+                  </span>
+                  
+
+                </Accordion.Body>
+              </Accordion.Item> : ''}
+
+              
             </Accordion>
 
             {user?.permissions[0].globalSetting ?

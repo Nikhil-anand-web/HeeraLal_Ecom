@@ -3,6 +3,7 @@
 
 import resetUserCrediential from "@/app/actions/resetUserCrediential";
 import sendOtpPhone from "@/app/actions/sendOtpPhone";
+import verifyPhoneOtp from "@/app/actions/verifyPhoneOtp";
 
 
 import { useRouter } from "next/navigation";
@@ -10,8 +11,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const VerifyPhoneForm = ({email ,isphoneVerified}) => {
-     console.log(isphoneVerified)
+const VerifyPhoneForm = ({ email, isphoneVerified }) => {
+    console.log(isphoneVerified)
     const [isLoading, setIsLoading] = useState(false);
     const [stedy, setstedy] = useState(false);
     const [counter, setCounter] = useState(30); // Set initial timer value (e.g., 30 seconds)
@@ -21,44 +22,46 @@ const VerifyPhoneForm = ({email ,isphoneVerified}) => {
     if (isphoneVerified) {
         rtr.push('/')
         return null
-        
-       }
- 
-    useEffect((()=>{
-        const fetch = async()=>{
+
+    }
+
+    useEffect((() => {
+        const fetch = async () => {
             try {
-                const resObj =  await  sendOtpPhone(decodedEmail);
+                const resObj = await sendOtpPhone(decodedEmail);
                 if (!resObj.success) {
                     throw resObj
-                    
+
                 }
-                 if (resObj.redirect) {
-                    rtr.push('/')
+                if (resObj.redirect) {
+                    rtr.back()
                     return
-                    
-                 }
-                
-    
+
+                }
+
+
                 toast.success("otp has been sent");
             } catch (error) {
                 console.error(error);
                 toast.warning("there is some problem in sending otp");
             } finally {
                 setIsLoading(false);
-            }}
+            }
+        }
         fetch()
-    }),[stedy])
-   
-  
+    }), [stedy])
+
+
     const onSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true); // Set loading state to true
-
+        console.log("onsubI")
 
         const formData = new FormData(e.target);
 
+
         try {
-            const resObj = await resetUserCrediential(formData,decodedEmail);
+            const resObj = await verifyPhoneOtp(formData.get('otpMobile'));
             console.log(resObj);
             if (!resObj.success) {
                 throw resObj;
@@ -73,7 +76,7 @@ const VerifyPhoneForm = ({email ,isphoneVerified}) => {
             setIsLoading(false);
         }
     };
-    
+
 
     useEffect(() => {
         if (counter > 0) {
@@ -113,20 +116,23 @@ const VerifyPhoneForm = ({email ,isphoneVerified}) => {
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-4">
-                        <h1 className="text-center mb-3">Verify your phone</h1>
-                        <div className="form-group mb-3">
+                        <form onSubmit={onSubmit}>
+                            <h1 className="text-center mb-3">Verify your phone</h1>
+                            <div className="form-group mb-3">
                                 <label htmlFor="username" className="mb-2">
-                                    Otp 
+                                    Otp
                                 </label>
-                                <input name="otpMobile"  type="text" className="form-control" />
+                                <input name="otpMobile" type="text" className="form-control" />
                             </div>
-                        
-                        <button type="submit" className="btn" disabled={isLoading}>
-                                    {isLoading ? "Submitting..." : "Submit"}
-                                </button>
-                        <button style={{marginLeft:"15px"}} onClick={handleResendOTP} disabled={isButtonDisabledResend || isLoading} className="btn" >
-                                    {isLoading || isButtonDisabledResend ? `${counter}` : "Resend"}
-                                </button>
+
+                            <button type="submit" className="btn" disabled={isLoading}>
+                                {isLoading ? "Submitting..." : "Submit"}
+                            </button>
+                            <button style={{ marginLeft: "15px" }} onClick={handleResendOTP} disabled={isButtonDisabledResend || isLoading} className="btn" >
+                                {isLoading || isButtonDisabledResend ? `${counter}` : "Resend"}
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             </div>

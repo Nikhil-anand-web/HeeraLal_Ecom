@@ -1,6 +1,7 @@
 "use server"
 import db from "@/lib/db";
-import twilioI from "@/lib/twilioI";
+import messageOtp from "@/lib/messageOtp";
+import twilioI from "@/lib/messageOtp";
 import speakeasy from 'speakeasy';
 
 export default async function sendOtpPhone(identifire) {
@@ -14,6 +15,12 @@ export default async function sendOtpPhone(identifire) {
             },
             data: {
                 otpMobile: tokenForMessage,
+            },select:{
+                mobile:true,
+                firstName:true,
+               
+
+
             }
         });
 
@@ -24,7 +31,7 @@ export default async function sendOtpPhone(identifire) {
             };
         }
 
-       await twilioI(`this is your otp ${tokenForMessage}`, userAccount.mobile);
+       await messageOtp(`${tokenForMessage}`, userAccount.mobile,userAccount.firstName);
    
         return {
             message: "OTP has been sent to your phone",

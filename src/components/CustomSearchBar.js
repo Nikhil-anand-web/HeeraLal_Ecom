@@ -32,7 +32,7 @@ const CustomSearchBar = () => {
         }
         helper()
     }, [searchQuery])
-    const onclk = (slug)=>{
+    const onclk = (slug) => {
         rtr.push(`/productDetails/${slug}`)
     }
     return (
@@ -42,9 +42,10 @@ const CustomSearchBar = () => {
 
                 {searchQuery.length > 0 && <button onClick={() => setSearchQuery('')} className="sarchbtn" type="submit">x</button>}
             </form>
-            {arrayOfProduct.length > 0 && <div style={{ width: "19%", position: "absolute", backgroundColor: "white", borderRadius: "17px", marginTop: "5px", padding: "30px" }}>
+            {searchQuery.length > 0 && <div style={{ width: "19%", position: "absolute", minWidth:"282px",  backgroundColor: "white", borderRadius: "17px", marginTop: "5px", padding: "30px" }}>
+                {arrayOfProduct && arrayOfProduct.length <= 0 && "No Product Found"}
 
-                {arrayOfProduct.map((pro) => <div onClick={()=>onclk(pro.slug)} className="dropdown-item">
+                {arrayOfProduct.map((pro) => <div onClick={() => onclk(pro.slug)} className="dropdown-item">
                     <Image
                         width={200}
                         height={300}
@@ -54,6 +55,7 @@ const CustomSearchBar = () => {
                     />
                     <span className="product-name">{pro.name}</span>
                 </div>)}
+
 
             </div>}
         </li>

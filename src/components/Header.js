@@ -10,23 +10,31 @@ import CustomSearchBar from './CustomSearchBar';
 import CustomSearchButton from './CustomSearchButton';
 import ShareTheSiteButton from './ShareTheSiteButton';
 import CoinThumbnail from './CoinThumbnail';
+import { headers } from 'next/headers';
+import ClientMenu from './ClientMenu';
+
 
 
 const Header = async (props) => {
+ 
+  const headersList = headers();
+    const domain = headersList.get('host') || "";
+    const fullUrl = headersList.get('referer') || "";
+ 
   const user = await getServerSession(authOptions)
-  var referal=null
+  var referal = null
   if (user) {
-     referal = await db.referal.findUnique({
+    referal = await db.referal.findUnique({
       where: {
         userId: user?.id
-  
-      },select:{
-        coins:true
+
+      }, select: {
+        coins: true
       }
     })
-    
+
   }
-  
+
 
   return (
     <header className="sticky-top shadow">
@@ -42,6 +50,7 @@ const Header = async (props) => {
             <ul className="d-flex">
               <li>
                 <CustomSearchButton />
+               
               </li>
               <li>
                 <Link href="/account/dashboard"></Link> <Link href="/account/dashboard">{user?.googleProfilePic ? <Image style={{ borderRadius: "60px", height: "50px", width: "50px" }} src={user?.googleProfilePic} alt={"pic"} height={100} width={100} /> : <i className="fa-solid fa-user"></i>}</Link>
@@ -63,25 +72,7 @@ const Header = async (props) => {
 
           <div className="collapse navbar-collapse " id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" href="/">Home</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" href="/aboutUs">Company</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" href="/products/all">Products</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" href="/bulkOrder">Bulk Orders</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" href="/recipes">Recipes</Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" href="/blogs">Blog</Link>
-              </li>
+             <ClientMenu/>
 
 
               <CustomSearchBar />
@@ -98,8 +89,8 @@ const Header = async (props) => {
               <li className="nav-item">
                 <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
               </li>
-              {referal && <li  className="nav-item">
-                <CoinThumbnail coins = {referal.coins} />
+              {referal && <li className="nav-item">
+                <CoinThumbnail coins={referal.coins} />
               </li>}
 
 

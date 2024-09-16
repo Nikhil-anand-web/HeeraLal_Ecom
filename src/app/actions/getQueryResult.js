@@ -29,11 +29,11 @@ export default async function getQueryResult(searchTerm) {
                   AND: [
                     {
                       OR: [
-                        { name: { contains: searchTerm, mode: 'insensitive' } },
-                        { description: { contains: searchTerm, mode: 'insensitive' } },
-                        { highLights: { contains: searchTerm, mode: 'insensitive' } },
-                        { slug: { contains: searchTerm, mode: 'insensitive' } },
-                        { category: { categoryName: { contains: searchTerm, mode: 'insensitive' } } },
+                        { name: { contains: searchTerm } },
+                        { description: { contains: searchTerm } },
+                        { highLights: { contains: searchTerm } },
+                        { slug: { contains: searchTerm } },
+                        { category: { categoryName: { contains: searchTerm } } },
                       ]
                     },
                     { status: true }

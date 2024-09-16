@@ -92,7 +92,7 @@ async function updateUserDetails(formData) {
             console.log(error)
             return ({
                 success: false,
-                message: error.meta?.cause || "internal server error"
+                message: error.code==="P2002"? "The field's value is already present": error.meta?.cause || "internal server error",
             })
 
         }

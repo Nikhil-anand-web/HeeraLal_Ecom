@@ -5,6 +5,18 @@ import React from 'react'
 
 const page = async () => {
     const user = await getServerSession(authOptions)
+    const userInfo = await db.user.findUnique({
+        where:{
+            id:user.id
+        },select:{
+            address:true,
+            pinCode:true,
+            city:true,
+            state:true,
+            mobile:true
+
+        }
+    })
     
   return (
     <div className="col-md-9 ps-5 border-start">
@@ -68,6 +80,8 @@ const page = async () => {
                                 </div>
                                
                                 <div className="user-name mb-2">{user.firstName} {user.lastName}</div>
+                                <div className="user-name mb-2">Address- {userInfo.address + `,${userInfo.city},${userInfo.state}` || <Link>Update Address</Link>}</div>
+                                <div className="user-name mb-2">Mobile- {userInfo.mobile}</div>
                                 <div className="user-email mb-2">
                                     <a>{user.email?user.email:<Link>Add Email</Link>}</a>
                                 </div>

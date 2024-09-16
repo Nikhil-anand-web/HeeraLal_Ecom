@@ -7,54 +7,57 @@ export default async function getAboutVarientInCart(ids = '') {
     const user = await getServerSession(authOptions)
 
 
+    if (user) {
 
-    try {
-        const cart = await db.cart.findUnique({
-            where: {
-                userId: user.id
-            }, select: {
-                cartItem: {
-                    where: {
-                        varientId: ids
-                    }, select: {
-                        qty: true,
-                        varient: {
-                            select: {
-                                qty: true
+
+        try {
+            const cart = await db.cart.findUnique({
+                where: {
+                    userId: user.id
+                }, select: {
+                    cartItem: {
+                        where: {
+                            varientId: ids
+                        }, select: {
+                            qty: true,
+                            varient: {
+                                select: {
+                                    qty: true
+                                }
                             }
+
+
                         }
-
-
                     }
                 }
+            })
+            if (!cart) {
+                throw {
+                    success: false,
+                    message: "cart is missing",
+
+
+                }
+
             }
-        })
-        if (!cart) {
-            throw {
+            return {
+                success: true,
+                message: "fetched",
+                cart
+
+            }
+
+
+        } catch (error) {
+            console.log(error)
+
+            return {
                 success: false,
-                message: "cart is missing",
-             
+                message: error.meta?.cause || "internal server error",
 
             }
 
         }
-        return {
-            success: true,
-            message: "fetched",
-            cart
-
-        }
-
-
-    } catch (error) {
-        console.log(error)
-
-        return {
-            success: false,
-            message: error.meta?.cause || "internal server error",
-
-        }
-
     }
 
 }

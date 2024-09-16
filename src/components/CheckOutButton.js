@@ -9,7 +9,12 @@ const CheckOutButton = () => {
     const onChkOut = async () => {
         try {
             const res = await checkOutCart()
-            if (!res.success) {
+            if (!res) {
+                return
+                
+            }
+            if (!res?.success) {
+
                 throw res
 
             }
