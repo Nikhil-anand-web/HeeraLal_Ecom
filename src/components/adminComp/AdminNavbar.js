@@ -1,11 +1,17 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaBars } from 'react-icons/fa';
 import Accordion from 'react-bootstrap/Accordion';
-import Image from 'next/image'
-import { useSession } from 'next-auth/react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-const AdminNavbar = () => {
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+
+
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => setIsOpen(!isOpen);
   const rtr = useRouter()
   const { data: user } = useSession();
 
@@ -25,16 +31,22 @@ const AdminNavbar = () => {
 
   }
 
-
   return (
-    <>
-     
-        <nav className="sidebar sidebar-offcanvas absolute" id="sidebar">
+    <div className="d-flex">
+      {/* Toggle Button */}
+      <button style={{ borderTopRightRadius: "21px", borderBottomRightRadius: "21px" }} className="btn btn-primary m-2" onClick={toggleSidebar}>
+        <FaBars />
+      </button>
+
+      {/* Sidebar - Conditional rendering based on isOpen */}
+      {isOpen && (
+        <div style={{ height: "91vh", overflowY: "scroll", marginTop: "8px", borderRadius: "21px" }} className="  sidebar p-3">
+          <h2 className="text-center">My App</h2>
           <ul className="nav">
             <li className="nav-item nav-profile">
               <a href="#" className="nav-link">
                 <div className="nav-profile-image">
-                  <Image src={url} width={500} height={600} alt="profile" />
+                  {/* <Image src={url} width={500} height={600} alt="profile" /> */}
                   <span className="login-status online" />
                   {/* Change to offline or busy as needed */}
                 </div>
@@ -279,8 +291,6 @@ const AdminNavbar = () => {
 
                 </Accordion.Body>
               </Accordion.Item> : ''}
-
-              
             </Accordion>
 
             {user?.permissions[0].globalSetting ?
@@ -291,12 +301,12 @@ const AdminNavbar = () => {
 
 
           </ul>
-        </nav>
-   
+        </div>
+      )}
 
 
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default AdminNavbar
+export default Sidebar;

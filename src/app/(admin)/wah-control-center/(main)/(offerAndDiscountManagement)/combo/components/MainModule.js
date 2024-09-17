@@ -2,13 +2,9 @@
 
 
 import getSearchedCombo from '@/app/actions/getSearchedCombo';
-import getSearchedProduct from '@/app/actions/getSearchedProduct';
-import getSearchedRecipe from '@/app/actions/getSearchedRecipe';
-import BlogModel from '@/components/adminComp/BlogModel';
+
 import ComboModel from '@/components/adminComp/ComboModel';
-import ProductModel from '@/components/adminComp/ProductModel';
-import RecipseModel from '@/components/adminComp/RecipseModel';
-import getSearchedBlogs from '@/components/getSearchedBlogs';
+
 import Spinner from '@/components/global/Spinner';
 import debounce from '@/lib/debounce';
 import { useRouter } from 'next/navigation';
@@ -19,7 +15,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredBlogs, setFilteredBlogs] = useState([]);
+  const [filteredCombos, setFilteredCombos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refetchComp, setRefetchComp] = useState(false)
 
@@ -32,7 +28,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
         // setArrayOfProduct(response.products)
 
-        setFilteredBlogs(response.combos);
+        setFilteredCombos(response.combos);
 
 
 
@@ -74,7 +70,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
 
         <div className={"hide-scrollbar"} style={{ height: "63vh", overflow: "scroll", width: "100%" }}>
-          {filteredBlogs.map((blog, index) =>  <ComboModel setRefetchComp={setRefetchComp} key={index} combo={blog} />)}
+          {filteredCombos.map((blog, index) =>  <ComboModel setRefetchComp={setRefetchComp} key={index} combo={blog} />)}
 
 
 

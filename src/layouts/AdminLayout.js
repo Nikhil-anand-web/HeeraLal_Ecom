@@ -21,8 +21,8 @@ export default function AdminLayout({ children }) {
                 <div className="container-fluid page-body-wrapper">
                     {/* partial:../../partials/_sidebar.html */}
 
-                    {/* <AdminNavbar /> */}
-                    <TestNavBar/>
+                    <AdminNavbar />
+                    {/* <TestNavBar/> */}
                     {/* partial */}
                     <div className="main-panel">
                         <div style={{
