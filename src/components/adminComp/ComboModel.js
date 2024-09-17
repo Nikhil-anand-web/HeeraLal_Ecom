@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const ComboModel = ({ combo }) => {
+const ComboModel = ({ combo ,setRefetchComp }) => {
     const rtr = useRouter()
     console.log(combo)
     const [isLoading,setIsLoading]=useState(false)
@@ -19,6 +19,7 @@ const ComboModel = ({ combo }) => {
 
 
             }
+            setRefetchComp((e)=>!e);
             toast.success(res.message)
         } catch (error) {
             console.log(error)
@@ -35,6 +36,7 @@ const ComboModel = ({ combo }) => {
 
             }
             toast.success(res.message)
+            setRefetchComp((e)=>!e)
 
         } catch (error) {
             console.log(error)
@@ -55,6 +57,7 @@ const ComboModel = ({ combo }) => {
                 throw res
 
             }
+            setRefetchComp((e)=>!e)
             toast.success(res.message)
 
         } catch (error) {

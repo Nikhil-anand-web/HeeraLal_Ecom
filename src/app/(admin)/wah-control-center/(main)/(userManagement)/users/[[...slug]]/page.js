@@ -59,9 +59,10 @@ const page = async ({ params }) => {
 
   return (
     (user && user.permissions[0].userUpdate ? <>
-      <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
+    
 
       <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />
+      <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
 
 
 

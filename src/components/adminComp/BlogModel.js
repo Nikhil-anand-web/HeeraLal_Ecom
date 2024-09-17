@@ -6,11 +6,12 @@ import Image from 'next/image'
 import React from 'react'
 import { toast } from 'react-toastify'
 
-const BlogModel = ({blog}) => {
+const BlogModel = ({blog,setRefetchComp}) => {
     const onDelete = async ()=>{
         const bindedFunction = deleteABlog.bind(null,blog.id)
         const res =  await bindedFunction();
         if(res.success) {
+          setRefetchComp((e)=>!e)
             toast.success(res.message)
         }else{
             toast.warning(res.message)
@@ -21,6 +22,7 @@ const BlogModel = ({blog}) => {
         const bindedFunction = toggleBlogStatus.bind(null,blog.id)
         const res =  await bindedFunction();
         if(res.success) {
+          setRefetchComp((e)=>!e)
             toast.success(res.message)
         }else{
             toast.warning(res.message)

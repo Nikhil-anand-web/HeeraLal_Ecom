@@ -8,7 +8,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const RecipseModel = ({ recipe }) => {
+const RecipseModel = ({ recipe ,setRefetchComp}) => {
     
    
     const [isLoading,setIsLoading]=useState(false)
@@ -23,6 +23,7 @@ const RecipseModel = ({ recipe }) => {
 
             }
             toast.success(res.message)
+            setRefetchComp((e)=>!e)
         } catch (error) {
             console.log(error)
 
@@ -37,6 +38,7 @@ const RecipseModel = ({ recipe }) => {
                 throw res
 
             }
+            setRefetchComp((e)=>!e)
             toast.success(res.message)
 
         } catch (error) {
@@ -57,6 +59,7 @@ const RecipseModel = ({ recipe }) => {
             if (!res.success) {
                 throw res
             }
+            setRefetchComp((e)=>!e)
             toast.success(res.message)
 
         } catch (error) {

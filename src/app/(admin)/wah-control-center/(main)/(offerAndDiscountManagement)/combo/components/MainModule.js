@@ -1,8 +1,14 @@
 "use client"
 
 
+import getSearchedCombo from '@/app/actions/getSearchedCombo';
 import getSearchedProduct from '@/app/actions/getSearchedProduct';
+import getSearchedRecipe from '@/app/actions/getSearchedRecipe';
+import BlogModel from '@/components/adminComp/BlogModel';
+import ComboModel from '@/components/adminComp/ComboModel';
 import ProductModel from '@/components/adminComp/ProductModel';
+import RecipseModel from '@/components/adminComp/RecipseModel';
+import getSearchedBlogs from '@/components/getSearchedBlogs';
 import Spinner from '@/components/global/Spinner';
 import debounce from '@/lib/debounce';
 import { useRouter } from 'next/navigation';
@@ -13,20 +19,20 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredProduct, setFilteredProduct] = useState([]);
+  const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refetchComp, setRefetchComp] = useState(false)
-  const rtr = useRouter()
+
   const fetchResults = useCallback(
     debounce(async (searchQuery) => {
 
       try {
         setIsLoading(true)
-        const response = await getSearchedProduct(searchQuery, pageNo, itemsPerPage)
+        const response = await getSearchedCombo(searchQuery, pageNo, itemsPerPage)
 
         // setArrayOfProduct(response.products)
 
-        setFilteredProduct(response.products);
+        setFilteredBlogs(response.combos);
 
 
 
@@ -54,7 +60,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
   return (
     <>
-      <h3>Products</h3>
+      <h3>Recipe</h3>
       <div style={{ marginBottom: "5rem" }} className="input-group">
 
         <span className="input-group-text" id="">Search</span>
@@ -68,7 +74,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
 
         <div className={"hide-scrollbar"} style={{ height: "63vh", overflow: "scroll", width: "100%" }}>
-          {filteredProduct.map((product, index) => <ProductModel setRefetchComp={setRefetchComp} key={index} product={product} />)}
+          {filteredBlogs.map((blog, index) =>  <ComboModel setRefetchComp={setRefetchComp} key={index} combo={blog} />)}
 
 
 
