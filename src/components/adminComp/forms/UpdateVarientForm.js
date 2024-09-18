@@ -64,7 +64,19 @@ const UpdateVarientForm = ({ productSlugs }) => {
 
     const onSubmit = async (e) => {
         e.parentProductSlug = selectedProduct
-        const formData = objectToFormData(e); // Collect form data
+       
+        const sizeobj = {
+            length: e.length,
+            bredth: e.bredth,
+            height: e.height
+        }
+        const str = JSON.stringify(sizeobj)
+        e.size = str
+        delete e.length
+        delete e.height
+        delete e.bredth
+        const formData = objectToFormData(e); 
+
         try {
             setIsLoading(true)
 
@@ -168,8 +180,8 @@ const UpdateVarientForm = ({ productSlugs }) => {
                                             <select defaultValue={0} onChange={handleIndntifierProductChange} {...field} className="form-select"  >
 
                                                 <option disabled value={0}>select a valid identifire</option>
-                                                <option  value={true}>true</option>
-                                                <option  value={false}>false</option>
+                                                <option value={true}>true</option>
+                                                <option value={false}>false</option>
 
 
 
@@ -181,8 +193,18 @@ const UpdateVarientForm = ({ productSlugs }) => {
                                     />
                                 </div>
                                 <div className="form-group" >
-                                    <label htmlFor="size">Size</label>
-                                    <input {...register("size")} type="text" className="form-control" id="size" placeholder="size" />
+                                    <label htmlFor="length">Length</label>
+                                    <input {...register("length", { required: true })} type="text" className="form-control" id="length" placeholder="length" />
+                                    {errors.size && <span>This field is required</span>}
+                                </div>
+                                <div className="form-group" >
+                                    <label htmlFor="bredth">Bredth</label>
+                                    <input {...register("bredth", { required: true })} type="text" className="form-control" id="bredth" placeholder="bredth" />
+                                    {errors.size && <span>This field is required</span>}
+                                </div>
+                                <div className="form-group" >
+                                    <label htmlFor="height">Height</label>
+                                    <input {...register("height", { required: true })} type="text" className="form-control" id="height" placeholder="height" />
                                     {errors.size && <span>This field is required</span>}
                                 </div>
                                 <div className="form-group" >

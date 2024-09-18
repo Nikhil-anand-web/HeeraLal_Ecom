@@ -46,6 +46,16 @@ const AddProductForm = ({ categories }) => {
     }
 
     const onSubmit = async (e) => {
+        const sizeobj = {
+            length:e.length,
+            bredth:e.bredth,
+            height:e.height
+        }
+        const str = JSON.stringify(sizeobj)
+        e.size = str
+        delete e.length
+        delete e.height
+        delete e.bredth
 
         const formData = objectToFormData(e); // Collect form data
 
@@ -368,8 +378,18 @@ const AddProductForm = ({ categories }) => {
                                 {errors.weight && <span>This field is required</span>}
                             </div>
                             <div className="form-group" >
-                                <label htmlFor="size">Size</label>
-                                <input {...register("size", { required: true })} type="text" className="form-control" id="size" placeholder="size" />
+                                <label htmlFor="length">Length</label>
+                                <input {...register("length", { required: true })} type="text" className="form-control" id="length" placeholder="length" />
+                                {errors.size && <span>This field is required</span>}
+                            </div>
+                            <div className="form-group" >
+                                <label htmlFor="bredth">Bredth</label>
+                                <input {...register("bredth", { required: true })} type="text" className="form-control" id="bredth" placeholder="bredth" />
+                                {errors.size && <span>This field is required</span>}
+                            </div>
+                            <div className="form-group" >
+                                <label htmlFor="height">Height</label>
+                                <input {...register("height", { required: true })} type="text" className="form-control" id="height" placeholder="height" />
                                 {errors.size && <span>This field is required</span>}
                             </div>
                             <div className="form-group" >

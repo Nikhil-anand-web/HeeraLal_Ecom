@@ -31,7 +31,7 @@ const AddVarientForm = ({ categories, productSlugs }) => {
         register,
         handleSubmit,
         control,
-       
+
 
         formState: { errors },
     } = useForm({ mode: "onChange" })
@@ -43,7 +43,18 @@ const AddVarientForm = ({ categories, productSlugs }) => {
 
     const onSubmit = async (e) => {
 
-        const formData = objectToFormData(e); // Collect form data
+        // Collect form data
+        const sizeobj = {
+            length: e.length,
+            bredth: e.bredth,
+            height: e.height
+        }
+        const str = JSON.stringify(sizeobj)
+        e.size = str
+        delete e.length
+        delete e.height
+        delete e.bredth
+        const formData = objectToFormData(e);
         try {
             const resObj = await createVarient(formData); // Pass formData to createBlog
             if (resObj.success) {
@@ -85,7 +96,7 @@ const AddVarientForm = ({ categories, productSlugs }) => {
 
                                             <option disabled value={0}>select a valid identifire</option>
                                             {
-                                                productSlugs.map((obj,index) => <option key ={index} value={obj.id}>{obj.slug}</option>)
+                                                productSlugs.map((obj, index) => <option key={index} value={obj.id}>{obj.slug}</option>)
                                             }
 
 
@@ -102,8 +113,18 @@ const AddVarientForm = ({ categories, productSlugs }) => {
                                 {errors.weight && <span>This field is required</span>}
                             </div>
                             <div className="form-group" >
-                                <label htmlFor="size">Size</label>
-                                <input {...register("size", { required: true })} type="text" className="form-control" id="size" placeholder="size" />
+                                <label htmlFor="length">Length</label>
+                                <input {...register("length", { required: true })} type="text" className="form-control" id="length" placeholder="length" />
+                                {errors.size && <span>This field is required</span>}
+                            </div>
+                            <div className="form-group" >
+                                <label htmlFor="bredth">Bredth</label>
+                                <input {...register("bredth", { required: true })} type="text" className="form-control" id="bredth" placeholder="bredth" />
+                                {errors.size && <span>This field is required</span>}
+                            </div>
+                            <div className="form-group" >
+                                <label htmlFor="height">Height</label>
+                                <input {...register("height", { required: true })} type="text" className="form-control" id="height" placeholder="height" />
                                 {errors.size && <span>This field is required</span>}
                             </div>
                             <div className="form-group" >
@@ -111,7 +132,7 @@ const AddVarientForm = ({ categories, productSlugs }) => {
                                 <input {...register("qty", { required: true })} type="number" className="form-control" id="qty" placeholder="qty" />
                                 {errors.qty && <span>This field is required</span>}
                             </div>
-                           
+
                             <div className="form-group" >
                                 <label htmlFor="mrp">MRP</label>
                                 <input {...register("mrp", { required: true })} type="text" className="form-control" id="mrp" placeholder="mrp" />
