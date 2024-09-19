@@ -14,6 +14,7 @@ import Link from 'next/link'
 import VarientControl from './_components/VarientControl'
 import MoreTabs from './_components/MoreTabs'
 import ComboThumbnail from '@/components/ComboThumbnail'
+import PincodeServiceabilityCheck from './_components/PincodeServiceabilityCheck'
 const page = async ({ params }) => {
     const productSlug = params.slug
     const product = await db.product.findUnique({
@@ -172,6 +173,7 @@ const page = async ({ params }) => {
                                 </div>
 
                                 <VarientControl varients={product.varient} />
+                                <PincodeServiceabilityCheck/>
 
                                 <div className="info-block d-flex row">
                                     <div className="col-4">

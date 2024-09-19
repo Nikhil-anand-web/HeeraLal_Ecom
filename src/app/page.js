@@ -225,7 +225,20 @@ const sliderRooot0 = await db.slider.findMany({
 })
 
 
- 
+ const bottomBanner =  await db.banners.findFirst({
+  where:{
+
+    AND:[{pageSlug:"root"},{displayOrder:1}]
+  }
+ })
+ const mustHaveSectionBanners = await db.banners.findMany({
+  where:{
+    AND:[{pageSlug:"root"},{OR:[{displayOrder:4},{displayOrder:2},{displayOrder:3}]}]
+  },orderBy: {
+    displayOrder: 'asc', // or 'desc'
+  },
+
+ })
 
   return (
     <MainLayout>
@@ -271,25 +284,20 @@ const sliderRooot0 = await db.slider.findMany({
                       <p>Happy Customers</p>
                     </div>
                   </div>
-                  <div className="funfact-txt">
-                    <div className="funfact-colum  text-center">
-                      <h3 className="primary-color">2560+</h3>
-                      <p>Happy Customers</p>
-                    </div>
-                  </div>
+                 
 
                 </div>
               </div>
 
 
             </div>
-            <BottomBanner imageS={banner2} />
+            <BottomBanner imageS={bottomBanner.images[0].url} />
           </div>
 
 
 
         </section>
-        <MustHaveSection />
+        <MustHaveSection mustHaveSectionBanners={mustHaveSectionBanners} />
         <section className="product-part  pt-0">
           <div className="container">
 

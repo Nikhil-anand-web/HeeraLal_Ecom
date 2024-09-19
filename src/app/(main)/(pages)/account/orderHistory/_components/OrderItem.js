@@ -1,34 +1,23 @@
-import Image from 'next/image'
+
 import React from 'react'
-import ecom from '../../../../../../images/pavbhaji.jpg'
+
 import Link from 'next/link'
 
-const OrderItem = () => {
+const OrderItem = ({orderId,date,qty,status,amount,goTo,paymentStatus}) => {
   return (
     <tr>
-                              <td className="align-middle border-top-0 w-0">
-                                 <Link href="/productDetails">
-                                    
-                                    <Image src={ecom} alt="Ecommerce" />
-                                    </Link>
-                              </td>
+                             
                               <td className="align-middle border-top-0">
-                                 <Link href="/productDetails" className="fw-semibold text-inherit">
-                                    <h6 className="mb-0">{"Haldiram's"} Nagpur Aloo Bhujia</h6>
-                                 </Link>
-                                 <span><small className="text-muted">400g</small></span>
+                                 <Link href={`${paymentStatus ===1?goTo:"#"}` }className="text-inherit">{orderId}</Link>
                               </td>
+                              <td className="align-middle border-top-0">{date}</td>
+                              <td className="align-middle border-top-0">{qty}</td>
                               <td className="align-middle border-top-0">
-                                 <Link href="#" className="text-inherit">#14899</Link>
+                                 <span className="badge bg-warning">{status===0?"pending":status===1?"processing":"compleated"}</span>
                               </td>
-                              <td className="align-middle border-top-0">March 5, 2023</td>
-                              <td className="align-middle border-top-0">1</td>
-                              <td className="align-middle border-top-0">
-                                 <span className="badge bg-warning">Processing</span>
-                              </td>
-                              <td className="align-middle border-top-0">$15.00</td>
+                              <td className="align-middle border-top-0">{paymentStatus ===1?`₹${amount}`:"payment failed"}</td>
                               <td className="text-muted align-middle border-top-0">
-                                 <Link href="/invoice" className="text-inherit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View"><i className="fa-regular fa-eye"></i></Link>
+                                 {paymentStatus ===1 && <Link href={goTo} className="text-inherit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View"><i className="fa-regular fa-eye"></i></Link>}
                               </td>
                            </tr>
   )

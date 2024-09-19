@@ -7,7 +7,13 @@ import showRoomImg from '../images/showroom.png'
 import footerLogo from '../images/footer-logo.png'
 import paymentImg from "../images/payments.png"
 import Link from 'next/link'
-const Footer = () => {
+const Footer = async () => {
+  const ftrlogo  = await  db.banners.findFirst({
+    where:{
+      
+      AND:[{pageSlug:"footer"},{displayOrder:0}]
+    }
+  })
   return (
     <footer className="footer">
     <div className="container">
@@ -57,7 +63,7 @@ const Footer = () => {
         <div className="col-lg-3 ">
           <div className="footer-left">
             <div className="footer-img mb-4">
-            <Image alt='logo'   width={"56%"} src={footerLogo}/>
+            <Image alt='logo'   width={120} height={60}  src={ftrlogo.images[0].url}/>
             </div>
             <div className="footer-content">
               <p className="mb-1">Pellentesque posuere orci lobortis scelerisque blandit. Donec id tellus lacinia an, tincidunt risus ac, consequat velit.</p>

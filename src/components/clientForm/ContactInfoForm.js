@@ -1,11 +1,10 @@
 "use client";
 import getShipingCharges from '@/app/actions/getShipingCharges';
-import updateUserDetails from '@/app/actions/updateUserDetails';
+
 import debounce from '@/lib/debounce';
-import objectToFormData from '@/lib/objectToFormData';
+
 import axios from 'axios';
-import { getSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -83,6 +82,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
 
 
         try {
+            setIsLoading(true)
             const response = await fetch('/api/v1/paytm/initiateTransaction', {
                 method: 'POST',
                 headers: {
@@ -92,6 +92,15 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
             });
 
             const data = await response.json();
+            console.log(data)
+            if (!data.success && (!data.params.CHECKSUMHASH || data.params.CHECKSUMHASH==='')) {
+                throw{
+                    success:false,
+                    message:data
+
+                }
+                
+            }
 
 
             const form = document.createElement('form');
@@ -111,7 +120,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
 
         } catch (error) {
             console.log('Error updating details:', error);
-            toast.warning(error.message)
+            toast.warning(error.message||"something went wrong")
         } finally {
             setIsLoading(false);
         }
@@ -175,7 +184,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
                     
 
                 <button type="submit" className="btn me-2 btn-gradient-primary" disabled={isLoading}>
-                    {isLoading ? "Submitting" : "Procide To Payment"}
+                    {isLoading ? "Redirecting..." : "Procide To Payment"}
                 </button>
             </form>
         </div>

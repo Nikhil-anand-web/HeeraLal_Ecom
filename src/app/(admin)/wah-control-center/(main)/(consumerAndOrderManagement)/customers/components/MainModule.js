@@ -3,7 +3,7 @@
 
 import getSearchedCustomer from '@/app/actions/getSearchedCustomer'
 
-import UserModal from '@/components/adminComp/UserModal'
+
 import CustomerModel from '@/components/CustomerModel'
 import Spinner from '@/components/global/Spinner'
 import debounce from '@/lib/debounce'

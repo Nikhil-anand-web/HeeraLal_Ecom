@@ -80,7 +80,7 @@ const BannerSettingForm = ({ pages }) => {
                 throw res
 
             }
-            setidentifireSlug('')
+           
             toast.success(res.message);
 
         } catch (error) {

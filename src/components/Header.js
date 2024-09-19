@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from "next/image";
-import logo from "../images/logo.png"
+
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
@@ -34,7 +34,15 @@ const Header = async (props) => {
     })
 
   }
+  const logo = await db.banners.findFirst({
+    where:{
 
+
+      AND:[{ pageSlug:'root'},{ displayOrder:0}]
+     
+    }
+  })
+console.log(logo)
 
   return (
     <header className="sticky-top shadow">
@@ -44,7 +52,7 @@ const Header = async (props) => {
 
           <Link className="navbar-brand" href="/">
 
-            <Image layout='responsive' height={71} width={150} src={logo} alt='logo' />
+            <Image layout='responsive' height={71} width={150} src={logo.images[0].url} alt='logo' />
           </Link>
           <div className="icons-group d-block d-lg-none">
             <ul className="d-flex">

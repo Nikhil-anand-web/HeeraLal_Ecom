@@ -33,22 +33,18 @@ async function updateABanner(formData) {
                         }
 
 
-                        files.forEach(async (file, index) => {
-                            const filePath = path.join(uploadDirectory, `${index}.jpeg`);
+                        const displayIndex =formData.get('selectedDisplayOrder')
+                            const filePath = path.join(uploadDirectory, `${displayIndex}.jpeg`);
 
-                            const bytes = await file.arrayBuffer()
+                            const bytes = await files[0].arrayBuffer()
                             const buffer = Buffer.from(bytes)
                             await writeFile(filePath, buffer)
+                       
+                        
+                            jsonToDb.push({ url: `/asset/banners/${formData.get('identifireSlug')}/${displayIndex}.jpeg`, alt: "banner" })
 
 
-
-
-                        });
-                        for (let i = 0; i < files.length; i++) {
-                            jsonToDb.push({ url: `/asset/banners/${formData.get('identifireSlug')}/${i}.jpeg`, alt: "banner" })
-
-
-                        }
+                       
 
                     }
 

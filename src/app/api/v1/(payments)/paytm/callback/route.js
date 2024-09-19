@@ -73,16 +73,19 @@ export async function POST(req) {
                     }
                 })
                 const earnedCoin =  Math.floor(percentOf(updatedOrder.finalPrice,referalConstrain.value))
-
-                const updatedReferal  = await db.referal.update({
-                    where:{
-                        userId:customer.referedById
-                    },data:{
-                        coins:{
-                            increment: earnedCoin
+                if (customer.referedById && customer.referedById!='') {
+                    const updatedReferal  = await db.referal.update({
+                        where:{
+                            userId:customer.referedById
+                        },data:{
+                            coins:{
+                                increment: earnedCoin
+                            }
                         }
-                    }
-                })
+                    })
+                    
+                }
+               
                 
             }
 

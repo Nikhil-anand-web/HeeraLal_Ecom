@@ -200,7 +200,7 @@ model slider {
 model banners {
   id           String @id @default(uuid())
   pageSlug     String
-  displayOrder Int
+  displayOrder Int 
   images       Json
 }
 

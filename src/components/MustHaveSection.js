@@ -8,7 +8,7 @@ import spices from "../images/spices.png"
 import getCategories from '@/app/actions/getCategories'
 
 import getProductByCategoryIdAndTag from '@/app/actions/getProductByCategoryIdAndTag'
-const MustHaveSection = () => {
+const MustHaveSection = ({mustHaveSectionBanners}) => {
   const [categories, setcategories] = useState([])
   const [activeCategoryId, setActiveCategoryId] = useState('')
   const [productsUnderActiveCategory, setproductsUnderActiveCategory] = useState([])
@@ -69,17 +69,17 @@ const MustHaveSection = () => {
                 <div className="row">
                   <div className="col-md-3">
 
-                    <Image src={logo2} alt="logo" layout="responsive" />
+                    <Image src={mustHaveSectionBanners[0].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
                   </div>
                   <div className="col-md-9">
 
-                    <Image src={spices} alt="logo" className="img-fluid" />
+                  <Image src={mustHaveSectionBanners[1].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
 
                   </div>
                 </div>
               </div>
               <div className="ban-img">
-                <Image src={banner3} alt="logo" className="img-fluid" />
+              <Image src={mustHaveSectionBanners[2].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
               </div>
             </section>
 

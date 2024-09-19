@@ -33,12 +33,14 @@ export default async function checkOutCart() {
                                 select: {
                                     id: true,
                                     productId: true,
+                                    slug:true,
                                     product: {
 
                                         select: {
                                             name: true,
                                             highLights: true,
                                             thumbNail: true,
+                                            slug:true,
                                             category: {
                                                 select: { categoryName: true }
                                             }
@@ -81,11 +83,13 @@ export default async function checkOutCart() {
                                         select: {
                                             id: true,
                                             productId: true,
+                                            slug:true,
                                             product: {
                                                 select: {
                                                     name: true,
                                                     highLights: true,
                                                     thumbNail: true,
+                                                    slug:true,
                                                     category: {
                                                         select: { categoryName: true }
                                                     }

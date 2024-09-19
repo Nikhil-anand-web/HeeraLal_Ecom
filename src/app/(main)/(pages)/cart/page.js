@@ -22,7 +22,7 @@ const Page = async () => {
     const user = await getServerSession(authOptions)
     if (!user) {
         redirect('/sign-in')
-        
+
     }
     const cart = await db.cart.findUnique({
         where: { userId: user.id },
@@ -65,7 +65,7 @@ const Page = async () => {
                     type: true
                 }
             },
-            refralDiscountAbsolute:true,
+            refralDiscountAbsolute: true,
             cartComboItems: {
                 select: {
                     qty: true,
@@ -105,52 +105,57 @@ const Page = async () => {
         }
     })
     var total = 0;
-    var absoluteCouponDiscount =0
+    var absoluteCouponDiscount = 0
 
     function applyCoupon() {
 
         if (cart.coupon) {
-            if (cart.coupon.type ==='absolute') {
-                absoluteCouponDiscount= parseFloat(cart.coupon.discountValue)
-                
-            }else if (cart.coupon.type==='percent') {
-                const val = percentOf(total,parseFloat(cart.coupon.discountValue))
-                console.log(val,"val")
-                absoluteCouponDiscount=val
-    
-                
+            if (cart.coupon.type === 'absolute') {
+                absoluteCouponDiscount = parseFloat(cart.coupon.discountValue)
+
+            } else if (cart.coupon.type === 'percent') {
+                const val = percentOf(total, parseFloat(cart.coupon.discountValue))
+                console.log(val, "val")
+                absoluteCouponDiscount = val
+
+
             }
-            
+
         }
-        
+
     }
     const tax = await db.globalSettings.findFirst({
-        where:{
-            settingName:"gstRate"
+        where: {
+            settingName: "gstRate"
         }
     })
-    var taxAmount =0
+    var taxAmount = 0
     function applyTaxes() {
-        var abs= percentOf((total-absoluteCouponDiscount-cart.refralDiscountAbsolute),tax.value)
-        taxAmount=abs
+        var abs = percentOf((total - absoluteCouponDiscount - cart.refralDiscountAbsolute), tax.value)
+        taxAmount = abs
 
-        
+
     }
     const referal = await db.referal.findUnique({
-        where:{
-            userId:user.id
+        where: {
+            userId: user.id
         }
     })
-    const referalConstrain  = await db.globalSettings.findFirst({
-        where:{
-           settingName: "refralDiscount"
+    const referalConstrain = await db.globalSettings.findFirst({
+        where: {
+            settingName: "refralDiscount"
         }
     })
-    referalConstrain
- if (!cart ) {
-     return <Image src={'/images/pageNotFound.jpg'} layout='responsive' width={100} height={100} />
-    
- }
+    const freeShiping = await db.globalSettings.findFirst({
+        where: {
+            settingName: 'freeShipingCartValue'
+        }
+    })
+   
+    if (!cart) {
+        return <Image src={'/images/pageNotFound.jpg'} layout='responsive' width={100} height={100} />
+
+    }
 
     return (
         <section className="login-page">
@@ -175,7 +180,7 @@ const Page = async () => {
 
                         {cart.cartItem.map((item, index) => {
                             const price = calculateFinalPrice(item.varient.mrp, item.varient.discount)
-                            total+=price*item.qty
+                            total += price * item.qty
 
                             applyCoupon()
                             applyTaxes()
@@ -196,7 +201,7 @@ const Page = async () => {
                                     </div>
                                 </div>
                                 <div className="col-md-2 common-padding"> {parseFloat(item.varient.discount) === 0 ? <div className="pro-price">₹{item.varient.mrp}</div> : <><p style={{ color: "green" }}>Offer price ₹{price}</p>
-                                    <s>MRP{item.varient.mrp}</s>
+                                    <s>MRP{item.varient.mrp.toString()}</s>
                                 </>}</div>
                                 <div className="col-md-3 common-padding">
                                     <div className="qty shopping-cart-input">
@@ -257,28 +262,34 @@ const Page = async () => {
                             <div className="container-fluid summary-box">
                                 <div style={{ width: "100%" }} className="row">
                                     <ApplyCouponModule coupon={cart.coupon} />
-                                    <ApplyRefralPointsModule referalConstrain={referalConstrain} referal={referal} referaldiscountOnCart={cart.refralDiscountAbsolute}/>
+                                    <ApplyRefralPointsModule referalConstrain={referalConstrain} referal={referal} referaldiscountOnCart={cart.refralDiscountAbsolute} />
 
                                     <div className="col-md-6 p-2 border"><strong>Subtotal</strong></div>
                                     <div className="col-md-6 p-2 border text-end">
-                                        
-                                        {(absoluteCouponDiscount===0 && cart.refralDiscountAbsolute===0)?`₹${total}`:<div>
-                                            <small style={{color:"green"}}> ₹{(total-absoluteCouponDiscount-cart.refralDiscountAbsolute).toPrecision(5)} </small>
+
+                                        {(absoluteCouponDiscount === 0 && cart.refralDiscountAbsolute === 0) ? `₹${total}` : <div>
+                                            <small style={{ color: "green" }}> ₹{(total - absoluteCouponDiscount - cart.refralDiscountAbsolute).toPrecision(5)} </small>
 
                                             <s>₹{total}</s>
-                                            
-                                            </div>}
-                                        </div>
+
+                                        </div>}
+                                    </div>
                                     <div className="col-md-6 p-2 border"><strong>Tax</strong></div>
                                     <div className="col-md-6 p-2 border text-end"> ₹{taxAmount.toPrecision(5)}</div>
                                     <div className="col-md-6 p-2 border"><strong>Estimated Total</strong></div>
-                                    <div className="col-md-6 p-2 border text-end"><strong>₹{((total-absoluteCouponDiscount-cart.refralDiscountAbsolute)+taxAmount).toPrecision(5)}</strong></div>
+                                    <div className="col-md-6 p-2 border text-end"><strong>₹{((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) + taxAmount).toPrecision(5)}</strong></div>
                                 </div>
                             </div>
                             <div className="d-flex row">
-                                <CheckOutButton/>
-                                <EmptyCartButton/>
+                                <CheckOutButton />
+                                <EmptyCartButton />
                             </div>
+
+                           {freeShiping.value===1 && <div>
+                           { ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) + taxAmount)<freeShiping.dependency?<p style={{color:"green",fontWeight:"bold"}} >{`Add item worth ₹${freeShiping.dependency - ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) + taxAmount).toPrecision(3)} to unlock FREE SHIPING!`}</p>:<p style={{color:"green",fontWeight:"bold"}}>FREE SHIPING unlocked</p>}
+                                
+                            </div>}
+
                         </div>
                     </div>
                 </div>
