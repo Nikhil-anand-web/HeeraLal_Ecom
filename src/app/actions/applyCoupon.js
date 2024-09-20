@@ -12,7 +12,7 @@ export default async function applyCoupon(code = '') {
     if (user) {
 
         
-        
+        console.log(code)
         try {
             if (code === '' || !code) {
                 return {
@@ -24,6 +24,28 @@ export default async function applyCoupon(code = '') {
     
     
             }
+
+            if (code==='welcome') {
+                const count = await db.orders.count({
+                    where:{
+                        customerId:user.id
+
+                    }
+                })
+                if (count>0) {
+                    return {
+                        success: false,
+                        message: "This coupon is for first user",
+        
+        
+                    }
+
+                    
+                }
+                
+            }
+
+
             const coupon = await db.coupons.findUnique({
                 where:{
                     code:code,

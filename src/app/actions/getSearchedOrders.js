@@ -33,8 +33,14 @@ export default async function getSearchedOrders(searchTerm, itemsPerPage, pageNo
                             orderStatus:true,
                             shipingStatus:true,
                             awb:true,
-                            paymentToken:true
+                            paymentToken:true,
+                            totalWeight:true
+                           
                             
+                        },orderBy:{
+                            createdAt:'desc'
+
+
                         },
 
                         skip: (parseInt(pageNo) - 1) * parseInt(itemsPerPage), // Move skip here
@@ -81,7 +87,7 @@ export default async function getSearchedOrders(searchTerm, itemsPerPage, pageNo
             //   });
 
             const orders = await db.$queryRaw`
-  SELECT orderId ,id,CustomerMeta,finalPrice,createdAt,paymentStatus,orderStatus,shipingStatus,awb
+  SELECT orderId ,id,CustomerMeta,finalPrice,createdAt,paymentStatus,orderStatus,shipingStatus,awb,totalWeight
 FROM orders
 WHERE JSON_EXTRACT(CustomerMeta, '$.firstName') LIKE CONCAT('%', ${searchTerm}, '%')
    OR JSON_EXTRACT(CustomerMeta, '$.lastName') LIKE CONCAT('%', ${searchTerm}, '%')

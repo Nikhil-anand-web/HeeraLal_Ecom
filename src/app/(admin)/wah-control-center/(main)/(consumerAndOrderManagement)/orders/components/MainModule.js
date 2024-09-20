@@ -1,7 +1,7 @@
 
 "use client"
 
-import getSearchedCustomer from '@/app/actions/getSearchedCustomer'
+
 import getSearchedOrders from '@/app/actions/getSearchedOrders'
 import OrderModel from '@/components/adminComp/OrderModel'
 
@@ -71,7 +71,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
             {(!isLoading ? <>
 
-                <div className={"hide-scrollbar"} style={{ height: "72vh", overflow: "scroll", width: "100%" }}>
+                <div className={"hide-scrollbar"} style={{ height: "60vh", overflow: "scroll", width: "100%" }}>
 
 
                     {filteredCustomers.map((order,index) => (

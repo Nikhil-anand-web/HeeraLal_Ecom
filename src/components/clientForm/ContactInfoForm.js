@@ -41,12 +41,12 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
                     const response = await axios.get(`https://api.postalpincode.in/pincode/${pinCode}`);
                     var shiping =null
                     if (wantToUseDefault  && userHaveAddress) {
-                        shiping = await getShipingCharges(userPinCode)
+                        shiping = await getShipingCharges(userPinCode,order.id)
                         console.log(shiping)
 
                         
                     }else{
-                        shiping =await getShipingCharges(pinCode)
+                        shiping =await getShipingCharges(pinCode,order.id)
 
                     }
                    
@@ -62,7 +62,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
                     console.error('Error fetching data:', error);
                 }
             } else {
-                setShipingCharges(0)
+                setShipingCharges(null)
                 setCity([]); // Clear the city list if the pinCode is empty
             }
         }, 500),

@@ -5,7 +5,7 @@ import ContactInfoForm from './clientForm/ContactInfoForm'
 import OrderSummary from './OrderSummary'
 
 const CheckOutContent = ({userHaveAddress,absoluteCouponDiscount,order,userInfo}) => {
-    const [shipingCharges , setShipingCharges] = useState(0)
+    const [shipingCharges , setShipingCharges] = useState(null)
     const [isPincodeSet,setIsPinCodeSet] = useState(false)
    
     return (

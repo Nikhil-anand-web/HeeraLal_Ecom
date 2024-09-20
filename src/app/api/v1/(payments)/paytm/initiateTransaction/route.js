@@ -76,7 +76,7 @@ export async function POST(req) {
             })
 
             const absoluteCouponDiscount = getcouponDiscount(order)
-            const res = await getShipingCharges(userInfo.pinCode)
+            const res = await getShipingCharges(userInfo.pinCode,order.id)
             const shipingCharge = res.charges
             const taxes = percentOf((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute), order.taxes)
 
@@ -216,7 +216,7 @@ export async function POST(req) {
             })
 
             const absoluteCouponDiscount = getcouponDiscount(order)
-            const res = await getShipingCharges(userInfo.pinCode)
+            const res = await getShipingCharges(userInfo.pinCode,order.id)
             const shipingCharge = res.charges
             const taxes = percentOf((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute), order.taxes)
 

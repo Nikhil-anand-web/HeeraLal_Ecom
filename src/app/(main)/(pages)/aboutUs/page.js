@@ -69,6 +69,7 @@ const page = () => {
             </div>
             <div className="col-lg-3 col-md-6">
                 <a href="#">
+        
                 <Image src={mem} className="img-fluid" alt=""/>
             <div className="teamdetails mt-3">
                 <h6>Team title</h6>

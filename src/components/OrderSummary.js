@@ -5,7 +5,7 @@ import percentOf from '@/lib/percentOf'
 import Image from 'next/image'
 import React from 'react'
 
-const OrderSummary = ({ order, shipingCharges = 0, absoluteCouponDiscount }) => {
+const OrderSummary = ({ order, shipingCharges , absoluteCouponDiscount }) => {
     console.log(order.varientMeta.product)
     return (
 
@@ -73,7 +73,9 @@ const OrderSummary = ({ order, shipingCharges = 0, absoluteCouponDiscount }) => 
                     </div>
                     <div className="row mb-2">
                         <div className="col-6">Shiping Charges</div>
-                        <div className="col-6  text-end">₹{shipingCharges}</div>
+                    
+                       <div className="col-6  text-end">₹{(shipingCharges===0)?"FREE SHIPING":shipingCharges}</div>
+                       
                     </div>
                     <div className="row">
                         <div className="col-6">
@@ -81,8 +83,9 @@ const OrderSummary = ({ order, shipingCharges = 0, absoluteCouponDiscount }) => 
                         </div>
                         <div className="col-6 text-end">
                             <div className="total-price">
-
-                                <span className="total-heading"> ₹{parseFloat(((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute))+(percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute),order.taxes)+shipingCharges)).toPrecision(5)}</span>
+                                
+                                
+                                <span className="total-heading"> ₹{(parseFloat(shipingCharges)||parseFloat(shipingCharges)===0)? parseFloat(((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute))+(percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute),order.taxes)+parseFloat(shipingCharges))).toPrecision(5):""}</span>
 
                             </div>
 

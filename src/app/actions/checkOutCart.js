@@ -129,6 +129,7 @@ export default async function checkOutCart() {
             const couponMeta = userCart.coupon
             const Subtotal = totalCartValue(userCart)
             const taxValueInPercent = tax.value
+            let totalweight=0
 
 
             userCart.cartItem.forEach(itm => {
@@ -136,10 +137,17 @@ export default async function checkOutCart() {
                 productMeta.add(itm.varient.product)
                 varientIds.add(itm.varient.id)
                 varientMeta.push(itm)
+                totalweight+=parseFloat(itm.varient.weight)
 
 
             });
             userCart.cartComboItems.forEach(itm => {
+                itm.combo.productVarients.forEach((varient)=>{
+                    totalweight+=(parseFloat(varient.weight)*itm.qty)
+                    
+
+                })
+
                 comboIds.push(itm.combo.id)
                 comboMeta.push(itm)
 
@@ -163,7 +171,8 @@ export default async function checkOutCart() {
                     taxes: taxValueInPercent,
                     productMeta:[...productMeta],
                     refralDiscountAbsolute:userCart.refralDiscountAbsolute,
-                    referalCoins:userCart.referalCoins
+                    referalCoins:userCart.referalCoins,
+                    totalWeight:totalweight
 
 
 
