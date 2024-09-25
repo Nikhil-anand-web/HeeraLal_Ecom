@@ -5,16 +5,18 @@ import React from 'react'
 import { toast } from 'react-toastify';
 
 const ShareTheSiteButton = ({style,children,className}) => {
-    const user = useSession()
+    const user = useSession().data
     
     
     const handleCopy = () => {
       if (!user || user.role===1 || user.role===2) {
         toast.warning("please login")
+        return
 
         
       }
-        const textToCopy = window.location.origin+`/refer/${user.data.id}`; // Replace with any text you want to copy
+      console.log(user)
+        const textToCopy = window.location.origin+`/refer/${user.id}`; // Replace with any text you want to copy
 
     
         navigator.clipboard.writeText(textToCopy)

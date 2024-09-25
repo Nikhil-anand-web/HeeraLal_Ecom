@@ -3,7 +3,7 @@ import React from 'react'
 
 import Link from 'next/link'
 
-const OrderItem = ({orderId,date,qty,status,amount,goTo,paymentStatus}) => {
+const OrderItem = ({orderId,date,qty,status,amount,goTo,paymentStatus,order}) => {
   return (
     <tr>
                              

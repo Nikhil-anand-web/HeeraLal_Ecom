@@ -194,6 +194,7 @@ const Page = async () => {
                                             <div className="col-md-9">
                                                 <div className="pro-details">
                                                     <div className="pro-heading mb-1">{item.varient.product.name}</div>
+                                                    <div className="pro-heading mb-1">{item.varient.weight}gm</div>
 
                                                 </div>
                                             </div>

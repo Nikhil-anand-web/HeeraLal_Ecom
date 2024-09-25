@@ -12,6 +12,7 @@ export default async function applyCoupon(code = '') {
     if (user) {
 
         
+        
         console.log(code)
         try {
             if (code === '' || !code) {

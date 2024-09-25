@@ -73,7 +73,7 @@ async function cancilAwb(awb) {
                     return {
 
                         success: true,
-                        message: `AWB ${cancilAwb} cancelled`
+                        message: `AWB ${awb} cancelled`
                     }
 
 

@@ -85,7 +85,7 @@ const page = async ({ params }) => {
                             const formattedDate = order.createdAt.toLocaleDateString('en-US', options);
 
 
-                            return <OrderItem key={index} paymentStatus={order.paymentStatus} orderId={order.orderId} date={formattedDate} qty={total} status={order.orderStatus} amount={order.finalPrice} goTo={`/invoice/${order.orderId}`}  />
+                            return <OrderItem key={index} order={order} paymentStatus={order.paymentStatus} orderId={order.orderId} date={formattedDate} qty={total} status={order.orderStatus} amount={order.finalPrice} goTo={`/invoice/${order.orderId}`}  />
                         })}
 
 

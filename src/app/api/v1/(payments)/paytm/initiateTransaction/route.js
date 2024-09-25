@@ -2,6 +2,7 @@ import checkPinCodeAv from '@/app/actions/checkPinCodeAv';
 import getShipingCharges from '@/app/actions/getShipingCharges';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import percentOf from '@/lib/percentOf';
+import roundToXDigits from '@/lib/roundToXDigits';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import PaytmChecksum from 'paytmchecksum';
@@ -77,11 +78,10 @@ export async function POST(req) {
 
             const absoluteCouponDiscount = getcouponDiscount(order)
             const res = await getShipingCharges(userInfo.pinCode,order.id)
-            const shipingCharge = res.charges
+            const shipingCharge =parseFloat( res.charges)
             const taxes = percentOf((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute), order.taxes)
 
-            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + parseFloat((taxes + shipingCharge).toPrecision(5))
-
+            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + roundToXDigits((taxes+shipingCharge),5)
 
 
             const updatedOrder = await db.orders.update({
@@ -217,21 +217,25 @@ export async function POST(req) {
 
             const absoluteCouponDiscount = getcouponDiscount(order)
             const res = await getShipingCharges(userInfo.pinCode,order.id)
-            const shipingCharge = res.charges
+            const shipingCharge = parseFloat(res.charges)
             const taxes = percentOf((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute), order.taxes)
 
-            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + parseFloat((taxes + shipingCharge).toPrecision(5))
+            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + roundToXDigits((taxes+shipingCharge),5)
+
 
             const customerMeta = {
                 firstName: reqObj.firstName,
                 lastName: reqObj.lastName,
                 mobile: reqObj.mobile,
-                pincode: reqObj.pincode,
+                pinCode: reqObj.pinCode,
                 address: reqObj.address,
                 state: reqObj.state,
                 city: reqObj.city,
 
             }
+            console.log(reqObj,"eeeee")
+            console.log(customerMeta,"sdfwdw")
+
 
             const updatedOrder = await db.orders.update({
                 where: {
@@ -247,6 +251,7 @@ export async function POST(req) {
                 }
 
             })
+            console.log(updatedOrder,"xcwd")
 
             const paytmParams = {
                 MID: process.env.NEXT_PUBLIC_PAYTM_MID,

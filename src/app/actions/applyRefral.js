@@ -12,7 +12,17 @@ export default async function applyRefral(referingId) {
 
     if (user) {
 
+        if (user.role === 1 || user.role === 2) {
 
+
+            return {
+                success: false,
+                message: "Account type not allowed",
+
+
+            }
+
+        }
 
         try {
             const orderCount = await db.orders.count({
@@ -20,27 +30,41 @@ export default async function applyRefral(referingId) {
                     customerId: user.id
                 }
             })
-            if (referingId===user.id) {
-                return{
-                    success:false,
-                    message:"user cant refer itself"
+            const isReferingAdmin = await db.admin.count({
+                where: {
+                    id: referingId
+                }
+            })
+            if (isReferingAdmin > 0) {
+                return {
+                    success: false,
+                    message: "referal id not allowed",
+
 
                 }
-                
+
             }
-            if (orderCount !==0) {
-                return{
+            if (referingId === user.id) {
+                return {
+                    success: false,
+                    message: "user cant refer itself"
 
-                    success:false,
-                    message:"referal can be only applied to first order"
                 }
-                
+
+            }
+            if (orderCount !== 0) {
+                return {
+
+                    success: false,
+                    message: "referal can be only applied to first order"
+                }
+
             }
             await db.user.update({
-                where:{
-                    id:user.id
-                },data:{
-                    referedBy:{connect:{id:referingId}}
+                where: {
+                    id: user.id
+                }, data: {
+                    referedBy: { connect: { id: referingId } }
                 }
             })
 
@@ -81,7 +105,7 @@ export default async function applyRefral(referingId) {
     } else {
         redirect('/sign-in')
 
-       
+
 
     }
 }

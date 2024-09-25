@@ -12,22 +12,22 @@ export default async function applyReferalPoint() {
 
 
     if (user) {
+       
 
-        
-        
+
         try {
             const referal = await db.referal.findUnique({
-                where:{
-                    userId:user.id
+                where: {
+                    userId: user.id
                 }
             })
 
-            if (referal.coins<=0) {
-                return{
-                    success:false,
-                    message:"you dont have a coin"
+            if (referal.coins <= 0) {
+                return {
+                    success: false,
+                    message: "you dont have a coin"
                 }
-                
+
             }
             const cart = await db.cart.findUnique({
                 where: { userId: user.id },
@@ -42,25 +42,25 @@ export default async function applyReferalPoint() {
                                         select: {
                                             name: true,
                                             thumbNail: true
-        
+
                                         }
-        
-        
+
+
                                     },
                                     mrp: true,
                                     discount: true
-        
+
                                 }
-        
+
                             },
                             qty: true,
-        
+
                         },
-        
-        
-        
+
+
+
                     },
-                    
+
                     cartComboItems: {
                         select: {
                             qty: true,
@@ -70,72 +70,72 @@ export default async function applyReferalPoint() {
                                     name: true,
                                     discountInPercent: true,
                                     name: true,
-        
+
                                     productVarients: {
                                         select: {
                                             product: {
                                                 select: {
-        
+
                                                     thumbNail: true
-        
+
                                                 }
-        
+
                                             },
                                             mrp: true,
                                             weight: true,
-        
+
                                         }
                                     }
-        
+
                                 }
-        
+
                             }
-        
+
                         }
-        
-        
+
+
                     }
-        
-        
+
+
                 }
             })
-           const cartValue = totalCartValue(cart)
+            const cartValue = totalCartValue(cart)
             const referalConstrain = await db.globalSettings.findFirst({
-                where:{
-                    settingName:"refralDiscount"
+                where: {
+                    settingName: "refralDiscount"
                 }
             })
 
-            const coinCanBeApplied  =  Math.floor(percentOf(cartValue,referalConstrain.dependency))
-            const coinsToBeApplied = coinCanBeApplied>referal.coins?referal.coins:coinCanBeApplied
-            const refralDiscountAbsolute= coinsToBeApplied*1
-        
+            const coinCanBeApplied = Math.floor(percentOf(cartValue, referalConstrain.dependency))
+            const coinsToBeApplied = coinCanBeApplied > referal.coins ? referal.coins : coinCanBeApplied
+            const refralDiscountAbsolute = coinsToBeApplied * 1
+
 
             await db.cart.update({
-                where:{
-                    userId:user.id
-                },data:{
-                    refralDiscountAbsolute:refralDiscountAbsolute,
-                    referalCoins:coinsToBeApplied
+                where: {
+                    userId: user.id
+                }, data: {
+                    refralDiscountAbsolute: refralDiscountAbsolute,
+                    referalCoins: coinsToBeApplied
 
 
                 }
             })
 
-        
-          
-         
-    
-         
 
-            
-           
 
-           
 
-            
 
-           
+
+
+
+
+
+
+
+
+
+
 
 
 

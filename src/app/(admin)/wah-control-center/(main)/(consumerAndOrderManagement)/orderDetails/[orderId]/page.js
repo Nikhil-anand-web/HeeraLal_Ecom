@@ -156,7 +156,7 @@ const Page = async (prop) => {
                                                     <div className="p-2">Taxes</div>
                                                 </div>
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2"> {order.taxes}% {`(₹${absTax})`}</div>
+                                                    <div className="p-2"> {order.taxes}% {`(₹${absTax.toPrecision(5)})`}</div>
                                                 </div>
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Shiping Charge</div>
@@ -182,14 +182,14 @@ const Page = async (prop) => {
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
                                                     <div className="p-2">{order.paymentStatus === 1 ? <span className="badge badge-success">{" Paid "}</span> : order.paymentToken?.STATUS?.lenght > 0 ? <span className="badge badge-danger">{" Payment Failed "}</span> : <span className="badge badge-danger">{" Un-Paid "}</span>}</div>
                                                 </div>
-                                                <DatePickerAndAwb orderId={order.orderId}/>
+                                                
                                             </div>
 
 
                                         </div>
                                     </div>
-                                    {order.comboMeta.length > 0 && <div className="tab-pane fade show" id="varients-tab-pane" role="tabpanel" aria-labelledby="combo-tab">
-                                        <div >
+                                    {order.comboMeta.length > 0 && <div className="tab-pane fade show" id="varients-tab-pane" role="tabpanel" aria-labelledby="combo-tab" >
+                                        <div style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }} >
 
                                             {order.comboMeta.map((combo, index) => <ComboModelMini key={index} data={combo} />)}
                                             {/* */}
@@ -197,18 +197,18 @@ const Page = async (prop) => {
 
                                         </div>
                                     </div>}
-                                    {order.varientMeta.length > 0 && <div className="tab-pane fade show" id="combo-tab-pane" role="tabpanel" aria-labelledby="varients-tab">
-                                        <div >
+                                    {order.varientMeta.length > 0 && <div className="tab-pane fade show" id="combo-tab-pane" role="tabpanel" aria-labelledby="varients-tab" >
+                                        <div style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }} >
 
                                             <VarientModelMini dataArray={order.varientMeta} />
-                                            {/* <ComboModelMini data={order.comboMeta[0]}/> */}
+                                            
 
 
                                         </div>
                                     </div>}
 
-                                    {order.paymentToken.TXNID && <div className="tab-pane fade" id="paymentDetail-pane" role="tabpanel" aria-labelledby="paymentDetail-tab">
-                                        <div className="row g-0">
+                                    {order.paymentToken.TXNID && <div className="tab-pane fade" id="paymentDetail-pane" role="tabpanel" aria-labelledby="paymentDetail-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                        <div className="row g-0" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
                                             <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div className="p-2">Transaction Id</div>
                                             </div>
@@ -250,11 +250,11 @@ const Page = async (prop) => {
 
                                         </div>
                                     </div>}
-                                    {!order.awb && <div className="tab-pane fade" id="ship-pane" role="tabpanel" aria-labelledby="ship-tab">
+                                    {!order.awb && <div className="tab-pane fade" id="ship-pane" role="tabpanel" aria-labelledby="ship-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}> 
                                         <DatePickerAndAwb orderId={order.orderId}/>
 
                                     </div>}
-                                    {(order.awb &&(order.orderStatus<2 ))? <div className="tab-pane fade" id="shipCancil-pane" role="tabpanel" aria-labelledby="shipCancil-tab">
+                                    {(order.awb &&(order.orderStatus<2 ))? <div className="tab-pane fade" id="shipCancil-pane" role="tabpanel" aria-labelledby="shipCancil-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
                                         <CancilShipmentButton awb={order.awb}>
                                             Cancil This Shipment
                                         </CancilShipmentButton>

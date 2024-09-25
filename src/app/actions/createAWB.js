@@ -7,6 +7,8 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import axios from 'axios';
 import { revalidatePath } from 'next/cache';
 import getShipingJWT from '@/lib/getShipingJWT';
+import savePdfFile from '@/lib/savePdfFile';
+import gramsToKg from '@/lib/gramToKg';
 
 
 function generateRequestObject({
@@ -36,7 +38,10 @@ function generateRequestObject({
     licenceKey,
     apiType,
     ConsigneeFullAddress,
-    date
+    date,
+    CollectableAmount,
+    originArea
+    
 }) {
     return {
         Request: {
@@ -78,7 +83,7 @@ function generateRequestObject({
             Services: {
                 AWBNo: "",
                 ActualWeight: actualWeight,
-                CollectableAmount: 0,
+                CollectableAmount: CollectableAmount,
                 Commodity: {
                     CommodityDetail1: "",
                     CommodityDetail2: "",
@@ -98,7 +103,7 @@ function generateRequestObject({
                 IsReversePickup: false,
                 ItemCount: 0,
                 Officecutofftime: "",
-                PDFOutputNotRequired: true,
+                PDFOutputNotRequired: false,
                 PackType: "",
                 ParcelShopCode: "",
                 PayableAt: "",
@@ -135,7 +140,7 @@ function generateRequestObject({
                 CustomerPincode: customerPincode,
                 CustomerTelephone: "",
                 IsToPayCustomer: false,
-                OriginArea: "DEL",
+                OriginArea: originArea,
                 Sender: "",
                 VendorCode: ""
             }
@@ -151,7 +156,7 @@ function generateRequestObject({
 
 
 
-async function createAWB(orderId, pickupTime = "1600", pickupdate = "1726846176677") {
+async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces ) {
     "use server"
 
     function validateSlug(value) {
@@ -174,6 +179,7 @@ async function createAWB(orderId, pickupTime = "1600", pickupdate = "17268461766
                             orderId: orderId
                         }
                     });
+                    console.log(order)
                     const dimentionArray = []
                     const customerName = order.CustomerMeta.firstName + " " + order.CustomerMeta.lastName
                     const customerMobile = order.CustomerMeta.mobile
@@ -190,26 +196,6 @@ async function createAWB(orderId, pickupTime = "1600", pickupdate = "17268461766
 
 
 
-                    // var totalNumberOfItem = 0
-                    //  order.varientMeta.forEach(varient => {
-                    //     totalNumberOfItem+=varient.qty
-                    //     // const obj = JSON.parse(varient.size)
-                    //     // const szobj =  {
-
-                    //     // }
-
-
-
-
-
-                    //  });
-                    //  order.comboMeta.forEach((meta)=>{
-                    //    const numberOfVarients= meta.combo.productVarients.length
-                    //    const numberofCombo = meta.qty
-                    //    totalNumberOfItem += (numberOfVarients,numberofCombo)
-
-
-                    //  })
 
 
 
@@ -226,28 +212,31 @@ async function createAWB(orderId, pickupTime = "1600", pickupdate = "17268461766
                         returnContact: returnContact,
                         returnEmailID: returnEmail,
                         returnPincode: returnPincode,
-                        actualWeight: actualweight,
-                        creditReferenceNo: order.orderId + "14",
+                        actualWeight: gramsToKg(actualweight),
+                        creditReferenceNo: order.orderId,
                         declaredValue: declaredValue,
-                        dimensions: [],
+                        dimensions: dimendarr,//  which dimention
                         pickupTime: pickupTime,
-                        pieceCount: 1,
-                        productCode: "A",
+                        pieceCount: noOfPieces,//piece count and item count
+                        productCode: process.env.SHIPING_PROD_CODE,
                         productType: 2,
-                        subProductCode: "P",
+                        subProductCode: "",
                         registerPickup: true,
                         customerAddress1: returnAddress,
                         customerMobile: returnMobile,
                         customerName: returnContact,
-                        customerPincode: "122002",
-                        customerCode: "246525",
+                        customerPincode: returnPincode,
+                        customerCode: process.env.SHIPING_CUST_CODE,
                         loginID: process.env.SHIPING_LOGIN_ID,
                         licenceKey: process.env.SHIPING_LIC,
-                        apiType: "S",
-                        date: pickupdate
+                        apiType: process.env.SHIPING_API_TYPE,
+                        date: pickupdate,
+                        CollectableAmount:0,
+                        originArea:process.env.SHIPING_ORIGIN
                     });
                     // console.log(requestObject)
                     const res = await getShipingJWT()
+                    console.log(requestObject)
                     const url = process.env.SHIPING_BASE_URL
                     const options = {
                         method: 'POST',
@@ -259,6 +248,9 @@ async function createAWB(orderId, pickupTime = "1600", pickupdate = "17268461766
 
                     const response = await axios.request(options)
                     const shipmentMeta = response.data.GenerateWayBillResult
+                    const downloadDir = path.join(process.cwd(), 'shipingLabels', `${shipmentMeta.AWBNo}.pdf`);
+                    savePdfFile(shipmentMeta.AWBPrintContent,downloadDir)
+                   delete shipmentMeta.AWBPrintContent
 
                     await db.orders.update({
                         where: {
@@ -292,7 +284,7 @@ async function createAWB(orderId, pickupTime = "1600", pickupdate = "17268461766
 
             } catch (error) {
                 console.log(error)
-                console.log(error?.response?.data['error-response'][0]?.Status[0]?.StatusInformation)
+               
 
                 return {
                     success: false,
