@@ -23,7 +23,7 @@ const ComboThumbnail = ({ combo }) => {
             <div className="col-12">
                 <h2>{combo.name}</h2>
             </div>
-            <div className="col-12 d-flex align-items-center combotext">
+            <div className="col-12 d-flex align-items-center combotext flex-wrap">
 
                 {thumbnails.map((th, index) => <>
                     <div key={index} >
@@ -31,7 +31,8 @@ const ComboThumbnail = ({ combo }) => {
                         <p>{combo.productVarients[index].product.name}</p> <p>weight - {combo.productVarients[index].weight}gm</p>
                         <p>MRP - {combo.productVarients[index].mrp}</p>
                     </div>
-                    {index !== thumbnails.length - 1 ? "+" : ""}</>
+                    {index !== thumbnails.length - 1 ? "+" : ""}
+                    </>
                 )}
 
                 =  <div className="offerPrice"><div className="strike">  ₹ {totalMrp}</div> <small style={{ color: "green" }}>Offer Price ₹ {actualPrice}</small><br /> <ComboToCartControl comboId={combo.id} /></div>
