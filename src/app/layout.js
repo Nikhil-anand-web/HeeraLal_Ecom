@@ -36,10 +36,14 @@ export default function RootLayout({ children }) {
           integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
           crossOrigin="anonymous"></script>
 
-        <script async src="http://localhost:3000/js/misc.js"></script>
-        <script async src="http://localhost:3000/js/settings.js"></script>
-        <script async src="http://localhost:3000/js/off-canvas.js"></script>
-        <script async src="http://localhost:3000/js/todolist.js"></script>
+
+        <script async src={`${process.env.NEXT_PUBLIC_BASE_URL}/js/misc.js`}></script>
+        <script async src={`${process.env.NEXT_PUBLIC_BASE_URL}/js/settings.js`}></script>
+
+        <script async src={`${process.env.NEXT_PUBLIC_BASE_URL}/js/off-canvas.js`}></script>
+
+        <script async src={`${process.env.NEXT_PUBLIC_BASE_URL}/js/todolist.js`}></script>
+
 
 
       </head>
