@@ -52,7 +52,7 @@ function CustomSearchButton() {
     return (
         <>
             <li>
-                <button onClick={handleShow} className="sarchbtn"  ><i className="fa-solid fa-magnifying-glass"></i></button>
+                <button onClick={handleShow} style={{backgroundColor:"transparent",border:"none"}}  ><i className="fa-solid fa-magnifying-glass"></i></button>
 
             </li>
 
