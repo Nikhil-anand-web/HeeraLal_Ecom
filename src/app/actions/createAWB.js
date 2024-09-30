@@ -41,7 +41,7 @@ function generateRequestObject({
     date,
     CollectableAmount,
     originArea
-    
+
 }) {
     return {
         Request: {
@@ -156,7 +156,7 @@ function generateRequestObject({
 
 
 
-async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces ) {
+async function createAWB(orderId, pickupTime, pickupdate, dimendarr, noOfPieces) {
     "use server"
 
     function validateSlug(value) {
@@ -180,6 +180,15 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
                         }
                     });
                     console.log(order)
+                    if (order.paymentStatus !== 1) {
+
+                        return {
+
+                            success: false,
+                            message: `unpaid order`
+                        }
+
+                    }
                     const dimentionArray = []
                     const customerName = order.CustomerMeta.firstName + " " + order.CustomerMeta.lastName
                     const customerMobile = order.CustomerMeta.mobile
@@ -231,8 +240,8 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
                         licenceKey: process.env.SHIPING_LIC,
                         apiType: process.env.SHIPING_API_TYPE,
                         date: pickupdate,
-                        CollectableAmount:0,
-                        originArea:process.env.SHIPING_ORIGIN
+                        CollectableAmount: 0,
+                        originArea: process.env.SHIPING_ORIGIN
                     });
                     // console.log(requestObject)
                     const res = await getShipingJWT()
@@ -244,15 +253,15 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
                         headers: { 'content-type': 'application/json', JWTToken: res.jwt },
                         data: requestObject
                     };
-                   
+
 
                     const response = await axios.request(options)
                     const shipmentMeta = response.data.GenerateWayBillResult
                     const downloadDir = path.join(process.cwd(), 'shipingLabels', `${shipmentMeta.AWBNo}.pdf`);
-                    savePdfFile(shipmentMeta.AWBPrintContent,downloadDir)
-                   delete shipmentMeta.AWBPrintContent
+                    savePdfFile(shipmentMeta.AWBPrintContent, downloadDir)
+                    delete shipmentMeta.AWBPrintContent
 
-                  const rtsorder=  await db.orders.update({
+                    const rtsorder = await db.orders.update({
                         where: {
                             orderId: order.orderId, // Ensure orderId is the correct field name in your schema
                         },
@@ -268,20 +277,20 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
                             },
                         },
                     });
-                   
+
                     await Promise.all(
                         rtsorder.shortItmsMeta.shortVarients.map(async (obj) => {
                             const { shortQty, id } = obj;
-                    
+
                             await db.varient.update({
                                 where: {
-                                    id: id,  
+                                    id: id,
                                 },
                                 data: {
                                     qty: {
                                         increment: shortQty,
                                     },
-                                    shortItmStatus:2
+                                    shortItmStatus: 2
                                 },
                             });
                         })
@@ -289,22 +298,22 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
                     await Promise.all(
                         rtsorder.shortItmsMeta.shortCombo.map(async (obj) => {
                             const { shortQty, id } = obj;
-                    
+
                             await db.combo.update({
                                 where: {
-                                    id: id,  
+                                    id: id,
                                 },
                                 data: {
                                     qty: {
                                         increment: shortQty,
                                     },
-                                    shortItmStatus:2
+                                    shortItmStatus: 2
                                 },
-                               
+
                             });
                         })
                     );
-                    
+
                     revalidatePath('/wah-control-center/orderDetails/')
                     return {
 
@@ -319,7 +328,7 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
 
             } catch (error) {
                 console.log(error)
-               
+
 
                 return {
                     success: false,
