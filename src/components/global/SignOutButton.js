@@ -7,7 +7,7 @@ const SignOutButton = ({children,className,styles}) => {
   const rtr = useRouter()
   const onClick=(e)=>{
     
-    signOut()
+    signOut({redirect: false })
     rtr.push('/wah-control-center/sign-in')
     
 
