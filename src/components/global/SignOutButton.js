@@ -5,9 +5,9 @@ import React from 'react'
 
 const SignOutButton = ({children,className,styles}) => {
   const rtr = useRouter()
-  const onClick=(e)=>{
+  const onClick= async(e)=>{
     
-    signOut({redirect: false })
+    await signOut({redirect: false })
     rtr.push('/wah-control-center/sign-in')
     
 
