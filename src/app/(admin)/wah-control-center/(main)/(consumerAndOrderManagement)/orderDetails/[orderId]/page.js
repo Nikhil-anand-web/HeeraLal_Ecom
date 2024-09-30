@@ -60,13 +60,13 @@ const Page = async (prop) => {
                                     </li>
 
 
-                                    {order.comboMeta.length > 0 && <li className="nav-item" role="presentation">
+                                    {order.comboMeta?.length > 0 && <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="varients-tab" data-bs-toggle="tab" data-bs-target="#varients-tab-pane" type="button" role="tab" aria-controls="varients-tab-pane" >Combo</button>
                                     </li>}
-                                    {order.varientMeta.length > 0 && <li className="nav-item" role="presentation">
+                                    {order.varientMeta?.length > 0 && <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="combo-tab" data-bs-toggle="tab" data-bs-target="#combo-tab-pane" type="button" role="tab" aria-controls="combo-tab-pane" >Product Varient</button>
                                     </li>}
-                                    {order.paymentToken.TXNID && <li className="nav-item" role="presentation">
+                                    {order.paymentToken?.TXNID && <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="paymentDetail-tab" data-bs-toggle="tab" data-bs-target="#paymentDetail-pane" type="button" role="tab" aria-controls="paymentDetail-pane">Payment Details</button>
                                     </li>}
                                     {!order.awb && <li className="nav-item" role="presentation">
@@ -202,16 +202,16 @@ const Page = async (prop) => {
 
                                         </div>
                                     </div>
-                                    {order.comboMeta.length > 0 && <div className="tab-pane fade show" id="varients-tab-pane" role="tabpanel" aria-labelledby="combo-tab" >
+                                    {order.comboMeta?.length > 0 && <div className="tab-pane fade show" id="varients-tab-pane" role="tabpanel" aria-labelledby="combo-tab" >
                                         <div style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }} >
 
-                                            {order.comboMeta.map((combo, index) => <ComboModelMini key={index} data={combo} />)}
+                                            {order.comboMeta?.map((combo, index) => <ComboModelMini key={index} data={combo} />)}
                                             {/* */}
 
 
                                         </div>
                                     </div>}
-                                    {order.varientMeta.length > 0 && <div className="tab-pane fade show" id="combo-tab-pane" role="tabpanel" aria-labelledby="varients-tab" >
+                                    {order.varientMeta?.length > 0 && <div className="tab-pane fade show" id="combo-tab-pane" role="tabpanel" aria-labelledby="varients-tab" >
                                         <div style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }} >
 
                                             <VarientModelMini dataArray={order.varientMeta} />
@@ -221,38 +221,38 @@ const Page = async (prop) => {
                                         </div>
                                     </div>}
 
-                                    {order.paymentToken.TXNID && <div className="tab-pane fade" id="paymentDetail-pane" role="tabpanel" aria-labelledby="paymentDetail-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                    {order.paymentToken?.TXNID && <div className="tab-pane fade" id="paymentDetail-pane" role="tabpanel" aria-labelledby="paymentDetail-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
                                         <div className="row g-0" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
                                             <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div className="p-2">Transaction Id</div>
                                             </div>
                                             <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div className="p-2">{order.paymentToken.TXNID}</div>
+                                                <div className="p-2">{order.paymentToken?.TXNID}</div>
                                             </div>
                                             <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div className="p-2">Status </div>
                                             </div>
                                             <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div className="p-2">{order.paymentToken.STATUS}</div>
+                                                <div className="p-2">{order.paymentToken?.STATUS}</div>
                                             </div>
                                             <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div className="p-2">Message From GateWay </div>
                                             </div>
                                             <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div className="p-2">{order.paymentToken.RESPMSG}</div>
+                                                <div className="p-2">{order.paymentToken?.RESPMSG}</div>
                                             </div>
                                             <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div className="p-2">Bank Txn Id </div>
                                             </div>
                                             <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div className="p-2">{order.paymentToken.BANKTXNID}</div>
+                                                <div className="p-2">{order.paymentToken?.BANKTXNID}</div>
                                             </div>
 
                                             <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div className="p-2">Transaction Amount</div>
                                             </div>
                                             <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                <div className="p-2"> ₹{order.paymentToken.TXNAMOUNT}</div>
+                                                <div className="p-2"> ₹{order.paymentToken?.TXNAMOUNT}</div>
                                             </div>
                                             <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                 <div className="p-2">Payment mode</div>
@@ -286,28 +286,28 @@ const Page = async (prop) => {
                                                 </div>
                                    
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2">{order.refundRequest.txnId}</div>
+                                                    <div className="p-2">{order.refundRequest?.txnId}</div>
                                                 </div>
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Transaction Amount</div>
                                                 </div>
                                              
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2">₹{order.refundRequest.refundAmount}</div>
+                                                    <div className="p-2">₹{order.refundRequest?.refundAmount}</div>
                                                 </div>
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Status</div>
                                                 </div>
                                              
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2">{order.refundRequest.resultStatus}</div>
+                                                    <div className="p-2">{order.refundRequest?.resultStatus}</div>
                                                 </div>
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Message</div>
                                                 </div>
                                              
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2">{order.refundRequest.resultMsg}</div>
+                                                    <div className="p-2">{order.refundRequest?.resultMsg}</div>
                                                 </div>
                                                
                                                 
