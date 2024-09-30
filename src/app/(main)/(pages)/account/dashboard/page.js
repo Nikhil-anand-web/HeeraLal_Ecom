@@ -1,4 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
+import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'

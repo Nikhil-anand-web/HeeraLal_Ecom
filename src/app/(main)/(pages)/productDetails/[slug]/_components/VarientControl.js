@@ -24,8 +24,10 @@ const VarientControl = ({ varients }) => {
   }
   const [activeVarient, setActiveVarient] = useState(ac[0])
 
+
   return (
     <div>
+  
 
       <h3>Variants</h3>
       <div className="qty-selector mb-5">

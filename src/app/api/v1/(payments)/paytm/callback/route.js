@@ -1,15 +1,17 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import checkStockFes from "@/lib/checkStockFes";
+import db from "@/lib/db";
 import percentOf from "@/lib/percentOf";
 import updateStockAfterOrder from "@/lib/updateStockAfterOrder";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import PaytmChecksum from 'paytmchecksum';
 
-export const config = {
-    api: {
-        bodyParser: false, // Disable automatic body parsing by Next.js
-    },
-};
+// export const config = {
+//     api: {
+//         bodyParser: false, // Disable automatic body parsing by Next.js
+//     },
+// };
 
 const parseUrlEncodedBody = async (req) => {
     const data = await req.text(); // Read raw body data
@@ -53,6 +55,21 @@ export async function POST(req) {
                     }
                 });
                 console.log("Updated Order:", updatedOrder);
+                const stockFesib = await checkStockFes(updatedOrder)
+                if (stockFesib.shortVarients.length>0 || stockFesib.shortCombo.length>0) {
+                    
+                    await db.orders.update({
+                        where: {
+                            orderId: updatedOrder.orderId,
+                        },
+                        data: {
+                            shortItmsMeta:stockFesib,
+                            shortItmStatus:1
+                        }
+                    });
+
+                    
+                }
 
                 const orderCount = await db.orders.count({
                     where: {

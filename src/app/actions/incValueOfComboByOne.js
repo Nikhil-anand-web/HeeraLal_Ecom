@@ -15,7 +15,15 @@ export default async function incValueOfComboByOne(ids = '') {
                 qty: true
             }
         })
-        if (stockOfCombo.qty < 1) {
+        const comboInCart = await db.cartComboItems.findFirst({
+            where:{
+              AND:[  {cart:{
+                    userId:user.id},
+                    
+                },{comboId:ids}]
+            }
+        })
+        if ( (comboInCart?.qty ? comboInCart.qty +1:0) >stockOfCombo.qty) {
             return {
                 success: false,
                 message: "outOfStock",

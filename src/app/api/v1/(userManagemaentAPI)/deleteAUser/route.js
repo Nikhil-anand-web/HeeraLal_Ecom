@@ -1,8 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/options";
 
 import db from "@/lib/db";
-import inputcleaner from "@/lib/inputcleaner";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 export async function POST(req) {
   return Response.json({

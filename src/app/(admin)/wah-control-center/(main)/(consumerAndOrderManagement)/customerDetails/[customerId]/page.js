@@ -3,6 +3,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image';
 import OrderModel from '@/components/adminComp/OrderModel'
+import db from '@/lib/db';
 
 const Page = async (prop) => {
     const user = await getServerSession(authOptions)

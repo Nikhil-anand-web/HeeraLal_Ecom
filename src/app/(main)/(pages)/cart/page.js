@@ -15,6 +15,7 @@ import EmptyCartButton from '@/components/EmptyCartButton'
 import { redirect } from 'next/navigation'
 import CheckOutButton from '@/components/CheckOutButton'
 import ApplyRefralPointsModule from '@/components/ApplyRefralPointsModule'
+import db from '@/lib/db'
 
 
 const Page = async () => {

@@ -4,7 +4,7 @@
 import db from "@/lib/db"
 
 
-export default async function isOutOfStock(ids = '') {
+export default async function isOutOfStock(ids ) {
    
 
 

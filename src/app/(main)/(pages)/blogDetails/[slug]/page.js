@@ -2,6 +2,7 @@ import BlogContent from '@/components/BlogContent'
 import React from 'react'
 
 import Image from 'next/image'
+import db from '@/lib/db'
 const page =  async({params}) => {
  
     const blogSlug = params.slug

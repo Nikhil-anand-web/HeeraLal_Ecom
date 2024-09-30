@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductBulk from '../_components/ProductBulk'
 import Pagination from '@/components/Pagination';
+import db from '@/lib/db';
 
 
 const page = async ({params}) => {

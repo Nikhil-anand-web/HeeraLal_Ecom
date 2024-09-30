@@ -2,6 +2,7 @@ import React from 'react'
 import VideoRight from '../components/VideoRight'
 import VideoLeft from '../components/VideoLeft'
 import Pagination from '@/components/Pagination'
+import db from '@/lib/db'
 
 
 const page = async ({params}) => {

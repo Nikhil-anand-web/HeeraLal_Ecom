@@ -8,103 +8,106 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useSWRConfig } from 'swr'
 
-const ProductToCartControl = ({ varientId = '' ,style }) => {
+const ProductToCartControl = ({ varientId, style }) => {
     const [noOfVarientInCart, setNoOfVarientInCart] = useState(0)
-    const [isOutOfStockState ,setIsOutOfStockState] =useState(false)
-    const [isRemaningFew , setIsRemainingFew] = useState(false)
-    const{mutate} = useSWRConfig()
-    
+    const [isOutOfStockState, setIsOutOfStockState] = useState(false)
+    const [isRemainingFewState, setIsRemainingFewState] = useState(false)
+    const { mutate } = useSWRConfig()
+
     useEffect(() => {
-        const fetch = async () => {
-            const res = await  isOutOfStock(varientId)
-            if (res.data.isOutOfStock) {
-                setIsOutOfStockState(res.data.isOutOfStock)
-                return
+        const fetchData = async () => {
+            if (!varientId) return; // Check if varientId is provided
 
-                
+            try {
+                // Check if the variant is out of stock
+                const resOutOfStock = await isOutOfStock(varientId)
+                if (resOutOfStock.data?.isOutOfStock) {
+                    setIsOutOfStockState(true)
+                    return
+                } else {
+                    setIsOutOfStockState(false)
+                }
+
+                // Fetch variant information in the cart
+                const resCartData = await getAboutVarientInCart(varientId)
+                const cartItem = resCartData?.cart?.cartItem[0] || null
+                setNoOfVarientInCart(cartItem ? cartItem.qty : 0)
+
+                // Check if the variant has only a few remaining
+                const resRemainingFew = await isRemainingFew(varientId)
+                setIsRemainingFewState(resRemainingFew.data?.isRemaningFew || false)
+            } catch (error) {
+                console.error('Error fetching variant data:', error)
+                toast.error("Failed to load product data")
             }
-            const data = await getAboutVarientInCart(varientId)
-            if (data?.cart?.cartItem.length > 0) {
-                setNoOfVarientInCart(data.cart.cartItem[0].qty)
-                
-
-            }
-            const isrmfew = await isRemainingFew(varientId)
-            setIsRemainingFew(isrmfew.data.isRemaningFew)
-
-
-            
         }
-        fetch()
 
+        fetchData()
+    }, [varientId]) // Runs whenever `varientId` changes
 
-    }, [])
     const increaseTheValueToOne = async () => {
         try {
             const res = await incValueOfVarientByOne(varientId)
 
-            if (!res.success) {
-                throw res
-                
-            }
+            if (res &&!res.success) throw res
+
             mutate('/action/getCartCount')
             mutate('/action/applyReferalPoint')
 
-            setNoOfVarientInCart(res.nwCartItem.qty)
-
+            setNoOfVarientInCart(res?res.nwCartItem.qty:0)
         } catch (error) {
-            console.log(error)
-
+            console.error(error)
+            toast.warning(error.message || 'Failed to increase quantity')
         }
-
-
     }
-    const decreaseTheValueToOne = async () => {
 
+    const decreaseTheValueToOne = async () => {
         try {
             const res = await decValueOfVarientByOne(varientId)
-            if (!res.success) {
-                throw res
-                
-            }
+
+            if (res &&!res.success) throw res
+
             mutate('/action/getCartCount')
             mutate('/action/applyReferalPoint')
 
-            setNoOfVarientInCart(res.nwCartItem.qty)
-
+            setNoOfVarientInCart(res?res.nwCartItem.qty:0)
         } catch (error) {
-            console.log(error)
-            toast.warning(error.message)
-
+            console.error(error)
+            toast.warning(error.message || 'Failed to decrease quantity')
         }
     }
+
+    // Handle out-of-stock display
     if (isOutOfStockState) {
-        return<div> <p>Varient Out Of Stock </p>
-        <p> Click To View Other</p>
-        </div>
-        
+        return (
+            <div>
+                <p>Variant Out Of Stock</p>
+                <p>Click To View Other</p>
+            </div>
+        )
     }
+
+    // Handle zero quantity in cart
     if (noOfVarientInCart === 0) {
-   
-        return<> <div style={style} className="pro-add-to-cart-btn">
-
-
-            <button onClick={increaseTheValueToOne}> + Add</button>
-            {isRemaningFew&&<p style={{color:"#cc524c",fontSize:"1.1rem"}}>Remaining Few</p>}
-        </div>
-        
-        </>
-        
-
+        return (
+            <div style={style} className="pro-add-to-cart-btn">
+                <button onClick={increaseTheValueToOne}>+ Add</button>
+                {isRemainingFewState && (
+                    <p style={{ color: "#cc524c", fontSize: "1.1rem" }}>Remaining Few</p>
+                )}
+            </div>
+        )
     }
+
+    // Handle when there are items in the cart
     return (
-        <div style={style}  className="pro-add-to-cart-btn">
-            <button onClick={decreaseTheValueToOne}> - </button>
-
+        <div style={style} className="pro-add-to-cart-btn">
+            <button onClick={decreaseTheValueToOne}>-</button>
             {noOfVarientInCart}
-
-            <button onClick={increaseTheValueToOne}> + </button>
-            {isRemaningFew&&<p style={{color:"#cc524c",fontSize:"1.1rem"}}>Remaining Few</p>}
+            <button onClick={increaseTheValueToOne}>+</button>
+            {isRemainingFewState && (
+                <p style={{ color: "#cc524c", fontSize: "1.1rem" }}>Remaining Few</p>
+            )}
         </div>
     )
 }

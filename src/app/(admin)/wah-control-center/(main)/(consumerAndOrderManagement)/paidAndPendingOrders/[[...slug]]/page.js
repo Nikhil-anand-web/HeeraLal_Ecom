@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/options"
 import Pagination from "@/components/Pagination"
 import MainModule from "../components/MainModule"
+import db from "@/lib/db"
 
 
 

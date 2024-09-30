@@ -1,6 +1,9 @@
 import checkPinCodeAv from '@/app/actions/checkPinCodeAv';
+import emptyCart from '@/app/actions/emptyCart';
 import getShipingCharges from '@/app/actions/getShipingCharges';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import checkStockFes from '@/lib/checkStockFes';
+import db from '@/lib/db';
 import percentOf from '@/lib/percentOf';
 import roundToXDigits from '@/lib/roundToXDigits';
 import { getServerSession } from 'next-auth';
@@ -27,6 +30,28 @@ export async function POST(req) {
     const user = await getServerSession(authOptions)
 
     try {
+        const order = await db.orders.findUnique({
+            where: {
+
+                orderId: reqObj.orderId,
+                AND: [{ customerId: user.id }]
+
+
+            }
+        })
+        const statusStock = await checkStockFes(order)
+        if (statusStock.shortCombo?.length > 0 || statusStock.shortVarients.length > 0) {
+            emptyCart()
+        
+            return NextResponse.json({
+                success: false,
+                message: "some of the items in cart went out of stock please try again"
+            }, { status: 400 })
+
+        }
+
+
+
         if (reqObj.wantToUseDefault === true) {
             const userInfo = await db.user.findUnique({
                 where: {
@@ -66,22 +91,14 @@ export async function POST(req) {
 
 
             }
-            const order = await db.orders.findUnique({
-                where: {
 
-                    orderId: reqObj.orderId,
-                    AND: [{ customerId: user.id }]
-
-
-                }
-            })
 
             const absoluteCouponDiscount = getcouponDiscount(order)
-            const res = await getShipingCharges(userInfo.pinCode,order.id)
-            const shipingCharge =parseFloat( res.charges)
+            const res = await getShipingCharges(userInfo.pinCode, order.id)
+            const shipingCharge = parseFloat(res.charges)
             const taxes = percentOf((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute), order.taxes)
 
-            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + roundToXDigits((taxes+shipingCharge),5)
+            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + roundToXDigits((taxes + shipingCharge), 5)
 
 
             const updatedOrder = await db.orders.update({
@@ -205,22 +222,14 @@ export async function POST(req) {
                 )
 
             }
-            const order = await db.orders.findUnique({
-                where: {
 
-                    orderId: reqObj.orderId,
-                    AND: [{ customerId: user.id }]
-
-
-                }
-            })
 
             const absoluteCouponDiscount = getcouponDiscount(order)
-            const res = await getShipingCharges(userInfo.pinCode,order.id)
+            const res = await getShipingCharges(userInfo.pinCode, order.id)
             const shipingCharge = parseFloat(res.charges)
             const taxes = percentOf((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute), order.taxes)
 
-            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + roundToXDigits((taxes+shipingCharge),5)
+            const finalPrice = parseFloat((order.subTotal - absoluteCouponDiscount - order.refralDiscountAbsolute)) + roundToXDigits((taxes + shipingCharge), 5)
 
 
             const customerMeta = {
@@ -233,8 +242,8 @@ export async function POST(req) {
                 city: reqObj.city,
 
             }
-            console.log(reqObj,"eeeee")
-            console.log(customerMeta,"sdfwdw")
+            console.log(reqObj, "eeeee")
+            console.log(customerMeta, "sdfwdw")
 
 
             const updatedOrder = await db.orders.update({
@@ -251,7 +260,7 @@ export async function POST(req) {
                 }
 
             })
-            console.log(updatedOrder,"xcwd")
+            console.log(updatedOrder, "xcwd")
 
             const paytmParams = {
                 MID: process.env.NEXT_PUBLIC_PAYTM_MID,
@@ -277,7 +286,7 @@ export async function POST(req) {
 
 
             return NextResponse.json({
-                success:true,
+                success: true,
                 url: `https://${process.env.PAYTM_ENVIRONMENT === 'TEST' ? 'securegw-stage' : 'securegw'}.paytm.in/order/process`,
                 params: paytmParams,
             }, { status: 200 })

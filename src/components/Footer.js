@@ -7,6 +7,7 @@ import showRoomImg from '../images/showroom.png'
 import footerLogo from '../images/footer-logo.png'
 import paymentImg from "../images/payments.png"
 import Link from 'next/link'
+import db from '@/lib/db'
 const Footer = async () => {
   const ftrlogo  = await  db.banners.findFirst({
     where:{

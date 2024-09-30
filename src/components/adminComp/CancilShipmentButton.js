@@ -4,12 +4,12 @@ import cancilAwb from '@/app/actions/cancilAwb'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const CancilShipmentButton = ({ awb ,children}) => {
+const CancilShipmentButton = ({ orderId ,children}) => {
     const [isloading,setIsloading] = useState()
     const onclk = async () => {
         try {
             setIsloading(true)
-            const res = await cancilAwb(awb)
+            const res = await cancilAwb(orderId)
             if (!res.success) {
                 throw res
 

@@ -252,7 +252,7 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
                     savePdfFile(shipmentMeta.AWBPrintContent,downloadDir)
                    delete shipmentMeta.AWBPrintContent
 
-                    await db.orders.update({
+                  const rtsorder=  await db.orders.update({
                         where: {
                             orderId: order.orderId, // Ensure orderId is the correct field name in your schema
                         },
@@ -268,9 +268,44 @@ async function createAWB(orderId, pickupTime , pickupdate,dimendarr,noOfPieces )
                             },
                         },
                     });
-
+                   
+                    await Promise.all(
+                        rtsorder.shortItmsMeta.shortVarients.map(async (obj) => {
+                            const { shortQty, id } = obj;
+                    
+                            await db.varient.update({
+                                where: {
+                                    id: id,  
+                                },
+                                data: {
+                                    qty: {
+                                        increment: shortQty,
+                                    },
+                                    shortItmStatus:2
+                                },
+                            });
+                        })
+                    );
+                    await Promise.all(
+                        rtsorder.shortItmsMeta.shortCombo.map(async (obj) => {
+                            const { shortQty, id } = obj;
+                    
+                            await db.combo.update({
+                                where: {
+                                    id: id,  
+                                },
+                                data: {
+                                    qty: {
+                                        increment: shortQty,
+                                    },
+                                    shortItmStatus:2
+                                },
+                               
+                            });
+                        })
+                    );
+                    
                     revalidatePath('/wah-control-center/orderDetails/')
-
                     return {
 
                         success: true,

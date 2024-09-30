@@ -1,5 +1,6 @@
 import BlogContent from '@/components/BlogContent'
 import Pagination from '@/components/Pagination';
+import db from '@/lib/db';
 import React from 'react'
 
 const page = async ({params}) => {

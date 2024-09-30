@@ -12,15 +12,16 @@ import ShareTheSiteButton from './ShareTheSiteButton';
 import CoinThumbnail from './CoinThumbnail';
 import { headers } from 'next/headers';
 import ClientMenu from './ClientMenu';
+import db from '@/lib/db';
 
 
 
 const Header = async (props) => {
- 
+
   const headersList = headers();
-    const domain = headersList.get('host') || "";
-    const fullUrl = headersList.get('referer') || "";
- 
+  const domain = headersList.get('host') || "";
+  const fullUrl = headersList.get('referer') || "";
+
   const user = await getServerSession(authOptions)
   var referal = null
   if (user) {
@@ -35,14 +36,14 @@ const Header = async (props) => {
 
   }
   const logo = await db.banners.findFirst({
-    where:{
+    where: {
 
 
-      AND:[{ pageSlug:'root'},{ displayOrder:0}]
-     
+      AND: [{ pageSlug: 'root' }, { displayOrder: 0 }]
+
     }
   })
-console.log(logo)
+  console.log(logo)
 
   return (
     <header className="sticky-top shadow">
@@ -58,7 +59,7 @@ console.log(logo)
             <ul className="d-flex">
               <li>
                 <CustomSearchButton />
-               
+
               </li>
               <li>
                 <Link href="/account/dashboard"></Link> <Link href="/account/dashboard">{user?.googleProfilePic ? <Image style={{ borderRadius: "60px", height: "50px", width: "50px" }} src={user?.googleProfilePic} alt={"pic"} height={100} width={100} /> : <i className="fa-solid fa-user"></i>}</Link>
@@ -72,7 +73,7 @@ console.log(logo)
 
 
           </div>
-
+          <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -80,7 +81,7 @@ console.log(logo)
 
           <div className="collapse navbar-collapse " id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-             <ClientMenu/>
+              <ClientMenu />
 
 
               <CustomSearchBar />

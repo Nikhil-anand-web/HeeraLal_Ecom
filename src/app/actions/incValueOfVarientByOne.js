@@ -19,7 +19,18 @@ export default async function incValueOfVarientByOne(ids = '') {
                 qty: true
             }
         })
-        if (stockOfVarient.qty < 1) {
+        const varientInCart = await db.cartItem.findFirst({
+            where:{
+              AND:[  {cart:{
+                    userId:user.id},
+                    
+                },{varientId:ids}]
+            }
+        })
+        
+
+        if ( (varientInCart?.qty ? varientInCart.qty +1:0) >stockOfVarient.qty) {
+           
             return {
                 success: false,
                 message: "outOfStock",

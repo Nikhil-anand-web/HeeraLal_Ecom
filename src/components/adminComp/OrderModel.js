@@ -17,20 +17,28 @@ const SingleOrder = ({ order, goTo = "#" }) => {
                 <div style={styles.orderItem}><strong>Final weight:</strong>  {order.totalWeight}gm</div>
                 <div style={styles.orderItem}><strong>Mobile:</strong>  {order.CustomerMeta.mobile}</div>
                 <div style={styles.orderItem}><strong>Created At:</strong> {new Date(order.createdAt).toLocaleString()}</div>
-                <div style={styles.orderItem}><strong>Payment Status:</strong>  {order.paymentStatus === 1 ? <span className="badge badge-success">{" Paid "}</span> : order.paymentToken?.STATUS?.lenght > 0 ? <span className="badge badge-danger">{" Payment Failed "}</span> : <span className="badge badge-danger">{" Un-Paid "}</span>}</div>
-                <div style={styles.orderItem}><strong>Order Status:</strong> {order.orderStatus===0?"pending":order.orderStatus===1?"processing":order.orderStatus===2?"compleated":"cancelled"}</div>
+                <div style={styles.orderItem}><strong>Payment Status:</strong>
+
+                    {order.paymentStatus === 1 && <span className="badge badge-success">{" Paid "}</span>}
+                    {order.paymentStatus === 2 && <span className="badge badge-danger">{" Refunded "}</span>}
+                    {(order.paymentStatus === 0 && order.paymentToken?.STATUS?.lenght > 0) && <span className="badge badge-danger">{" Payment Failed "}</span>}
+                    {(order.paymentStatus === 0 && !order.paymentToken) && <span className="badge badge-danger">{" Unpaid "}</span>}
+
+
+                </div>
+                <div style={styles.orderItem}><strong>Order Status:</strong> {order.orderStatus === 0 ? "pending" : order.orderStatus === 1 ? "processing" : order.orderStatus === 2 ? "compleated" : "cancelled"}</div>
                 <div style={styles.orderItem}><strong>Shipping Status:</strong> {order.shipingStatus}</div>
                 <div style={styles.orderItem}><strong>AWB:</strong> {order.awb ? order.awb : "not available"}</div>
-               
+
 
             </div>
             <Link href={goTo}>
-                    <button class="btn btn-success">
-                        Details
+                <button class="btn btn-success">
+                    Details
 
-                    </button>
+                </button>
 
-                </Link>
+            </Link>
 
 
         </div>

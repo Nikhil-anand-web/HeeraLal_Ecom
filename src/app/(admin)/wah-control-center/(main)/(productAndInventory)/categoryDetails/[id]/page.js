@@ -1,5 +1,6 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import AdminLayout from '@/layouts/AdminLayout'
+import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 
 

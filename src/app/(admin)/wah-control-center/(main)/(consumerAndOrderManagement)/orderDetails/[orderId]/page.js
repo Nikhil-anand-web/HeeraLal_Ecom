@@ -8,6 +8,8 @@ import ComboModelMini from '../components/ComboModelMini';
 import ReadyToShipButton from '@/components/adminComp/ReadyToShipButton';
 import DatePickerAndAwb from '@/components/global/DatePickerAndAwb';
 import CancilShipmentButton from '@/components/adminComp/CancilShipmentButton';
+import RefundButton from '@/components/adminComp/RefundButton';
+import db from '@/lib/db';
 
 const Page = async (prop) => {
     const user = await getServerSession(authOptions)
@@ -50,6 +52,7 @@ const Page = async (prop) => {
                 <div className="row gy-lg-0">
                     <div className="col-12 col-lg-8 col-xl-9">
                         <div className="card widget-card border-light shadow-sm">
+                            
                             <div className="card-body p-4">
                                 <ul className="nav nav-tabs" id="profileTab" role="tablist">
                                     <li className="nav-item" role="presentation">
@@ -70,8 +73,11 @@ const Page = async (prop) => {
                                         <button className="nav-link" id="ship-tab" data-bs-toggle="tab" data-bs-target="#ship-pane" type="button" role="tab" aria-controls="ship-pane">Ship</button>
                                     </li>}
                                     
-                                    {(order.awb &&(order.orderStatus<2))? <li className="nav-item" role="presentation">
-                                        <button className="nav-link" id="shipCancil-tab" data-bs-toggle="tab" data-bs-target="#shipCancil-pane" type="button" role="tab" aria-controls="shipCancil-pane">Cancilation/Refund </button>
+                                    {((order.orderStatus<2))? <li className="nav-item" role="presentation">
+                                        <button className="nav-link" id="shipCancil-tab" data-bs-toggle="tab" data-bs-target="#shipCancil-pane" type="button" role="tab" aria-controls="shipCancil-pane">Cancilation </button>
+                                    </li>:""}
+                                    {order.paymentStatus==1? <li className="nav-item" role="presentation">
+                                        <button className="nav-link" id="refund-tab" data-bs-toggle="tab" data-bs-target="#refund-pane" type="button" role="tab" aria-controls="refund-pane">Refund </button>
                                     </li>:""}
 
                                 </ul>
@@ -180,7 +186,15 @@ const Page = async (prop) => {
                                                     <div className="p-2">Payment Status</div>
                                                 </div>
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2">{order.paymentStatus === 1 ? <span className="badge badge-success">{" Paid "}</span> : order.paymentToken?.STATUS?.lenght > 0 ? <span className="badge badge-danger">{" Payment Failed "}</span> : <span className="badge badge-danger">{" Un-Paid "}</span>}</div>
+                                                    <div className="p-2">
+                                                        
+                                                        {order.paymentStatus === 1 && <span className="badge badge-success">{" Paid "}</span> }
+                                                        {order.paymentStatus === 2 && <span className="badge badge-danger">{" Refunded "}</span> }
+                                                        {(order.paymentStatus === 0 && order.paymentToken?.STATUS?.lenght > 0) && <span className="badge badge-danger">{" Payment Failed "}</span> }
+                                                        {(order.paymentStatus === 0 && !order.paymentToken) && <span className="badge badge-danger">{" Unpaid "}</span> }
+                                                    
+                                                    
+                                                    </div>
                                                 </div>
                                                 
                                             </div>
@@ -250,14 +264,59 @@ const Page = async (prop) => {
 
                                         </div>
                                     </div>}
-                                    {!order.awb && <div className="tab-pane fade" id="ship-pane" role="tabpanel" aria-labelledby="ship-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}> 
+                                    {!order.awb  && <div className="tab-pane fade" id="ship-pane" role="tabpanel" aria-labelledby="ship-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}> 
                                         <DatePickerAndAwb orderId={order.orderId}/>
 
                                     </div>}
-                                    {(order.awb &&(order.orderStatus<2 ))? <div className="tab-pane fade" id="shipCancil-pane" role="tabpanel" aria-labelledby="shipCancil-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
-                                        <CancilShipmentButton awb={order.awb}>
+                                    {((order.orderStatus<2 ))? <div className="tab-pane fade" id="shipCancil-pane" role="tabpanel" aria-labelledby="shipCancil-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                        <CancilShipmentButton orderId={order.orderId}>
                                             Cancil This Shipment
                                         </CancilShipmentButton>
+                                        
+                                    </div>:""}
+                                    {order.paymentStatus==1? <div className="tab-pane fade" id="refund-pane" role="tabpanel" aria-labelledby="refund-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                   { !order.refundRequest?<RefundButton orderId={order.orderId}>
+                                        Raise refund Request
+                                    </RefundButton>:<div>
+                                        <h3>Refund request details</h3>
+
+                                        <div className="row">
+                                                <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                    <div className="p-2">Transaction Id</div>
+                                                </div>
+                                   
+                                                <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                    <div className="p-2">{order.refundRequest.txnId}</div>
+                                                </div>
+                                                <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                    <div className="p-2">Transaction Amount</div>
+                                                </div>
+                                             
+                                                <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                    <div className="p-2">₹{order.refundRequest.refundAmount}</div>
+                                                </div>
+                                                <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                    <div className="p-2">Status</div>
+                                                </div>
+                                             
+                                                <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                    <div className="p-2">{order.refundRequest.resultStatus}</div>
+                                                </div>
+                                                <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                    <div className="p-2">Message</div>
+                                                </div>
+                                             
+                                                <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                    <div className="p-2">{order.refundRequest.resultMsg}</div>
+                                                </div>
+                                               
+                                                
+                                            </div>
+                                        
+                                        
+                                        
+                                        
+                                        </div>}
                                         
                                     </div>:""}
                                     

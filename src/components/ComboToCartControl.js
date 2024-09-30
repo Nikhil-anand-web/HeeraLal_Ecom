@@ -1,10 +1,7 @@
 "use client"
 import decValueOfComboByOne from '@/app/actions/decValueOfComboByOne'
-import decValueOfVarientByOne from '@/app/actions/decValueOfVarientByOne'
 import getAboutComboInCart from '@/app/actions/getAboutComboInCart'
-import getAboutVarientInCart from '@/app/actions/getAboutVarientInCart'
 import incValueOfComboByOne from '@/app/actions/incValueOfComboByOne'
-import incValueOfVarientByOne from '@/app/actions/incValueOfVarientByOne'
 import isComboOutOfStock from '@/app/actions/isComboOutOfStock'
 
 import React, { useEffect, useState } from 'react'
@@ -14,97 +11,93 @@ import { useSWRConfig } from 'swr'
 const ComboToCartControl = ({ comboId = '', style }) => {
     const [noOfComboInCart, setNoOfComboInCart] = useState(0)
     const [isOutOfStockState, setIsOutOfStockState] = useState(false)
-    const {mutate} = useSWRConfig()
-
+    const { mutate } = useSWRConfig()
 
     useEffect(() => {
-        const fetch = async () => {
-            const res = await isComboOutOfStock(comboId)
-            if (res.data.isOutOfStock) {
-                setIsOutOfStockState(res.data.isOutOfStock)
-                return
+        const fetchComboData = async () => {
+            if (!comboId) return; // Ensure comboId is provided
 
+            try {
+                // Check if combo is out of stock
+                const resOutOfStock = await isComboOutOfStock(comboId)
+                if (resOutOfStock.data?.isOutOfStock) {
+                    setIsOutOfStockState(true)
+                    return
+                } else {
+                    setIsOutOfStockState(false)
+                }
 
+                // Fetch combo details in the cart
+                const resCartData = await getAboutComboInCart(comboId)
+                const cartComboItem = resCartData?.cart?.cartComboItems[0] || null
+                setNoOfComboInCart(cartComboItem ? cartComboItem.qty : 0)
+            } catch (error) {
+                console.error('Error fetching combo data:', error)
+                toast.error('Failed to load combo data')
             }
-            const data = await getAboutComboInCart(comboId)
-            if (data?.cart?.cartComboItems.length > 0) {
-                setNoOfComboInCart(data.cart.cartComboItems[0].qty)
-
-
-            }
-
-
-
-
         }
-        fetch()
 
+        fetchComboData()
+    }, [comboId]) // Runs whenever comboId changes
 
-    }, [])
     const increaseTheValueToOne = async () => {
         try {
             const res = await incValueOfComboByOne(comboId)
-            if (!res.success) {
-                throw res
 
-            }
+            if (res &&!res.success) throw res
+
             mutate('/action/getCartCount')
             mutate('/action/applyReferalPoint')
 
-            setNoOfComboInCart(res.nwCartComboItem.qty)
-
+            setNoOfComboInCart(res?res.nwCartComboItem.qty:0)
         } catch (error) {
-            console.log(error)
-
+            console.error(error)
+            toast.warning(error.message || 'Failed to increase combo quantity')
         }
-
-
     }
-    const decreaseTheValueToOne = async () => {
 
+    const decreaseTheValueToOne = async () => {
         try {
             const res = await decValueOfComboByOne(comboId)
-            if (!res.success) {
-                throw res
 
-            }
+            if (res &&!res.success) throw res
+
             mutate('/action/getCartCount')
             mutate('/action/applyReferalPoint')
-            setNoOfComboInCart(res.nwCartComboItem.qty)
 
+            setNoOfComboInCart(res?res.nwCartComboItem.qty:0)
         } catch (error) {
-            console.log(error)
-            toast.warning(error.message)
-
+            console.error(error)
+            toast.warning(error.message || 'Failed to decrease combo quantity')
         }
     }
+
     if (isOutOfStockState) {
-        return <div> <p>combo Out Of Stock </p>
-
-        </div>
-
+        return (
+            <div>
+                <p>Combo Out Of Stock</p>
+            </div>
+        )
     }
+
     if (noOfComboInCart === 0) {
-
-        return <> <div style={style} className="pro-add-to-cart-btn">
-
-
-            <button onClick={increaseTheValueToOne} className="btn single-product-addtocart-template-product"><i className="fa fa-shopping-bag"></i>Add Combo to cart</button>
-
-        </div>
-
-        </>
-
-
+        return (
+            <div style={style} className="pro-add-to-cart-btn">
+                <button
+                    onClick={increaseTheValueToOne}
+                    className="btn single-product-addtocart-template-product"
+                >
+                    <i className="fa fa-shopping-bag"></i> Add Combo to Cart
+                </button>
+            </div>
+        )
     }
+
     return (
         <div style={style} className="pro-add-to-cart-btn">
             <button onClick={decreaseTheValueToOne}> - </button>
-
             {noOfComboInCart}
-
             <button onClick={increaseTheValueToOne}> + </button>
-
         </div>
     )
 }

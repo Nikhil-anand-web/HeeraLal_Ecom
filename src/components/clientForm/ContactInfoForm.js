@@ -93,7 +93,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
 
             const data = await response.json();
             console.log(data)
-            if (!data.success && (!data.params.CHECKSUMHASH || data.params.CHECKSUMHASH==='')) {
+            if ( !data || (!data?.success && (!data?.params?.CHECKSUMHASH || data?.params?.CHECKSUMHASH===''))) {
                 throw{
                     success:false,
                     message:data
@@ -119,8 +119,9 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
             form.submit();
 
         } catch (error) {
+            console.log(error)
             console.log('Error updating details:', error);
-            toast.warning(error.message||"something went wrong")
+            toast.warning(error.message.message||"something went wrong")
         } finally {
             setIsLoading(false);
         }

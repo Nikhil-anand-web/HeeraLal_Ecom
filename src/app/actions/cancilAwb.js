@@ -11,16 +11,9 @@ import getShipingJWT from '@/lib/getShipingJWT';
 
 
 
-async function cancilAwb(awb) {
+async function cancilAwb(orderId) {
     "use server"
 
-    function validateSlug(value) {
-
-        if (!(/^[a-z][a-zA-Z0-9]*$/.test(value))) {
-            return false;
-        }
-        return true;
-    }
 
 
     const user = await getServerSession(authOptions)
@@ -28,36 +21,141 @@ async function cancilAwb(awb) {
         if (user.role === 1 || user.role === 2) {
             try {
                 if (user.permissions[0].consumerAndOrderManagement) {
+                    const order = await db.orders.findUnique({
+                        where: {
+                            orderId: orderId
+                        }, select: {
+                            awb: true,
+
+                            paymentStatus: true,
+                            orderStatus: true
 
 
-                    const res = await getShipingJWT()
-                    const url = process.env.SHIPING_BASE_URL
+                        }
+                    })
+                    if (order.paymentStatus == 0 || order.orderStatus == 2 || order.orderStatus == 3) {
+                        if (order.paymentStatus == 0) {
+                            return {
+                                message: "not paid",
+                                success: false
+                            }
+
+                        } else if (order.orderStatus == 2) {
+                            return {
+                                message: "order completed",
+                                success: false
+                            }
 
 
-                    const options = {
-                      method: 'POST',
-                      url: `${url}/transportation/waybill/v1/CancelWaybill`,
-                      headers: {'content-type': 'application/json', JWTToken: res.jwt},
-                      data: {
-                        Request: {AWBNo: awb},
-                        Profile: {LoginID: process.env.SHIPING_LOGIN_ID, Api_type: 'S', LicenceKey: process.env.SHIPING_LIC}
-                      }
-                    };
-                    
-                   const response = await axios.request(options)
+                        } else if (order.orderStatus == 3) {
+                            return {
+                                message: "order already cancled",
+                                success: false
+                            }
 
-                   console.log(response)
-                   const cancledWaybill = response.data.CancelWaybillResult.AWBNo
+                        }
 
-                   await db.orders.update({
-                    where:{
-                        awb:cancledWaybill
-                    },data:{
-                        orderStatus:3,
-                        shipingStatus:"cancelled"
                     }
-                    
-                   })
+                    const awb = order.awb
+                    if (awb) {
+                        const res = await getShipingJWT()
+                        const url = process.env.SHIPING_BASE_URL
+                        const options = {
+                            method: 'POST',
+                            url: `${url}/transportation/waybill/v1/CancelWaybill`,
+                            headers: { 'content-type': 'application/json', JWTToken: res.jwt },
+                            data: {
+                                Request: { AWBNo: awb },
+                                Profile: { LoginID: process.env.SHIPING_LOGIN_ID, Api_type: 'S', LicenceKey: process.env.SHIPING_LIC }
+                            }
+                        };
+                        const response = await axios.request(options)
+
+                        console.log(response)
+                        var cancledWaybill = response.data.CancelWaybillResult.AWBNo
+
+                    }
+
+
+
+
+                    const updated = await db.orders.update({
+                        where: {
+                            orderId: orderId
+                        }, data: {
+                            orderStatus: 3,
+                            shipingStatus: "cancelled",
+                            lastEditedBy: {
+                                connect: {
+                                    id: user.id, // Ensure user.id is a valid identifier for the related user
+                                },
+                            },
+                        }, select: {
+                            orderId: true,
+                            varientMeta: true,
+                            comboMeta: true,
+                        }
+
+                    })
+                    const varientIdsArr = []
+                    const varientIncrementFactorArr = []
+                    const comboIdsArr = []
+                    const comboIncrementFactorArr = []
+
+                    updated.varientMeta.forEach((itm) => {
+                        varientIncrementFactorArr.push(itm.qty)
+                        varientIdsArr.push(itm.varient.id)
+
+
+                    });
+
+                    updated.comboMeta.forEach((itm) => {
+                        comboIdsArr.push(itm.combo.id)
+                        comboIncrementFactorArr.push(itm.qty)
+
+
+
+                    })
+
+
+
+
+                    const updatePromisesVarient = varientIdsArr.map((id, index) => {
+                        const factor = varientIncrementFactorArr[index];
+                        return db.varient.update({
+                            where: { id },
+                            data: {
+                                qty: {
+                                    increment: factor,
+                                },
+                                createdBy: {
+                                    connect: { id: user.id },
+                                },
+                            },
+                        });
+                    });
+
+                    // Execute all updates in a transaction
+                    await db.$transaction(updatePromisesVarient);
+                    const updatePromisesCombo = comboIdsArr.map((id, index) => {
+                        const factor = comboIncrementFactorArr[index]
+
+                        return db.combo.update({
+                            where: { id },
+                            data: {
+                                qty: {
+                                    increment: factor,
+                                },
+                                createdBy: {
+                                    connect: { id: user.id },
+                                },
+                            },
+
+                        })
+                    })
+                    await db.$transaction(updatePromisesCombo);
+
+
 
 
 
@@ -73,7 +171,7 @@ async function cancilAwb(awb) {
                     return {
 
                         success: true,
-                        message: `AWB ${awb} cancelled`
+                        message: awb ? `AWB ${awb} cancelled` : `order Id ${updated.orderId} cancelled`
                     }
 
 

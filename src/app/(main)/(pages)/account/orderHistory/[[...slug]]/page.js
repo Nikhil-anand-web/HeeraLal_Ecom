@@ -4,6 +4,7 @@ import Pagination from '@/components/Pagination'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import OrderItem from '../_components/OrderItem'
+import db from '@/lib/db'
 
 
 const page = async ({ params }) => {

@@ -14,7 +14,7 @@ import PaytmChecksum from 'paytmchecksum';
 
 async function refund(orderId) {
     "use server"
-
+    console.log(orderId)
 
 
     const user = await getServerSession(authOptions)
@@ -69,12 +69,33 @@ async function refund(orderId) {
                     };
 
                     const response = await axios.post('https://securegw.paytm.in/refund/apply', post_data, options);
-                    console.log(response, "res")
-                    console.log(response.data.body.resultInfo)
+                    // console.log(response, "res")
+                    console.log(response.data.body)
+
+
+                    const refundObj = { ...response.data.body, ...response.data.body.resultInfo }
 
 
 
+                    delete refundObj.resultInfo
+                    console.log(refundObj)
 
+                    await db.orders.update({
+                        where: {
+                            orderId: refundObj.orderId
+
+                        }, data: {
+                            refundRequest: refundObj,
+                            refundRequestStatus:1,
+                            paymentStatus:2,//this need to be updated by webhook
+                            lastEditedBy: {
+                                connect: {
+                                    id: user.id, // Ensure user.id is a valid identifier for the related user
+                                },
+                            },
+                            
+                        }
+                    })
 
 
 
@@ -88,7 +109,7 @@ async function refund(orderId) {
                     return {
 
                         success: true,
-                        message: `AWB ${cancilAwb} cancelled`
+                        message: `success`
                     }
 
 

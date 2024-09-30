@@ -1,5 +1,6 @@
 "use server"
 
+import db from "@/lib/db"
 import getShipmentTransitDetails from "@/lib/getShipmentTransitDetails"
 
 
