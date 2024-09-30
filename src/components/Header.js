@@ -73,7 +73,7 @@ const Header = async (props) => {
 
 
           </div>
-          <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
+          <ShareTheSiteButton style={{ borderRadius: "21px",marginLeft:"15px"}} className="btn btn-success">Share</ShareTheSiteButton>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -95,9 +95,9 @@ const Header = async (props) => {
                   <span className="number" name={"cntdis"}><CartCount /></span>
                   <i className="fa-solid fa-bag-shopping"></i></Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
-              </li>
+              </li> */}
               {referal && <li className="nav-item">
                 <CoinThumbnail coins={referal.coins} />
               </li>}
