@@ -8,7 +8,7 @@ const SignOutButton = ({children,className,styles}) => {
   const onClick=(e)=>{
     
     signOut()
-    rtr.replace('/')
+    rtr.refresh()
     
 
   }
