@@ -8,7 +8,7 @@ const SignOutButton = ({children,className,styles}) => {
   const onClick=(e)=>{
     
     signOut()
-    rtr.refresh()
+    rtr.push('/wah-control-center/sign-in')
     
 
   }
