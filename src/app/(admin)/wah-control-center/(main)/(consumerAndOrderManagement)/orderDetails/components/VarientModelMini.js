@@ -1,11 +1,15 @@
 import calculateFinalPrice from '@/lib/calculateFinalPrice';
 import React from 'react';
 
-const VarientModelMini = ({ dataArray }) => {
+const VarientModelMini = ({ dataArray, shortVarientIds=[] }) => {
     return (
         <div style={{ overflowY: "scroll", maxHeight: "63vh" }}>
-            {dataArray.map((data, index) => (
-                <div
+            {dataArray.map((data, index) => {
+
+                const result = shortVarientIds.find(item => item.id === data.varient.id);
+                const shortComboQty = result?.shortQty ?? 0;
+
+                return <div
                     key={index}
                     style={{
                         display: 'flex', flexWrap: 'wrap', gap: '20px',
@@ -20,12 +24,13 @@ const VarientModelMini = ({ dataArray }) => {
                     <div><strong>Bulk: </strong>{data.varient.isBulk ? 'Yes' : 'No'}</div>
                     <div><strong>Weight: </strong>{data.varient.weight} kg</div>
                     <div><strong>Product Name: </strong>{data.varient.product.name}</div>
-                    
-                    {/* New Fields */}
+                    <div><strong>Varient Short: </strong>{shortComboQty===0? <span className="badge badge-success">{" Ideal "}</span> : <span className="badge badge-danger">{shortComboQty}</span>}</div>
+
+
                     <div><strong>Discount: </strong>{data.varient.discount}%</div>
                     <div><strong>Price After Discount: </strong>₹{calculateFinalPrice(data.varient.mrp, data.varient.discount)}</div>
                 </div>
-            ))}
+            })}
         </div>
     );
 };

@@ -1,6 +1,33 @@
-canc and refunded 
-compleated 
-failed
-short and to be compleated
-referal paid and compleat
 
+
+
+
+in products short products
+
+select:{
+                            id:true,
+                            slug:true,
+                            product:{
+                                select:{
+                                     slug:true,
+                                     thumbNail:true
+                                }
+                            },
+                            weight:true,
+                            size:true,
+                            qty:true,
+                            status:true,
+                            maxQuantityForFewAvailable:true,
+                            mrp:true,
+                            wholeSalePrice:true,
+                            minQtyForBulkOrder:true,
+                            isDefault:true,
+                            qty:true,
+                            isBulk:true,
+                            discount:true,
+                            _count:{
+                                select:{
+                                    combo:true
+                                }
+
+                            },

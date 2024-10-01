@@ -19,7 +19,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredCustomers, setFilteredCustomers] = useState([]);
+    const [filteredOrder, setFilteredOrder] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     
     const fetchResults = useCallback(
@@ -31,7 +31,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
              
                console.log(response)
                
-               setFilteredCustomers(response.orders)
+               setFilteredOrder(response.orders)
                 
 
 
@@ -75,7 +75,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
                 <div className={"hide-scrollbar"} style={{ height: "60vh", overflow: "scroll", width: "100%" }}>
 
 
-                    {filteredCustomers.map((order,index) => (
+                    {filteredOrder.map((order,index) => (
 
                         <OrderModel key={index} goTo={`orderDetails/${order.orderId}`} order ={order}/>
                     ))}</div>

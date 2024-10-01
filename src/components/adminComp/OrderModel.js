@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
+import PrintOrder from './PrintLabel';
+import PrintLabel from './PrintLabel';
 
 const SingleOrder = ({ order, goTo = "#" }) => {
     return (
@@ -26,19 +28,31 @@ const SingleOrder = ({ order, goTo = "#" }) => {
 
 
                 </div>
+                <div style={styles.orderItem}><strong>Short Item Status:</strong>
+
+                    {order.shortItmStatus === 0 && <span className="badge badge-success">{" Ideal "}</span>}
+                    {order.shortItmStatus === 1 && <span className="badge badge-danger">{" Short Items "}</span>}
+                    {order.shortItmStatus === 2 && <span className="badge badge-success">{" Fulfilled"}</span>}
+                    
+
+                </div>
                 <div style={styles.orderItem}><strong>Order Status:</strong> {order.orderStatus === 0 ? "pending" : order.orderStatus === 1 ? "processing" : order.orderStatus === 2 ? "compleated" : "cancelled"}</div>
                 <div style={styles.orderItem}><strong>Shipping Status:</strong> {order.shipingStatus}</div>
                 <div style={styles.orderItem}><strong>AWB:</strong> {order.awb ? order.awb : "not available"}</div>
 
 
             </div>
+            <div style={{display:"flex",gap:"10px"}}>
             <Link href={goTo}>
-                <button class="btn btn-success">
+                <button className="btn btn-success">
                     Details
 
                 </button>
 
             </Link>
+            {order.awb &&  <PrintLabel className="btn btn-success" orderId={order.awb}/>}
+            </div>
+          
 
 
         </div>

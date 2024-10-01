@@ -1,11 +1,8 @@
 import { getServerSession } from "next-auth"
-
+import MainModule from "../components/MainModule"
 import { authOptions } from "@/app/api/auth/[...nextauth]/options"
 import Pagination from "@/components/Pagination"
-import MainModule from "../components/MainModule"
 import db from "@/lib/db"
-
-
 
 
 
@@ -13,40 +10,40 @@ const page = async ({ params }) => {
   const user = await getServerSession(authOptions)
 
 
-
-  var count = 0
-  var itemsPerPage = 20
-
+  var count =0
+  var itemsPerPage = 2
   if (user) {
     if (user.role === 1 || user.role === 2) {
 
-      if (user.permissions[0].consumerAndOrderManagement) {
+      if (user.permissions[0].productAndInventory) {
+
         var pageNo = params.slug?.at(params?.slug?.length - 1)
         if (!pageNo || isNaN(pageNo)) {
           pageNo = 1;
 
-
         }
-
-        count = await db.orders.count({
-          where: {
-            AND: [{
-              CustomerMeta: {
-                not: null,  // This filters out orders where CustomerMeta is  not null
-              }
-            }, { paymentToken: { not: null } }]
+        // lowStockProduct
+        const setting = await db.globalSettings.findFirst({
+          where:{
+            settingName : "lowStockProduct"
 
           }
+        })
 
+         count =  await db.varient.count({
+          where:{
+            qty:{
+              lt:setting.value
+            }
+          }
+          
 
         })
 
 
 
 
-
-
-
+       
 
 
 
@@ -65,18 +62,17 @@ const page = async ({ params }) => {
   }
 
 
-
+  
 
 
   return (
-    (user && user.permissions[0].consumerAndOrderManagement ? <>
+    ( user && user.permissions[0].productAndInventory? <>
+     
+      <MainModule pageNo={pageNo} itemsPerPage={itemsPerPage}  />
       <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
 
-      <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />
 
-
-
-    </> : <p>Access Denied</p>)
+    </>:<p>Access Denied</p>)
   )
 }
 

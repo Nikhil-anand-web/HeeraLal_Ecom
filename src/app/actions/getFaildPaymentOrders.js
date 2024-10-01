@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]/options"
 
 
-export default async function getSearchedOrdersCancelledButNotRefunded(searchTerm, itemsPerPage, pageNo) {
+export default async function getFaildPaymentOrders(searchTerm, itemsPerPage, pageNo) {
     const user = await getServerSession(authOptions)
 
 
@@ -19,7 +19,7 @@ export default async function getSearchedOrdersCancelledButNotRefunded(searchTer
                     message: `result`,
                     orders: await db.orders.findMany({
                         where: {
-                            AND:[{orderStatus:3},{paymentStatus:1},{awb:{not:null}}]
+                            AND:[{orderStatus:0},{paymentStatus:0},{paymentToken:{not:null}}]
 
                         },
                         select: {
@@ -65,9 +65,9 @@ export default async function getSearchedOrdersCancelledButNotRefunded(searchTer
                 OR JSON_EXTRACT(productMeta, '$.name') LIKE CONCAT('%', ${searchTerm}, '%')
                 OR JSON_EXTRACT(productMeta, '$.slug') LIKE CONCAT('%', ${searchTerm}, '%')
             )
-            AND orderStatus = 3
-            AND paymentStatus = 1
-            AND awb IS NOT NULL
+            AND orderStatus = 0
+            AND paymentStatus = 0
+            AND paymentToken IS NOT NULL
           `;
           
 

@@ -1,5 +1,5 @@
 "use client"
-import getSearchedOrdersCancelledButNotRefunded from '@/app/actions/getSearchedOrdersCancelledButNotRefunded'
+import getCompleatedOrders from '@/app/actions/getCompleatedOrders'
 import OrderModel from '@/components/adminComp/OrderModel'
 import Spinner from '@/components/global/Spinner'
 import debounce from '@/lib/debounce'
@@ -8,18 +8,19 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredOrder, setFilteredOrders] = useState([]);
+    const [filteredOrder, setFilteredOrder] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
+    
     const fetchResults = useCallback(
         debounce(async (searchQuery) => {
 
             try {
                 setIsLoading(true)
-                const response = await getSearchedOrdersCancelledButNotRefunded(searchQuery,itemsPerPage,pageNo)
+                const response = await getCompleatedOrders(searchQuery,itemsPerPage,pageNo)
              
-              
+               console.log(response)
                
-                setFilteredOrders(response.orders)
+               setFilteredOrder(response.orders)
                 
 
 

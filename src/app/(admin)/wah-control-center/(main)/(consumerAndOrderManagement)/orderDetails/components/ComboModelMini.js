@@ -1,7 +1,7 @@
 import calculateFinalPriceOfComboAndThumbnailArray from '@/lib/calculateFinalPriceOfComboAndThumbnailArray';
 import React from 'react';
 
-const ComboDetails = ({ data }) => {
+const ComboDetails = ({ data, shortComboQty=0}) => {
   const { qty, combo } = data;
   const { name, productVarients, discountInPercent } = combo;
 
@@ -53,6 +53,7 @@ const ComboDetails = ({ data }) => {
         <h3 style={styles.comboName}>Combo: {name}</h3>
         <div>Quantity: {qty}</div>
       </div>
+      <div><strong>Combo Short: </strong>{shortComboQty===0? <span className="badge badge-success">{" Ideal "}</span> : <span className="badge badge-danger">{shortComboQty}</span>}</div>
 
       {/* Product Variants Section */}
       <div style={styles.section}>

@@ -33,7 +33,9 @@ export default async function getSearchedOrdersProcessingAndAwbGenerated(searchT
                             shipingStatus: true,
                             awb: true,
                             paymentToken: true,
-                            totalWeight: true
+                            totalWeight: true,
+                            shortItmStatus:true,
+                            shortItmsMeta:true
 
 
                         }, orderBy: {
@@ -52,7 +54,7 @@ export default async function getSearchedOrdersProcessingAndAwbGenerated(searchT
             }
 
             const orders = await db.$queryRaw`
-            SELECT orderId, id, CustomerMeta, finalPrice, createdAt, paymentStatus, orderStatus, shippingStatus, awb, totalWeight
+            SELECT orderId, id, CustomerMeta, finalPrice, createdAt, paymentStatus, orderStatus, shipingStatus, awb, totalWeight,shortItmStatus,shortItmsMeta
             FROM orders
             WHERE (
                 JSON_EXTRACT(CustomerMeta, '$.firstName') LIKE CONCAT('%', ${searchTerm}, '%')

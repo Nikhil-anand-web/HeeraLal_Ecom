@@ -1,25 +1,35 @@
+
 "use client"
-import getSearchedOrdersCancelledButNotRefunded from '@/app/actions/getSearchedOrdersCancelledButNotRefunded'
+
+
+
+import getOrdersWithReferalApplied from '@/app/actions/getOrdersWithReferalApplied'
 import OrderModel from '@/components/adminComp/OrderModel'
 import Spinner from '@/components/global/Spinner'
 import debounce from '@/lib/debounce'
+
+
+
+
 import React, { useCallback, useEffect, useState } from 'react'
+
 const MainModule = ({ itemsPerPage ,pageNo}) => {
 
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredOrder, setFilteredOrders] = useState([]);
+    const [filteredOrder, setFilteredOrder] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
+    
     const fetchResults = useCallback(
         debounce(async (searchQuery) => {
 
             try {
                 setIsLoading(true)
-                const response = await getSearchedOrdersCancelledButNotRefunded(searchQuery,itemsPerPage,pageNo)
+                const response = await getOrdersWithReferalApplied(searchQuery,itemsPerPage,pageNo)
              
-              
+               console.log(response)
                
-                setFilteredOrders(response.orders)
+               setFilteredOrder(response.orders)
                 
 
 
@@ -53,6 +63,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
             <div style={{ marginBottom: "5rem" }} className="input-group">
 
                 <span className="input-group-text" id="">Search</span>
+
                 <input value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value) }} type="text" className="form-control" />
 
             </div>

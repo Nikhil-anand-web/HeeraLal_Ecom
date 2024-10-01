@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]/options"
 
 
-export default async function getSearchedOrdersCancelledButNotRefunded(searchTerm, itemsPerPage, pageNo) {
+export default async function getOrdersWithReferalApplied(searchTerm, itemsPerPage, pageNo) {
     const user = await getServerSession(authOptions)
 
 
@@ -19,7 +19,7 @@ export default async function getSearchedOrdersCancelledButNotRefunded(searchTer
                     message: `result`,
                     orders: await db.orders.findMany({
                         where: {
-                            AND:[{orderStatus:3},{paymentStatus:1},{awb:{not:null}}]
+                            AND: [{refralDiscountAbsolute:{not:0}},{paymentStatus:1}]
 
                         },
                         select: {
@@ -54,22 +54,21 @@ export default async function getSearchedOrdersCancelledButNotRefunded(searchTer
             }
 
             const orders = await db.$queryRaw`
-            SELECT orderId, id, CustomerMeta, finalPrice, createdAt, paymentStatus, orderStatus, shipingStatus, awb, totalWeight,shortItmStatus,shortItmsMeta
-            FROM orders
-            WHERE (
-                JSON_EXTRACT(CustomerMeta, '$.firstName') LIKE CONCAT('%', ${searchTerm}, '%')
-                OR JSON_EXTRACT(CustomerMeta, '$.lastName') LIKE CONCAT('%', ${searchTerm}, '%')
-                OR JSON_EXTRACT(CustomerMeta, '$.email') LIKE CONCAT('%', ${searchTerm}, '%')
-                OR JSON_EXTRACT(CustomerMeta, '$.mobile') LIKE CONCAT('%', ${searchTerm}, '%')
-                OR orderId LIKE CONCAT('%', ${searchTerm}, '%')
-                OR JSON_EXTRACT(productMeta, '$.name') LIKE CONCAT('%', ${searchTerm}, '%')
-                OR JSON_EXTRACT(productMeta, '$.slug') LIKE CONCAT('%', ${searchTerm}, '%')
-            )
-            AND orderStatus = 3
-            AND paymentStatus = 1
-            AND awb IS NOT NULL
-          `;
-          
+  SELECT orderId ,id,CustomerMeta,finalPrice,createdAt,paymentStatus,orderStatus,shipingStatus,awb,totalWeight,shortItmStatus,shortItmsMeta
+FROM orders
+WHERE( JSON_EXTRACT(CustomerMeta, '$.firstName') LIKE CONCAT('%', ${searchTerm}, '%')
+   OR JSON_EXTRACT(CustomerMeta, '$.lastName') LIKE CONCAT('%', ${searchTerm}, '%')
+   OR JSON_EXTRACT(CustomerMeta, '$.email') LIKE CONCAT('%', ${searchTerm}, '%')
+   OR JSON_EXTRACT(CustomerMeta, '$.mobile') LIKE CONCAT('%', ${searchTerm}, '%')
+   OR orderId LIKE CONCAT('%', ${searchTerm}, '%')
+   OR JSON_EXTRACT(productMeta, '$.name') LIKE CONCAT('%', ${searchTerm}, '%')
+   OR JSON_EXTRACT(productMeta, '$.slug') LIKE CONCAT('%', ${searchTerm}, '%'))
+   AND paymentStatus=1
+   AND refralDiscountAbsolute IS NOT NULL
+
+`;
+
+
 
 
 

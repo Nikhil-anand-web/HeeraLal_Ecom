@@ -93,6 +93,9 @@ const Sidebar = () => {
                     </Accordion.Item>
 
                   </Accordion>
+                  <Accordion.Header onClick={() => { rtr.push("/wah-control-center/remainingFewAndNegativeVarients") }} className={"no-border-children"} >
+                    Critical Varients
+                  </Accordion.Header>
                   <Accordion defaultActiveKey={['0']} >
                     <Accordion.Item eventKey="2">
                       <Accordion.Header >Product</Accordion.Header>
@@ -287,7 +290,71 @@ const Sidebar = () => {
 
 
                   </span>
-                  
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/paidAndPendingOrders">
+                      Paid And Pending Orders
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/processingAndAwbGeneratedOrders">
+                      Processing And AWB Generated Orders
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/shortOrders">
+                      Short Orders
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/allOrders">
+                      All Orders
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/cancelledAndRefundedOrders">
+                      Cancelled And Refunded Orders
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/cancelledButNotRefunded">
+                      Cancelled But Not-Refunded Orders
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/compleatedOrders">
+                      Compleated Orders
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/ordersWithReferal">
+                      Orders With Referal
+                    </Link>
+
+
+                  </span>
+
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/paymentFailedOrders">
+                      Payment Failed Orders
+                    </Link>
+
+
+                  </span>
+
 
                 </Accordion.Body>
               </Accordion.Item> : ''}

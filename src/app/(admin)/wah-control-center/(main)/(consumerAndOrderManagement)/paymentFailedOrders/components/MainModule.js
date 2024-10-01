@@ -1,5 +1,7 @@
 "use client"
-import getSearchedOrdersCancelledButNotRefunded from '@/app/actions/getSearchedOrdersCancelledButNotRefunded'
+import getFaildPaymentOrders from '@/app/actions/getFaildPaymentOrders'
+
+
 import OrderModel from '@/components/adminComp/OrderModel'
 import Spinner from '@/components/global/Spinner'
 import debounce from '@/lib/debounce'
@@ -8,16 +10,17 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
 
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredOrder, setFilteredOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
+    
     const fetchResults = useCallback(
         debounce(async (searchQuery) => {
 
             try {
                 setIsLoading(true)
-                const response = await getSearchedOrdersCancelledButNotRefunded(searchQuery,itemsPerPage,pageNo)
+                const response = await getFaildPaymentOrders(searchQuery,itemsPerPage,pageNo)
              
-              
+            
                
                 setFilteredOrders(response.orders)
                 
@@ -62,7 +65,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
                 <div className={"hide-scrollbar"} style={{ height: "60vh", overflow: "scroll", width: "100%" }}>
 
 
-                    {filteredOrder.map((order,index) => (
+                    {filteredOrders.map((order,index) => (
 
                         <OrderModel key={index} goTo={`orderDetails/${order.orderId}`} order ={order}/>
                     ))}</div>
