@@ -301,7 +301,7 @@ const sliderRooot0 = await db.slider.findMany({
                   <div className="divider-top-selling"></div>
 
 
-                  {/* {productsTopSelling.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount}  productName={pro.name} price={pro.varient[0].mrp} varientId={pro.varient[0].id} />)} */}
+                  {productsTopSelling.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount}  productName={pro.name} price={pro.varient[0].mrp} varientId={pro.varient[0].id} />)}
                 </div>
               </div>
 
@@ -312,7 +312,7 @@ const sliderRooot0 = await db.slider.findMany({
                   <h3>Trending Products</h3>
                   <div className="divider-top-selling"></div>
 
-                  {/* {productsTrending.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount} productName={pro.name} price={pro.varient[0].mrp} varientId={pro.varient[0].id} />)} */}
+                  {productsTrending.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount} productName={pro.name} price={pro.varient[0].mrp} varientId={pro.varient[0].id} />)}
 
                 </div>
               </div>
@@ -322,7 +322,7 @@ const sliderRooot0 = await db.slider.findMany({
                   <h3>Recently added</h3>
                   <div className="divider-top-selling"></div>
 
-                  {/* {productRecentlyAdded.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount}  productName={pro.name} price={pro.varient[0].mrp} />)} */}
+                  {productRecentlyAdded.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount}  productName={pro.name} price={pro.varient[0].mrp} />)}
                 </div>
 
               </div>
@@ -332,7 +332,7 @@ const sliderRooot0 = await db.slider.findMany({
                   <h3>Top Rated</h3>
                   <div className="divider-top-selling"></div>
 
-                  {/* {productTopRated.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount}  productName={pro.name} price={pro.varient[0].mrp} />)} */}
+                  {productTopRated.map((pro) => <TopSellingProduct goTo={`/productDetails/${pro.slug}`} imageS={pro.thumbNail[0].url} discount={pro.varient[0].discount}  productName={pro.name} price={pro.varient[0].mrp} />)}
                 </div>
               </div>
 
