@@ -26,8 +26,9 @@ export default function AdminLayout({ children }) {
                     {/* partial */}
                     <div className="main-panel">
                         <div style={{
-                            overflow: "hidden",
-                            height: "91vh"
+                          
+                            height: "91vh",
+                            
                         }} className="content-wrapper">
                             {/* <Suspense fallback={<Spinner/>}> */}
                             {children}
