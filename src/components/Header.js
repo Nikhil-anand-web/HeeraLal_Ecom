@@ -50,6 +50,9 @@ const Header = async (props) => {
 
       <nav className="navbar navbar-expand-lg navbar-light bg-light ">
         <div className="container navigation">
+          <button  className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span  className="navbar-toggler-icon"></span>
+          </button>
 
           <Link className="navbar-brand" href="/">
 
@@ -73,10 +76,8 @@ const Header = async (props) => {
 
 
           </div>
-          <ShareTheSiteButton style={{ borderRadius: "21px",marginLeft:"15px"}} className="btn btn-success">Share</ShareTheSiteButton>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          <ShareTheSiteButton style={{ borderRadius: "21px", marginLeft: "15px" }} className="btn btn-success">Share</ShareTheSiteButton>
+
 
 
           <div className="collapse navbar-collapse " id="navbarSupportedContent">

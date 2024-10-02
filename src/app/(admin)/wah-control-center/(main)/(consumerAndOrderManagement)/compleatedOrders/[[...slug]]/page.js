@@ -13,10 +13,10 @@ const page = async ({ params }) => {
   const user = await getServerSession(authOptions)
 
 
- 
+
   var count = 0
   var itemsPerPage = 20
-  
+
   if (user) {
     if (user.role === 1 || user.role === 2) {
 
@@ -24,19 +24,19 @@ const page = async ({ params }) => {
         var pageNo = params.slug?.at(params?.slug?.length - 1)
         if (!pageNo || isNaN(pageNo)) {
           pageNo = 1;
-          
+
 
         }
 
         count = await db.orders.count({
-          where:{
-            AND:[{orderStatus:2},{paymentStatus:1},{awb:{not:null}}]
+          where: {
+            AND: [{ orderStatus: 2 }, { paymentStatus: 1 }, { awb: { not: null } }]
 
           }
 
 
         })
-       
+
 
 
 
@@ -60,7 +60,7 @@ const page = async ({ params }) => {
 
   }
 
- 
+
 
 
 
