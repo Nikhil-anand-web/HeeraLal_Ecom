@@ -10,7 +10,7 @@ const Page = async () => {
     // Check if the user's mobile number is verified
     if (user?.mobileVerified) {
         // Redirect to the homepage if the mobile is verified
-        redirect('/');
+        redirect('/cart');
     }
     if (!user.mobile) {
         redirect('/account/profile');
