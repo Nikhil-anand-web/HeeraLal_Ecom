@@ -143,7 +143,7 @@ const Sidebar = () => {
                         </span>
                         <span className="nav-item">
                           <Link className="nav-link" href="wah-control-center/remainingFewAndNegativeVarients">
-                            Update varient
+                            Critical varients
                           </Link>
 
 
