@@ -16,7 +16,7 @@ import AuthProvider from "./context/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Heera Lal',
+  title: 'Heeral',
   icons: {
     icon: '/images/favicon.ico',
   },
