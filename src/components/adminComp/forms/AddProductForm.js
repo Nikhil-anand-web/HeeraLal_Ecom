@@ -310,7 +310,8 @@ const AddProductForm = ({ categories }) => {
                                 rules={{ required: 'Category is required' }}
 
                                 render={({ field }) => (
-                                    <select className="form-select" {...field} id="isBestSeller">
+                                    <select defaultValue={0} className="form-select" {...field} id="isBestSeller">
+                                        <option disabled value={0}>select a valid state</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>

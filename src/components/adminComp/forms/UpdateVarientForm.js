@@ -148,7 +148,7 @@ const UpdateVarientForm = ({ productSlugs }) => {
 
                                         rules={{ required: 'Category is required' }}
                                         render={({ field }) => (
-                                            <select defaultValue={"0"} {...field} className="form-select"  >
+                                            <select defaultValue={0} {...field} className="form-select"  >
 
                                                 <option disabled value={0}>select a valid slug</option>
                                                 {

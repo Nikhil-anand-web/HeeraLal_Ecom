@@ -45,14 +45,14 @@ const AddComboForm = ({ varientSlugs }) => {
     console.log(maxLimitVarient)
     const onSubmit = async (e) => {
         const formData = objectToFormData(e)
-        formData.set('noOfVarient',noOfVarientInvolve)
+        formData.set('noOfVarient', noOfVarientInvolve)
 
         try {
             setIsLoading(true)
-            const res =await createCombo(formData)
+            const res = await createCombo(formData)
             if (!res.success) {
                 throw res
-                
+
             }
             toast.success(res.message)
 
@@ -61,7 +61,7 @@ const AddComboForm = ({ varientSlugs }) => {
             toast.warning(error.message)
 
 
-        }finally{
+        } finally {
             setIsLoading(false)
         }
 
@@ -115,9 +115,9 @@ const AddComboForm = ({ varientSlugs }) => {
                                 rules={{ required: 'parentProductSlug is required' }}
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field}>
+                                    <select defaultValue={0} className="form-select" {...field}>
 
-                                        <option disabled value={0}>select a valid slug</option>
+                                        <option disabled value={0}>select a valid state</option>
                                         {
                                             varientSlugs.map((obj, i) => <option key={i} value={obj.id}>{obj.slug}</option>)
                                         }

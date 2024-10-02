@@ -222,9 +222,9 @@ const BannerSettingForm = ({ pages }) => {
                                     name="displayOrder"
                                     control={control}
                                     render={({ field: { onChange, onBlur, value, ref } }) => (
-                                        <select onChange={handelSelectionofDisplayOrder} onBlur={onBlur} value={value} ref={ref} defaultValue={"def"} className="form-select" id="displayOrder">
+                                        <select onChange={handelSelectionofDisplayOrder} onBlur={onBlur} value={value} ref={ref} defaultValue={0} className="form-select" id="displayOrder">
 
-                                            <option disabled value={"def"}>select a valid order</option>
+<option disabled value={0}>select a valid state</option>
 
                                             {
                                                 displayOrders.map((cat, index) => <option key={index} value={cat.displayOrder}>{cat.displayOrder}</option>)

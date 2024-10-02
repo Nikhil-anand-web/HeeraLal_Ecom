@@ -1,10 +1,10 @@
 "use client"
-import createCombo from '@/app/actions/createCombo';
+
 import createCoupon from '@/app/actions/createCoupon';
-import getComboLitmit from '@/app/actions/getSettingValue';
+
 import objectToFormData from '@/lib/objectToFormData';
-import React, { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form';
+import React, {  useState } from 'react'
+import {  useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 const AddCouponForm = () => {
@@ -15,9 +15,7 @@ const AddCouponForm = () => {
 
         register,
         handleSubmit,
-        control,
-        setValue,
-        getValues,
+      
 
 
         formState: { errors },

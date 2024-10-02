@@ -92,7 +92,7 @@ const AddVarientForm = ({ categories, productSlugs }) => {
                                     rules={{ required: 'parentProductSlug is required' }}
 
                                     render={({ field }) => (
-                                        <select defaultValue={"0"} className="form-select" {...field}>
+                                        <select defaultValue={0} className="form-select" {...field}>
 
                                             <option disabled value={0}>select a valid identifire</option>
                                             {

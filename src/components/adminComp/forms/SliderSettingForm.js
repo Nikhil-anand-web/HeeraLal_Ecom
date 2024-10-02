@@ -113,7 +113,7 @@ const SliderSettingForm = ({ pages }) => {
     const handleFileChange = (event) => {
         setImagePreview([])
         const files = Array.from(event.target.files);
-        const validFiles = files.filter(file => (file.type === 'image/jpeg' || file.type === 'image/png'||file.type === 'image/jpg' ||file.type === 'image/webp'));
+        const validFiles = files.filter(file => (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/webp'));
 
         if (files.length !== validFiles.length) {
             alert('Only JPEG images are allowed.');
@@ -159,7 +159,7 @@ const SliderSettingForm = ({ pages }) => {
     const onCross = (index) => {
         const originalFileList = getValues('samplePhotos')
 
- 
+
 
 
 
@@ -190,13 +190,13 @@ const SliderSettingForm = ({ pages }) => {
 
         setImagePreview(restImage)
 
-        for (let i = index; i < imagePreview.length-1; i++) {
+        for (let i = index; i < imagePreview.length - 1; i++) {
             console.log(i)
-            
-            setValue(`lnk_${i}`, getValues(`lnk_${i+1}`));
-            
+
+            setValue(`lnk_${i}`, getValues(`lnk_${i + 1}`));
+
         }
-        unregister(`lnk_${imagePreview.length-1}`)
+        unregister(`lnk_${imagePreview.length - 1}`)
 
     }
     const handelSelectionofDisplayOrder = (e) => {
@@ -246,9 +246,9 @@ const SliderSettingForm = ({ pages }) => {
                                     name="displayOrder"
                                     control={control}
                                     render={({ field: { onChange, onBlur, value, ref } }) => (
-                                        <select onChange={handelSelectionofDisplayOrder} onBlur={onBlur} value={value} ref={ref} defaultValue={"def"} className="form-select" id="displayOrder">
+                                        <select onChange={handelSelectionofDisplayOrder} onBlur={onBlur} value={value} ref={ref} defaultValue={0} className="form-select" id="displayOrder">
 
-                                            <option disabled value={"def"}>select a valid order</option>
+                                            <option disabled value={0}>select a valid state</option>
 
                                             {
                                                 displayOrders.map((cat, index) => <option key={index} value={cat.displayOrder}>{cat.displayOrder}</option>)
@@ -267,7 +267,7 @@ const SliderSettingForm = ({ pages }) => {
                             <div className="form-group">
                                 <p>Upload samplePhotos</p>
                                 <label style={{ fontSize: "2rem", cursor: "pointer" }} className="fa  fa-folder-open" htmlFor="samplePhotos"></label>
-                                <input  style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple accept="image/*" />
+                                <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple accept="image/*" />
                             </div>
 
 
@@ -306,7 +306,7 @@ const SliderSettingForm = ({ pages }) => {
                                                 id={`lnk_${index}`}
                                                 placeholder="Link for this image"
                                             />
-                                          
+
                                             {errors[`lnk_${index}`] && <p>{errors[`lnk_${index}`].message}</p>}
                                         </div>
                                     </div>

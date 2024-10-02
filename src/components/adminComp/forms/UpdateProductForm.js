@@ -184,7 +184,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
                             rules={{ required: 'identifireSlug is required' }}
 
                             render={({ field }) => (
-                                <select defaultValue={"0"} className="form-select" {...field}>
+                                <select defaultValue={0} className="form-select" {...field}>
 
                                     <option disabled value={0}>select a valid identifire</option>
                                     {
@@ -247,7 +247,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field} id="parentId">
+                                    <select defaultValue={0} className="form-select" {...field} id="parentId">
 
                                         <option disabled value={0}>select a valid category</option>
                                         {
@@ -270,7 +270,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field} id="showOnHome">
+                                    <select defaultValue={0} className="form-select" {...field} id="showOnHome">
                                         <option disabled value={0}>select a valid state</option>
 
                                         <option value={true}>True</option>
@@ -292,7 +292,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field} id="isFeatured">
+                                    <select defaultValue={0} className="form-select" {...field} id="isFeatured">
                                         <option disabled value={0}>select a valid state</option>
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -313,7 +313,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field} id="isVegiterian">
+                                    <select defaultValue={0} className="form-select" {...field} id="isVegiterian">
                                         <option disabled value={0}>select a valid state</option>
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -334,7 +334,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field} id="isBestSeller">
+                                    <select defaultValue={0} className="form-select" {...field} id="isBestSeller">
                                         <option disabled value={0}>select a valid state</option>
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>

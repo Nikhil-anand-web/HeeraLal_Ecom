@@ -109,7 +109,7 @@ const AddComboForm = ({ productSlug }) => {
                                 rules={{ required: 'product slug is required' }}
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field}>
+                                    <select defaultValue={0} className="form-select" {...field}>
 
                                         <option disabled value={0}>select a valid slug</option>
                                         {

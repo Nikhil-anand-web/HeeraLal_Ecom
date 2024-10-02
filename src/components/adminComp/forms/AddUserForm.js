@@ -85,7 +85,8 @@ const AddUserForm = ({ permissions }) => {
                                 rules={{ required: 'Category is required' }}
 
                                 render={({ field }) => (
-                                    <select defaultValue={1} className="form-select" {...field} id="exampleSelectGender">
+                                    <select defaultValue={0} className="form-select" {...field} id="exampleSelectGender">
+                                        <option disabled value={0}>select a valid state</option>
 
 
                                         <option value="2">Female</option>

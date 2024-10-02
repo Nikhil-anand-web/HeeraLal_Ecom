@@ -270,7 +270,8 @@ const UpdateCategoryForm = ({ categories }) => {
                                 rules={{ required: 'Category is required' }}
 
                                 render={({ field }) => (
-                                    <select className="form-select" {...field} id="showOnHome">
+                                    <select defaultValue={0} className="form-select" {...field} id="showOnHome">
+                                        <option disabled value={0}>select a valid state</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
