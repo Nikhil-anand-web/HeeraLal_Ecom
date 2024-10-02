@@ -2,6 +2,7 @@
 
 
 
+import PieChart from '@/components/adminComp/PieChart'
 import SalesChart from '@/components/adminComp/SalesChart'
 import AdminLayout from '@/layouts/AdminLayout'
 import db from '@/lib/db'
@@ -48,18 +49,15 @@ const Page = async () => {
 
   const canButNREf = await db.orders.count({
     where: {
-      AND: [{ orderStatus: 3 }, { paymentStatus: 2 }, { awb: { not: null } }]
+      AND: [{ orderStatus: 3 }, { paymentStatus: 1 }, { awb: { not: null } }]
 
     }
 
 
   })
-
-
-
   const refunded = await db.orders.count({
     where: {
-      AND: [{ orderStatus: 3 }, { paymentStatus: 1 }, { awb: { not: null } }]
+      AND: [{ orderStatus: 3 }, { paymentStatus: 2 }, { awb: { not: null } }]
 
     }
   })
@@ -79,7 +77,26 @@ const Page = async () => {
 
 
   })
-  
+  // const paymentFaild = await db.orders.count({
+  //   where:{
+  //     AND:[{orderStatus:0},{paymentStatus:0},{paymentToken:{not:null}}]
+
+  //   }
+
+
+  // })
+  // const referalOrders = await db.orders.count({
+  //   where:{
+  //     AND:[{refralDiscountAbsolute:{not:0}},{paymentStatus:1}]
+
+  //   }
+
+
+  // })
+  const pieDataArr = [paidAndPending,ProcessingAndAwb,canButNREf,short]
+  const pieLabel = ["Paid and pending" , "Processing and awb gen." , "Canceled but not refunded","short Order"]
+ 
+
 
 
   return (
@@ -164,10 +181,12 @@ const Page = async () => {
           </div>
 
         </div>
-        <div style={{backgroundColor:"white",marginBottom:"50px",padding:"50px"}} className="row">
-          <SalesChart  style={{width:"50%",height:"50vh",display:"flex"}} />
+        <div style={{ backgroundColor: "white", marginBottom: "50px", padding: "50px" }} className="row">
+          <SalesChart style={{ width: "50%", height: "50vh", display: "flex" }} />
+
 
         </div>
+        <PieChart pieDataArr={pieDataArr} pieLabel={pieLabel} />
 
 
       </div>

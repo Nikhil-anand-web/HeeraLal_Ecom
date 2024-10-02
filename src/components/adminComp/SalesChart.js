@@ -36,7 +36,7 @@ const LineChart = ({ style }) => {
     const chartRef = useRef(null);
     const [monthlyData, setmonthlyData] = useState()
     const [countArr, setCountArr] = useState()
-    const [year, setYear] = useState(2024)
+    const [year, setYear] = useState( parseInt(new Date(Date.now()).getFullYear()))
     const [aggregateOrder, setAgregateOrder] = useState(0)
     const [aggRev, setRev] = useState(0)
 
