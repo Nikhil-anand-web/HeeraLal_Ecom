@@ -93,9 +93,7 @@ const Sidebar = () => {
                     </Accordion.Item>
 
                   </Accordion>
-                  <Accordion.Header onClick={() => { rtr.push("/wah-control-center/remainingFewAndNegativeVarients") }} className={"no-border-children"} >
-                    Critical Varients
-                  </Accordion.Header>
+                
                   <Accordion defaultActiveKey={['0']} >
                     <Accordion.Item eventKey="2">
                       <Accordion.Header >Product</Accordion.Header>
@@ -134,9 +132,17 @@ const Sidebar = () => {
                           </Link>
 
                         </span>
+                        
 
                         <span className="nav-item">
                           <Link className="nav-link" href="/wah-control-center/updateVarient">
+                            Update varient
+                          </Link>
+
+
+                        </span>
+                        <span className="nav-item">
+                          <Link className="nav-link" href="wah-control-center/remainingFewAndNegativeVarients">
                             Update varient
                           </Link>
 
