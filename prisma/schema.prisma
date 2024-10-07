@@ -32,6 +32,7 @@ model admin {
   coupons        coupons[]
   user           user[]
   orders         orders[]
+  faqs           faqs[]
 }
 
 model user {
@@ -91,10 +92,14 @@ model blog {
 }
 
 model faqs {
-  id       String @id @default(uuid())
-  question String
-  answer   String
-  status   Int    @default(1)
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  status    Int      @default(1)
+  createdBy admin    @relation(fields: [adminId], references: [id])
+  adminId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model permissions {
@@ -108,6 +113,7 @@ model permissions {
   globalSetting                 Boolean @default(false)
   siteManagement                Boolean @default(false)
   consumerAndOrderManagement    Boolean @default(false)
+  archives                      Boolean @default(false)
 }
 
 model category {
@@ -160,7 +166,7 @@ model varient {
   weight                     Decimal    @db.Decimal(10, 2)
   size                       String
   maxQuantityForFewAvailable Int        @default(10)
-  qty                        Int        
+  qty                        Int
   status                     Boolean    @default(true)
   isBulk                     Boolean    @default(false)
   discount                   Decimal    @default(0) @db.Decimal(10, 2)
@@ -270,39 +276,41 @@ model coupons {
 }
 
 model orders {
-  id                     String   @id @default(uuid())
-  orderId                String   @unique
-  customerId             String
-  CustomerMeta           Json?
-  productIds             Json
-  productMeta            Json
-  varientIds             Json
-  varientMeta            Json
-  comboIds               Json
-  refralDiscountAbsolute Float    @default(0)
-  comboMeta              Json
-  couponMeta             Json?
-  subTotal               Float
-  taxes                  Float
-  finalPrice             Float?
-  shipingCharges         Float?
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
-  PaymentMode            String?
-  paymentToken           Json?
-  referalCoins           Int      @default(0)
-  paymentStatus          Int      @default(0)
-  orderStatus            Int      @default(0)
-  shipingStatus          String   @default("initiated")
-  awb                    String?  @unique
-  totalWeight            Float    @default(0)
-  shipmentMeta           Json?
-  lastEditedBy           admin?   @relation(fields: [adminId], references: [id])
-  refundRequest          Json?
-  refundRequestStatus Int @default(0)
-  adminId                String?
-  shortItmsMeta Json?
-  shortItmStatus Int @default(0)
+  id                        String   @id @default(uuid())
+  orderId                   String   @unique
+  customerId                String
+  CustomerMeta              Json?
+  productIds                Json
+  productMeta               Json
+  varientIds                Json
+  varientMeta               Json
+  comboIds                  Json
+  refralDiscountAbsolute    Float    @default(0)
+  comboMeta                 Json
+  couponMeta                Json?
+  subTotal                  Float
+  taxes                     Float
+  finalPrice                Float?
+  shipingCharges            Float?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+  PaymentMode               String?
+  paymentToken              Json?
+  referalCoins              Int      @default(0)
+  paymentStatus             Int      @default(0)
+  orderStatus               Int      @default(0)
+  shipingStatus             String   @default("initiated")
+  awb                       String?  @unique
+  totalWeight               Float    @default(0)
+  shipmentMeta              Json?
+  lastEditedBy              admin?   @relation(fields: [adminId], references: [id])
+  refundRequest             Json?
+  refundRequestStatus       Int      @default(0)
+  adminId                   String?
+  shortItmsMeta             Json?
+  shortItmStatus            Int      @default(0)
+  cancellationRequestStatus Int      @default(0)
+  cancellationRequestMeta   Json?
 }
 
 model staticInfo {
@@ -316,4 +324,12 @@ model referal {
   user   user   @relation(fields: [userId], references: [id])
   userId String @unique
   coins  Int    @default(0)
+}
+
+model queries {
+  id        String   @id @default(uuid())
+  email     String
+  name      String
+  message   String   @db.LongText
+  createdAt DateTime @default(now())
 }

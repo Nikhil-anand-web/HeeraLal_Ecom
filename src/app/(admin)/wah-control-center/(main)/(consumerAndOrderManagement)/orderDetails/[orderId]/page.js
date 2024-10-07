@@ -5,11 +5,18 @@ import { getServerSession } from 'next-auth'
 import Image from 'next/image'; // Ensure Image is imported
 import VarientModelMini from '../components/VarientModelMini';
 import ComboModelMini from '../components/ComboModelMini';
-import ReadyToShipButton from '@/components/adminComp/ReadyToShipButton';
 import DatePickerAndAwb from '@/components/global/DatePickerAndAwb';
 import CancilShipmentButton from '@/components/adminComp/CancilShipmentButton';
 import RefundButton from '@/components/adminComp/RefundButton';
 import db from '@/lib/db';
+
+import dateTimeExtractor from '@/lib/dateTimeExtractor';
+
+import MarkAsCompleated from '@/components/adminComp/MarkAsCompleated';
+import MarkAsCancelled from '@/components/adminComp/MarkAsCancelled';
+import formatDate from '@/lib/formatDate';
+import AcceptCancellationReq from '@/components/AcceptCancellationReq';
+import RejectCancellationRequest from '@/components/RejectCancellationRequest';
 import PrintLabel from '@/components/adminComp/PrintLabel';
 
 
@@ -55,14 +62,13 @@ const Page = async (prop) => {
                     <div className="col-12 col-lg-8 col-xl-9">
                         <div className="card widget-card border-light shadow-sm">
 
+
                             <div className="card-body p-4">
                                 <ul className="nav nav-tabs" id="profileTab" role="tablist">
                                     <li className="nav-item" role="presentation">
                                         <button className="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" type="button" role="tab" aria-controls="overview-tab-pane" aria-selected="true">Overview</button>
                                     </li>
-                                   {order.awb&& <li className="nav-item" role="presentation">
-                                        <PrintLabel className="nav-link"orderId={order.awb}/>
-                                    </li>}
+
 
 
                                     {order.comboMeta?.length > 0 && <li className="nav-item" role="presentation">
@@ -78,12 +84,26 @@ const Page = async (prop) => {
                                         <button className="nav-link" id="ship-tab" data-bs-toggle="tab" data-bs-target="#ship-pane" type="button" role="tab" aria-controls="ship-pane">Ship</button>
                                     </li>}
 
+                                    {((order.cancellationRequestStatus >= 1)) ? <li className="nav-item" role="presentation">
+                                        <button className="nav-link" id="cancelReq-tab" data-bs-toggle="tab" data-bs-target="#cancelReq-pane" type="button" role="tab" aria-controls="cancelReq-pane">cancellation Request</button>
+                                    </li> : ""}
                                     {((order.orderStatus < 2)) ? <li className="nav-item" role="presentation">
-                                        <button className="nav-link" id="shipCancil-tab" data-bs-toggle="tab" data-bs-target="#shipCancil-pane" type="button" role="tab" aria-controls="shipCancil-pane">Cancilation </button>
+                                        <button className="nav-link" id="shipCancil-tab" data-bs-toggle="tab" data-bs-target="#shipCancil-pane" type="button" role="tab" aria-controls="shipCancil-pane">cancellation </button>
                                     </li> : ""}
                                     {order.paymentStatus == 1 ? <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="refund-tab" data-bs-toggle="tab" data-bs-target="#refund-pane" type="button" role="tab" aria-controls="refund-pane">Refund </button>
                                     </li> : ""}
+                                    {(order.paymentStatus == 1 && order.orderStatus == 1 && order.awb != null) ? <li className="nav-item" role="presentation">
+                                        <button className="nav-link" id="pickup-tab" data-bs-toggle="tab" data-bs-target="#pickup-pane" type="button" role="tab" aria-controls="pickup-pane">Pickup Details </button>
+                                    </li> : ""}
+                                    {(true ) ? <li className="nav-item" role="presentation">
+                                        <button className="nav-link" id="action-tab" data-bs-toggle="tab" data-bs-target="#action-pane" type="button" role="tab" aria-controls="action-pane">Action </button>
+                                    </li> : ""}
+
+                                    {/* {order.awb && <li className="nav-item" role="presentation">
+                                        <TrackShipmentButton className="nav-link"  awb={order.awb}/>
+                                    </li>} */}
+
 
                                 </ul>
                                 <div className="tab-content pt-4" id="profileTabContent">
@@ -91,7 +111,7 @@ const Page = async (prop) => {
                                         <div className='hide-scrollbar' style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
 
 
-                                            
+
                                             <div className="row">
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Order Id</div>
@@ -104,7 +124,7 @@ const Page = async (prop) => {
                                                     <div className="p-2">Customer Name </div>
                                                 </div>
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2">{order?.CustomerMeta?.firstName}{order?.CustomerMeta?.lastName}</div>
+                                                    <div className="p-2">{order?.CustomerMeta?.firstName} {order?.CustomerMeta?.lastName}</div>
                                                 </div>
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Mobile </div>
@@ -123,7 +143,7 @@ const Page = async (prop) => {
                                                     <div className="p-2">Date of order</div>
                                                 </div>
                                                 <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
-                                                    <div className="p-2">{order.createdAt.toString()}</div>
+                                                    <div className="p-2">{formatDate(order.createdAt)}</div>
                                                 </div>
                                                 <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
                                                     <div className="p-2">Order Status</div>
@@ -208,8 +228,8 @@ const Page = async (prop) => {
                                                     <div className="p-2">
 
                                                         {order.shortItmStatus === 0 && <span className="badge badge-success">{" Ideal "}</span>}
-                                                        {order.paymentStatus === 1 && <span className="badge badge-danger">{" Short Item "}</span>}
-                                                        {order.paymentStatus === 2 && <span className="badge badge-success">{" Fullfilled "}</span>}
+                                                        {order.shortItmStatus === 1 && <span className="badge badge-danger">{" Short Item "}</span>}
+                                                        {order.shortItmStatus === 2 && <span className="badge badge-success">{" Fullfilled "}</span>}
 
 
 
@@ -295,6 +315,26 @@ const Page = async (prop) => {
                                         <DatePickerAndAwb orderId={order.orderId} />
 
                                     </div>}
+                                    {((order.cancellationRequestStatus >= 1)) ? <div className="tab-pane fade" id="cancelReq-pane" role="tabpanel" aria-labelledby="cancelReq-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                        <div className='row'>
+                                            <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                <div className="p-2">Reason</div>
+                                            </div>
+
+                                            <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                <div className="p-2">{order.cancellationRequestMeta?.at(0).reason}</div>
+                                            </div>
+
+                                        </div>
+
+                                        {order.cancellationRequestStatus == 1 ? <><AcceptCancellationReq orderId={order.orderId} />
+                                            <RejectCancellationRequest orderId={order.orderId} /></> : <>
+                                            {order.cancellationRequestStatus == 2 && "Accepted"}
+                                            {order.cancellationRequestStatus == 3 && "Reject"}
+
+                                        </>}
+
+                                    </div> : ""}
                                     {((order.orderStatus < 2)) ? <div className="tab-pane fade" id="shipCancil-pane" role="tabpanel" aria-labelledby="shipCancil-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
                                         <CancilShipmentButton orderId={order.orderId}>
                                             Cancil This Shipment
@@ -344,6 +384,70 @@ const Page = async (prop) => {
 
 
                                         </div>}
+
+                                    </div> : ""}
+                                    {(order.paymentStatus == 1 && order.orderStatus == 1 && order.awb != null) ? <div className="tab-pane fade" id="pickup-pane" role="tabpanel" aria-labelledby="pickup-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                        <div className="row">
+                                            <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                <div className="p-2">AWB</div>
+                                            </div>
+
+                                            <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                <div className="p-2">{order.shipmentMeta.AWBNo}</div>
+                                            </div>
+                                            <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                <div className="p-2">Status</div>
+                                            </div>
+
+                                            <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                <div className="p-2">{order.shipmentMeta.Status[0].StatusInformation}</div>
+                                            </div>
+                                            <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                <div className="p-2">Destination Area</div>
+                                            </div>
+
+                                            <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                <div className="p-2">{order.shipmentMeta.DestinationArea}</div>
+                                            </div>
+                                            <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                <div className="p-2">Destination Location</div>
+                                            </div>
+
+                                            <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                <div className="p-2">{order.shipmentMeta.DestinationLocation}</div>
+                                            </div>
+                                            <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                <div className="p-2">Pick Time</div>
+                                            </div>
+
+                                            <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                <div className="p-2">{dateTimeExtractor(order.shipmentMeta.ShipmentPickupDate)}</div>
+                                            </div>
+                                            <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
+                                                <div className="p-2">Customer Address</div>
+                                            </div>
+
+                                            <div className="col-7 col-md-9 bg-light border-start border-bottom border-white border-3">
+                                                <div className="p-2">{order.CustomerMeta.address + "," + order.CustomerMeta.city + "," + order.CustomerMeta.state + "," + order.CustomerMeta.pinCode}</div>
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                    </div> : ""}
+                                    {true ? <div className="tab-pane fade" id="action-pane" role="tabpanel" aria-labelledby="action-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                        {(order.paymentStatus == 1 && order.orderStatus == 1 && order.awb != null) && <li className="nav-item" role="presentation">
+                                            <MarkAsCompleated className="mt-3 pay-now-button btn" orderId={order.orderId} />
+                                        </li>}
+                                        {(order.paymentStatus == 1 && order.orderStatus == 2 && order.awb != null) && <li className="nav-item" role="presentation">
+                                            <MarkAsCancelled className="mt-3 pay-now-button btn"orderId={order.orderId} />
+                                        </li>}
+                                        {(order.awb ) && <li className="nav-item" role="presentation">
+                                          <PrintLabel className="mt-3 pay-now-button btn" orderId={order.awb} />
+                                        </li>}
+                                        
 
                                     </div> : ""}
 

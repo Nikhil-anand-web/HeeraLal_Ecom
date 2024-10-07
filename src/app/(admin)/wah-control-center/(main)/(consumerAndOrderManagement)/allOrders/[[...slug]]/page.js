@@ -4,6 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options"
 import Pagination from "@/components/Pagination"
 import MainModule from "../components/MainModule"
 import db from "@/lib/db"
+import getPaginationLimit from "@/lib/getPaginationLimit"
 
 
 
@@ -15,7 +16,7 @@ const page = async ({ params }) => {
 
 
   var count = 0
-  var itemsPerPage = 20
+  var itemsPerPage = await getPaginationLimit()
 
   if (user) {
     if (user.role === 1 || user.role === 2) {
@@ -70,9 +71,11 @@ const page = async ({ params }) => {
 
   return (
     (user && user.permissions[0].consumerAndOrderManagement ? <>
-      <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
+    <h3>Total-{count}</h3>
+      
 
       <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />
+      <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
 
 
 

@@ -1,6 +1,7 @@
 import BlogContent from '@/components/BlogContent'
 import Pagination from '@/components/Pagination';
 import db from '@/lib/db';
+import getPaginationLimit from '@/lib/getPaginationLimit';
 import React from 'react'
 
 const page = async ({params}) => {
@@ -9,7 +10,7 @@ const page = async ({params}) => {
         pageNo = 1;
 
     }
-    var itemsPerPage = 6
+    var itemsPerPage = await getPaginationLimit()
     const count = await db.blog.count({
         where:{
             status:1

@@ -8,6 +8,7 @@ import { revalidatePath } from 'next/cache';
 
 
 import PaytmChecksum from 'paytmchecksum';
+import isUnderDuration from "@/lib/isUnderDuration";
 
 
 
@@ -25,9 +26,24 @@ async function refund(orderId) {
 
                     const order = await db.orders.findUnique({
                         where: {
-                            orderId: orderId
+                            orderId: orderId,
+                            
                         }
                     })
+                    const refundUpperLimit = await db.globalSettings.findFirst({
+                        where: {
+                            settingName: "refundUpperLimit"
+
+
+                        }
+                    })
+                    if (!isUnderDuration(refundUpperLimit.value, order.createdAt)) {
+                        return {
+                            message: "time limit exceeded",
+                            success: false
+                        }
+
+                    }
                     if (order.paymentStatus !== 1) {
                         return {
 

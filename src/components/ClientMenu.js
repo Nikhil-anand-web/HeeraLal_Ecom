@@ -7,7 +7,7 @@ const ClientMenu = () => {
     const url = usePathname()
     const arr = url.split('/')
     const active = arr.at(1)
-    console.log(arr.at(1),"jdfnw")
+  
   return (
     <>
      <li className="nav-item">
@@ -28,6 +28,9 @@ const ClientMenu = () => {
 
               <li className="nav-item">
                 <Link className={`nav-link  ${active==='blogs' && 'active'}`} href="/blogs">Blog</Link>
+              </li>
+              <li className="nav-item">
+                <Link className={`nav-link  ${active==='faqs' && 'active'}`} href="/faqs">FAQ's</Link>
               </li>
       
     </>

@@ -2,6 +2,7 @@ import React from 'react'
 import ProductBulk from '../_components/ProductBulk'
 import Pagination from '@/components/Pagination';
 import db from '@/lib/db';
+import getPaginationLimit from '@/lib/getPaginationLimit';
 
 
 const page = async ({params}) => {
@@ -11,7 +12,7 @@ const page = async ({params}) => {
         pageNo = 1;
 
     }
-    var itemsPerPage = 6
+    var itemsPerPage = await getPaginationLimit()
     const count = await db.product.count({
         where:{
             AND:[{ varient:{

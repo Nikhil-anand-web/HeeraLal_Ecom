@@ -13,7 +13,7 @@ const Page = async ({params}) => {
     const order =  await db.orders.findUnique({
         where:{
             orderId:orderId,
-            AND:[{customerId:user.id},{paymentStatus:1}]
+            AND:[{customerId:user.id},{paymentStatus:{gt:0}}]
         },select:{
             orderId:true,
             createdAt:true,
@@ -29,7 +29,10 @@ const Page = async ({params}) => {
             comboMeta:true,
             CustomerMeta:true,
             couponMeta:true,
-            refralDiscountAbsolute:true
+            refralDiscountAbsolute:true,
+            cancellationRequestStatus:true,
+            orderStatus:true
+
 
 
 

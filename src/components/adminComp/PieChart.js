@@ -55,7 +55,7 @@ const PieChart = ({pieDataArr,pieLabel}) => {
       },
       title: {
         display: true,
-        text: "Pie Chart Example",
+        text: "Orders",
       },
     },
   };

@@ -42,7 +42,7 @@ const Page = async () => {
   })
   const ProcessingAndAwb = await db.orders.count({
     where: {
-      AND: [{ orderStatus: 2 }, { paymentStatus: 1 }, { awb: { not: null } }]
+      AND: [{ orderStatus: 1 }, { paymentStatus: 1 }, { awb: { not: null } }]
 
     }
 
@@ -50,7 +50,7 @@ const Page = async () => {
 
   const canButNREf = await db.orders.count({
     where: {
-      AND: [{ orderStatus: 3 }, { paymentStatus: 1 }, { awb: { not: null } }]
+      AND: [{ orderStatus: 3 }, { paymentStatus: 1 }]
 
     }
 
@@ -58,7 +58,7 @@ const Page = async () => {
   })
   const refunded = await db.orders.count({
     where: {
-      AND: [{ orderStatus: 3 }, { paymentStatus: 2 }, { awb: { not: null } }]
+      AND: [{ orderStatus: 3 }, { paymentStatus: 2 }]
 
     }
   })

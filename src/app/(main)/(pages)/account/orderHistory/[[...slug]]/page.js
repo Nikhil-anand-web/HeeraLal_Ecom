@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import OrderItem from '../_components/OrderItem'
 import db from '@/lib/db'
+import getPaginationLimit from '@/lib/getPaginationLimit'
 
 
 const page = async ({ params }) => {
@@ -14,7 +15,7 @@ const page = async ({ params }) => {
         pageNo = 1;
 
     }
-    var itemsPerPage = 5
+    var itemsPerPage = await getPaginationLimit()
     const count = await db.orders.count({
         where: {
             customerId: user.id,
@@ -25,7 +26,7 @@ const page = async ({ params }) => {
     const orders = await db.orders.findMany({
         where: {
             customerId: user.id,
-            paymentStatus:1
+           OR:[{paymentStatus:1},{paymentStatus:2}] 
         }, select: {
             orderId: true,
             createdAt: true,

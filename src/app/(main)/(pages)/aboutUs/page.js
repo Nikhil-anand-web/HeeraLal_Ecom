@@ -1,8 +1,42 @@
 import React from 'react'
-import abo from "../../../../images/abo-1.webp"
-import mem from "../../../../images/mem-02.webp"
+
+
 import Image from 'next/image'
-const page = () => {
+const page = async() => {
+    const ourMission = (await db.staticInfo.findFirst({
+        where:{
+            key:"ourMission"
+        }
+    })).value[0].data
+    const ourStories = (await db.staticInfo.findFirst({
+        where:{
+            key:"ourStories"
+        }
+    })).value[0].data
+    const ourApproach = (await db.staticInfo.findFirst({
+        where:{
+            key:"ourApproach"
+        }
+    })).value[0].data
+    const ourPhilosophy = (await db.staticInfo.findFirst({
+        where:{
+            key:"ourApproach"
+        }
+    })).value[0].data
+    const smallFactAboutMasala = (await db.staticInfo.findFirst({
+        where:{
+            key:"smallFactAboutMasala"
+        }
+    })).value[0].data
+    const banner = (await db.banners.findFirst({
+        where:{
+            AND:[{pageSlug:"aboutUs"},{displayOrder:0}]
+
+
+        }
+    }))
+    
+
   return (
     <section className="login-page">
     <div className="container">
@@ -15,25 +49,25 @@ const page = () => {
         <div className="row aboutbox">
             <div className="col-md-6">
                 <h5>OUR MISSION</h5>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim ipsam.</p>
+                <p>{ourMission}</p>
 
             </div>
 
             <div className="col-md-6">
                 <h5>OUR STORIES</h5>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim ipsam.</p>
+                <p>{ourStories}</p>
                 
             </div>
 
             <div className="col-md-6 mt-2">
                 <h5>OUR APPROACH</h5>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim ipsam.</p>
+                <p>{ourApproach}</p>
                 
             </div>
 
             <div className="col-md-6 mt-2">
                 <h5>OUR PHILOSOPHY</h5>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim ipsam.</p>
+                <p>{ourPhilosophy}</p>
                 
             </div>
         </div>
@@ -41,61 +75,14 @@ const page = () => {
         <div className="row mt-5 align-items-center aboutbox">
             <div className="col-md-6">
                
-                <Image src={abo} className="img-fluid" alt=""/>
+                <Image src={banner.images[0].url} layout='responsive'width={18} height={9} className="img-fluid" alt=""/>
             </div>
             <div className="col-md-6">
-                <h3>The Richest Masala In The World</h3>
-                <p>Quisque volutpat mattis eros. Nullam malesuada erat ut ki diaml ka dhuddu pochu turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat</p>
-                <p>Quisque volutpat mattis eros. Nullam malesuada erat ut ki diaml ka dhuddu pochu turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat</p>
+                <h3>Small Facts About Masala</h3>
+                <p>{smallFactAboutMasala}</p>
             </div>
         </div>
-        <div className="row mt-5 justify-content-center">
-            <div className="col-md-7 text-center">
-                <h3>Our Team</h3>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo nemo enim ipsam.</p>
-                
-            </div>
-        </div>
-        <div className="row mt-5">
-            <div className="col-lg-3 col-md-6">
-                <a href="#">
-                
-                <Image src={mem} className="img-fluid" alt=""/>
-            <div className="teamdetails mt-3">
-                <h6>Team title</h6>
-                <p>omnis iste natus error sit voluptatem accusantium doloremque laudantium, </p>
-            </div>
-            </a>
-            </div>
-            <div className="col-lg-3 col-md-6">
-                <a href="#">
-        
-                <Image src={mem} className="img-fluid" alt=""/>
-            <div className="teamdetails mt-3">
-                <h6>Team title</h6>
-                <p>omnis iste natus error sit voluptatem accusantium doloremque laudantium, </p>
-            </div>
-            </a>
-            </div>
-            <div className="col-lg-3 col-md-6">
-                <a href="#">
-                <Image src={mem} className="img-fluid" alt=""/>
-            <div className="teamdetails mt-3">
-                <h6>Team title</h6>
-                <p>omnis iste natus error sit voluptatem accusantium doloremque laudantium, </p>
-            </div>
-            </a>
-            </div>
-            <div className="col-lg-3 col-md-6">
-                <a href="#">
-                <Image src={mem} className="img-fluid" alt=""/>
-            <div className="teamdetails mt-3">
-                <h6>Team title</h6>
-                <p>omnis iste natus error sit voluptatem accusantium doloremque laudantium, </p>
-            </div>
-            </a>
-            </div>
-        </div>
+     
     
        
         </div>

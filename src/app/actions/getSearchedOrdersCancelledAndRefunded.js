@@ -19,7 +19,7 @@ export default async function getSearchedOrdersCancelledAndRefunded(searchTerm, 
                     message: `result`,
                     orders: await db.orders.findMany({
                         where: {
-                            AND:[{orderStatus:3},{paymentStatus:2},{awb:{not:null}}]
+                            AND:[{orderStatus:3},{paymentStatus:2}]
 
                         },
                         select: {
@@ -67,7 +67,7 @@ export default async function getSearchedOrdersCancelledAndRefunded(searchTerm, 
             )
             AND orderStatus = 3
             AND paymentStatus = 2
-            AND awb IS NOT NULL
+            
           `;
           
 

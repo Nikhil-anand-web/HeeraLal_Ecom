@@ -2,13 +2,14 @@ import db from '@/lib/db'
 import React from 'react'
 import ProductRetail from './_components/ProductRetail'
 import Pagination from '@/components/Pagination'
+import getPaginationLimit from '@/lib/getPaginationLimit'
 
 // import ProductRetail from '../_components/ProductRetail'
 const page = async ({ params }) => {
     const categorySlug = params.slug[0].trim()
     var pageNo = params.slug[params.slug.length - 1]
 
-    const itemsPerPage = 2
+    const itemsPerPage = await getPaginationLimit()
     if (!pageNo || isNaN(pageNo)) {
         pageNo = 1;
 

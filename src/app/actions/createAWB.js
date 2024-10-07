@@ -277,42 +277,46 @@ async function createAWB(orderId, pickupTime, pickupdate, dimendarr, noOfPieces)
                             },
                         },
                     });
-
-                    await Promise.all(
-                        rtsorder.shortItmsMeta.shortVarients.map(async (obj) => {
-                            const { shortQty, id } = obj;
-
-                            await db.varient.update({
-                                where: {
-                                    id: id,
-                                },
-                                data: {
-                                    qty: {
-                                        increment: shortQty,
+                    if (rtsorder.shortItmsMeta) {
+                        await Promise.all(
+                            rtsorder.shortItmsMeta.shortVarients.map(async (obj) => {
+                                const { shortQty, id } = obj;
+    
+                                await db.varient.update({
+                                    where: {
+                                        id: id,
                                     },
-                                    shortItmStatus: 2
-                                },
-                            });
-                        })
-                    );
-                    await Promise.all(
-                        rtsorder.shortItmsMeta.shortCombo.map(async (obj) => {
-                            const { shortQty, id } = obj;
-
-                            await db.combo.update({
-                                where: {
-                                    id: id,
-                                },
-                                data: {
-                                    qty: {
-                                        increment: shortQty,
+                                    data: {
+                                        qty: {
+                                            increment: shortQty,
+                                        },
+                                        shortItmStatus: 2
                                     },
-                                    shortItmStatus: 2
-                                },
+                                });
+                            })
+                        );
+                        await Promise.all(
+                            rtsorder.shortItmsMeta.shortCombo.map(async (obj) => {
+                                const { shortQty, id } = obj;
+    
+                                await db.combo.update({
+                                    where: {
+                                        id: id,
+                                    },
+                                    data: {
+                                        qty: {
+                                            increment: shortQty,
+                                        },
+                                        shortItmStatus: 2
+                                    },
+    
+                                });
+                            })
+                        );
+                        
+                    }
 
-                            });
-                        })
-                    );
+                   
 
                     revalidatePath('/wah-control-center/orderDetails/')
                     return {
@@ -327,7 +331,7 @@ async function createAWB(orderId, pickupTime, pickupdate, dimendarr, noOfPieces)
 
 
             } catch (error) {
-                console.log(error)
+                console.log( error?.response?.data['error-response'][0])
 
 
                 return {

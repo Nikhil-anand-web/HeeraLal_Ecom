@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import PrintOrder from './PrintLabel';
+
 import PrintLabel from './PrintLabel';
 
 const SingleOrder = ({ order, goTo = "#" }) => {

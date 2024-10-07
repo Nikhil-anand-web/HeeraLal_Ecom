@@ -28,12 +28,14 @@ async function getYearWiseSales(year) {
                         createdAt: 'asc', // Order the result by the created date
                     },
                     where: {
-                        createdAt: {
+                        AND:[{ createdAt: {
                             gte: new Date(`${year}-01-01`), // Filter to only include orders from 2024
                             lt: new Date(`${year+1}-01-01`), // Make sure it only includes up to the end of 2024
-                        },
+                        },},{orderStatus:2},{paymentStatus:1}]
+                       
                     }
                 });
+                console.log(monthlyData)
 
                 // Processing the result to group by month
                 const result = monthlyData.reduce((acc, order) => {

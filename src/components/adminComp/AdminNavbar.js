@@ -221,6 +221,13 @@ const Sidebar = () => {
 
                   </span>
                   <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/queries">
+                    Queries
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
                     <Link className="nav-link" href="/wah-control-center/recipes">
                       Recipe
                     </Link>
@@ -243,6 +250,13 @@ const Sidebar = () => {
                   <span className="nav-item">
                     <Link className="nav-link" href="/wah-control-center/slider">
                       Slider
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/updateStaticData">
+                    Update Static Data
                     </Link>
 
 
@@ -360,6 +374,20 @@ const Sidebar = () => {
 
 
                   </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/orderCancellationRequest">
+                      Order Cancellation Request 
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/abandonedCart">
+                    Abandoned Carts 
+                    </Link>
+
+
+                  </span>
 
 
                 </Accordion.Body>
@@ -369,6 +397,11 @@ const Sidebar = () => {
             {user?.permissions[0].globalSetting ?
               <Accordion.Header onClick={() => { rtr.push("/wah-control-center/globalSettings") }} className={"no-border-children"} >
                 Global Setting
+              </Accordion.Header>
+              : ""}
+            {user?.permissions[0].archives ?
+              <Accordion.Header onClick={() => { rtr.push("/wah-control-center/archives") }} className={"no-border-children"} >
+               Archives
               </Accordion.Header>
               : ""}
 

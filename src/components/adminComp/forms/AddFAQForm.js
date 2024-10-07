@@ -33,8 +33,7 @@ const AddFAQForm = () => {
         <div className="col-12 grid-margin stretch-card">
             <div className="card">
                 <div className="card-body">
-                    <h4 className="card-title">Basic form elements</h4>
-                    <p className="card-description">Basic form elements</p>
+                   
                     <form onSubmit={onSubmit} className="forms-sample">
                         <div className="form-group">
                             <label htmlFor="question">Question</label>

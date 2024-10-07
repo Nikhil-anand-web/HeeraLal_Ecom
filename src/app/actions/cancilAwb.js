@@ -6,6 +6,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import axios from 'axios';
 import { revalidatePath } from 'next/cache';
 import getShipingJWT from '@/lib/getShipingJWT';
+import isUnderDuration from "@/lib/isUnderDuration";
 
 
 
@@ -28,11 +29,26 @@ async function cancilAwb(orderId) {
                             awb: true,
 
                             paymentStatus: true,
-                            orderStatus: true
+                            orderStatus: true,
+                            createdAt:true
 
 
                         }
                     })
+                    const cancilationUpperLimit = await db.globalSettings.findFirst({
+                        where: {
+                            settingName: "cancilationUpperLimit"
+
+
+                        }
+                    })
+                    if (!isUnderDuration(cancilationUpperLimit.value, order.createdAt)) {
+                        return {
+                            message: "time limit exceeded",
+                            success: false
+                        }
+
+                    }
                     if (order.paymentStatus == 0 || order.orderStatus == 2 || order.orderStatus == 3) {
                         if (order.paymentStatus == 0) {
                             return {

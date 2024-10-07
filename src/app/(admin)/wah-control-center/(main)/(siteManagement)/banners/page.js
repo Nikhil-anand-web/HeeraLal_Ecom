@@ -17,7 +17,7 @@ const page = async () => {
           pageSlug: true,
         },
       });
-  console.log(uniquePageSlugs)
+
 
      
   return (

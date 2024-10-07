@@ -3,11 +3,13 @@ import calculateFinalPrice from '@/lib/calculateFinalPrice';
 import calculateFinalPriceOfComboAndThumbnailArray from '@/lib/calculateFinalPriceOfComboAndThumbnailArray';
 import percentOf from '@/lib/percentOf';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print';
 
 const Invoice = ({ order,companyAddress }) => {
     const rf = useRef()
+    const rtr = useRouter()
     const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
     const formattedDate = order.createdAt.toLocaleDateString('en-US', options);
     const getCouponDiscount = ()=>{
@@ -80,6 +82,7 @@ const Invoice = ({ order,companyAddress }) => {
                                                 <th>Bank Transaction Id</th>
                                                 <th>AWB No:</th>
                                                 <th>Shiping Status:</th>
+                                                <th>Payment Status:</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -88,6 +91,7 @@ const Invoice = ({ order,companyAddress }) => {
                                                 <td>{order.paymentToken.BANKTXNID}</td>
                                                 <td>{order.awb || "not shiped"}</td>
                                                 <td>{order.shipingStatus}</td>
+                                                <td>{order.paymentStatus==1?"paid":"refund request raised"}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -199,8 +203,17 @@ const Invoice = ({ order,companyAddress }) => {
 
                 <li>
                     <button className="btn text-white print-button rounded ms-2" onClick={handlePrint}>Print</button>
+                    {((order.paymentStatus==1 && order.orderStatus<3)&& order.cancellationRequestStatus==0)&&<button className="btn text-white print-button rounded ms-2" onClick={()=>rtr.push(`/refundRequest/${order.orderId}`)}>Raise Cancilation Request</button>}
+                    
+
                 </li>
             </ul>
+            <div>
+               cancilation request satus - {order.cancellationRequestStatus==1 && "cancellation request raised"}
+                    {order.cancellationRequestStatus==2 && "cancellation request accepted"}
+                    {order.cancellationRequestStatus==2 && "cancellation request rejected"}
+            </div>
+           
         </div>
     )
 }
