@@ -2,6 +2,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../../auth/[...nextauth]/options";
 
 import db from "@/lib/db";
+import fs from 'fs';
+import path from 'path';
 
 
 export async function DELETE(req) {
@@ -19,6 +21,8 @@ export async function DELETE(req) {
       try {
      
         if (user.permissions[0].productAndInventory) {
+          console.log(reqObj[0].id)
+          
           const deletedCat = await db.category.delete({
             where: {
               id: reqObj[0].id ,
