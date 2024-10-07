@@ -28,10 +28,17 @@ export default async function sendOtps(identifire) {
 
             }
         })
+        if (!userAccount) {
+            return{
+                message:"cant find account",
+                success:false
+            }
+            
+        }
  
 
-        console.log(await messageOtp(`${tokenForMessage}`, userAccount.mobile,userAccount.firstName))
-        console.log(await resend(tokenForEmail, userAccount.email))
+        console.log( messageOtp(`${tokenForMessage}`, userAccount.mobile,userAccount.firstName))
+        console.log( resend(tokenForEmail, userAccount.email))
         return{
             message:"email has been sent to your phone and email",
             success:true
@@ -42,7 +49,7 @@ export default async function sendOtps(identifire) {
         console.log(error.code)
         return {
             success: false,
-            message: error.code==="P2002"? "The field's value is already present": error.meta?.cause || "internal server error",
+            message: error.code==="P2002"? "The field's value is already present": error.code==="P2025"?"user not fount": "internal server error",
    
          }
 

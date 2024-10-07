@@ -55,7 +55,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
   return (
     <>
       <h3>Products</h3>
-      <div style={{ marginBottom: "5rem" }} className="input-group">
+      <div style={{ marginBottom: "2rem" }} className="input-group">
 
         <span className="input-group-text" id="">Search</span>
 

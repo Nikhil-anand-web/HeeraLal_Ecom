@@ -18,19 +18,29 @@ const Page = (props) => {
     const rtr = useRouter()
  
     useEffect((()=>{
-        
+        const fetch = async ()=> {
             try {
-                const resObj =   sendOtps(decodedEmail);
-                 console.log("k")
+                const resObj = await  sendOtps(decodedEmail);
+                 
+                 if (!resObj.success) {
+                    throw resObj
+                    
+                 }
                 
     
-                toast.success("otp has been sent");
+                toast.success(resObj.message);
             } catch (error) {
                 console.error(error);
                 toast.warning(error.message);
+                rtr.replace('/sign-in')
             } finally {
                 setIsLoading(false);
             }
+            
+        }
+        fetch()
+        
+           
         
     }),[stedy])
 

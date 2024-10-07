@@ -4,6 +4,7 @@
 
 import PieChart from '@/components/adminComp/PieChart'
 import SalesChart from '@/components/adminComp/SalesChart'
+import SendEmail from '@/components/adminComp/SendEmail'
 import AdminLayout from '@/layouts/AdminLayout'
 import db from '@/lib/db'
 import Link from 'next/link'
@@ -183,12 +184,14 @@ const Page = async () => {
           </div>
 
         </div>
+        <SendEmail/>
         <div style={{ backgroundColor: "white", marginBottom: "50px", padding: "50px" }} className="row">
           <SalesChart style={{ width: "50%", height: "50vh", display: "flex" }} />
 
 
         </div>
         <PieChart pieDataArr={pieDataArr} pieLabel={pieLabel} />
+     
 
 
       </div>

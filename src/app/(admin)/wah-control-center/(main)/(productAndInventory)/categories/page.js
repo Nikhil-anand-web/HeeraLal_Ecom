@@ -52,14 +52,14 @@ const page =  () => {
       (!isLoading?<>
       <h3>Categories</h3>
 
-         <div style={{marginBottom:"5rem"}} className="input-group">
+         <div style={{marginBottom:"2rem"}} className="input-group">
        
        <span className="input-group-text" id="">Slug or Name</span>
      
      <input value={searchQuery} onChange={(e)=>{setSearchQuery(e.target.value)}} type="text" className="form-control" />
      </div>
       
-      <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "hidden", width: "100%" }}>
+      <div className={"hide-scrollbar"} style={{ height: "75vh", overflow: "scroll", width: "100%" }}>
       {FilteredCategories.map((category)=><CategoryModel key={category.id} setstateRefresherDummyValue={setstateRefresherDummyValue} setCategories={setCategories} categoriesList ={category} />)}
         
      
