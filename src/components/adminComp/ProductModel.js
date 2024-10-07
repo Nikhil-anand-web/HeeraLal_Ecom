@@ -156,7 +156,7 @@ const ProductModel = ({ product, setRefetchComp }) => {
             display: isExpanded ? 'block' : 'none',
         },
     };
-
+  console.log(product.thumbNail[0]?.url)
     return (
         <div id={product.id} style={styles.container}>
             <Image
