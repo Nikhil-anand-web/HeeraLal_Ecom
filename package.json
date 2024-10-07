@@ -20,7 +20,6 @@
     "bootstrap": "^5.3.3",
     "bootstrap-datepicker": "^1.10.0",
     "busboy": "^1.6.0",
-    "cashfree-pg": "^4.2.3",
     "chart.js": "^4.4.4",
     "codemirror": "^5.47.0",
     "font-awesome": "4.7.0",
