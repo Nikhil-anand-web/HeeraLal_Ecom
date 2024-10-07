@@ -60,7 +60,7 @@ const Footer = async () => {
       key: "companyAddress"
     }
   })).value
-  console.log(companyAddress)
+ 
   return (
     <footer className="footer">
       <div className="container">
