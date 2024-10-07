@@ -36,7 +36,7 @@ const page = async () => {
      
   return (
    <>
-     <h3 style={{marginBottom:"40px"}} className="page-title">Global Setting</h3>
+     <h3 style={{marginBottom:"40px" ,overflow:"hidden"}} className="page-title">Global Setting</h3>
 
      {user.permissions.at(0)?.globalSetting? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}>
 

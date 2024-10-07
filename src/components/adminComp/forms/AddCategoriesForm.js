@@ -197,9 +197,9 @@ const AddCategoriesForm = ({ categories }) => {
                                 rules={{ required: 'Category is required' }}
 
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field} id="parentId">
+                                    <select defaultValue={"-1"} className="form-select" {...field} id="parentId">
 
-                                        <option value={"0"}>Root</option>
+                                        <option disabled value={"-1"}>Select a valid option</option>
                                         <option value={"0"}>Root</option>
                                         {
                                             categories.map((cat) => <option value={cat.id}>{cat.slug}</option>)
