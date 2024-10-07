@@ -63,7 +63,7 @@ const MainModule = ({ itemsPerPage, pageNo }) => {
             </div>
 
             {/* Date Range Input */}
-            <div style={{ marginBottom: "5rem" }} className="input-group">
+            <div style={{ marginBottom: "2rem" }} className="input-group">
                 <span className="input-group-text">Enter Range (days)</span>
                 <input
                     placeholder='days'

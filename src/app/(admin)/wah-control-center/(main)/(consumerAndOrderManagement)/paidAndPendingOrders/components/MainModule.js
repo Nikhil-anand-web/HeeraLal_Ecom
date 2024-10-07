@@ -62,7 +62,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
     return (
         <>
            <h3>Paid And Pending Orders</h3>
-            <div style={{ marginBottom: "5rem" }} className="input-group">
+            <div style={{ marginBottom: "2rem" }} className="input-group">
 
                 <span className="input-group-text" id="">Search</span>
 
