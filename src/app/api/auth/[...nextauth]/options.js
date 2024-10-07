@@ -112,7 +112,7 @@ export const authOptions = {
 
                             console.log("User authorized successfully", user);
 
-                            user.sourceUrl = sourceUrl
+                            user.sourceUrl ='/sign-in'
                             return user;
 
                         } else {

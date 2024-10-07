@@ -66,6 +66,7 @@ const AddProductForm = ({ categories }) => {
 
 
         try {
+            setIsLoading(true)
 
             const samplePicArray = Array.from(e.samplePhotos);
             console.log(samplePicArray)
@@ -221,7 +222,7 @@ const AddProductForm = ({ categories }) => {
 
                                 name="category"
                                 control={control}
-                                rules={{ required: 'Category is required' }}
+                                rules={{ required: ' required' }}
 
                                 render={({ field }) => (
                                     <select defaultValue={"0"} className="form-select" {...field} id="parentId">
@@ -244,10 +245,11 @@ const AddProductForm = ({ categories }) => {
 
                                 name="showOnHome"
                                 control={control}
-                                rules={{ required: 'Category is required' }}
+                                rules={{ required: 'required' }}
 
                                 render={({ field }) => (
-                                    <select className="form-select" {...field} id="showOnHome">
+                                    <select defaultValue={0} className="form-select" {...field} id="showOnHome">
+                                         <option disabled value={0}>select a valid option</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -265,10 +267,11 @@ const AddProductForm = ({ categories }) => {
 
                                 name="isFeatured"
                                 control={control}
-                                rules={{ required: 'Category is required' }}
+                                rules={{ required: 'required' }}
 
                                 render={({ field }) => (
-                                    <select className="form-select" {...field} id="isFeatured">
+                                    <select defaultValue={0} className="form-select" {...field} id="isFeatured">
+                                         <option disabled value={0}>select a valid option</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -286,10 +289,11 @@ const AddProductForm = ({ categories }) => {
 
                                 name="isVegiterian"
                                 control={control}
-                                rules={{ required: 'Category is required' }}
+                                rules={{ required: 'required' }}
 
                                 render={({ field }) => (
-                                    <select className="form-select" {...field} id="isVegiterian">
+                                    <select defaultValue={0} className="form-select" {...field} id="isVegiterian">
+                                         <option disabled value={0}>select a valid option</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -307,7 +311,7 @@ const AddProductForm = ({ categories }) => {
 
                                 name="isBestSeller"
                                 control={control}
-                                rules={{ required: 'Category is required' }}
+                                rules={{ required: 'required' }}
 
                                 render={({ field }) => (
                                     <select defaultValue={0} className="form-select" {...field} id="isBestSeller">
@@ -329,7 +333,7 @@ const AddProductForm = ({ categories }) => {
                         <div className="form-group">
                             <p>Upload samplePhotos</p>
                             <label style={{ fontSize: "2rem", cursor: "pointer" }} className="fa  fa-folder-open" htmlFor="samplePhotos"></label>
-                            <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple accept="image/*" />
+                            <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple ="true" accept="image/*" />
 
 
 

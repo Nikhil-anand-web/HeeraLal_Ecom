@@ -6,33 +6,35 @@ import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import React from 'react'
 
-const page = async() => {
-    const user = await getServerSession(authOptions)
-    var faqs  = []
- if (user.permissions.at(0)?.complementaryContentManagment) {
-    const faqList =  await db.faqs.findMany({
-        select:{
-            id:true,
-            question :true,
-            answer :true,
-            status:true
+const page = async () => {
+  const user = await getServerSession(authOptions)
+  var faqs = []
+  if (user.permissions.at(0)?.complementaryContentManagment) {
+    const faqList = await db.faqs.findMany({
+      select: {
+        id: true,
+        question: true,
+        answer: true,
+        status: true
 
 
-        }
+      }
     })
     faqs = faqList
     console.log(faqList)
 
-    
- }
+
+  }
   return (
     <>
-          <h3 className="page-title"> FAQs</h3>
-        {faqs.map((faq,index)=>{
-           return <FaqsModel key = {index} faq = {faq}/>
+      <h3 className="page-title"> FAQs</h3>
+      <div className={"hide-scrollbar"} style={{ height: "85vh", overflow: "scroll", width: "100%" }}>
+      {faqs.map((faq, index) => {
+        return <FaqsModel key={index} faq={faq} />
 
-        })}
-        
+      })}
+      </div>
+
     </>
   )
 }

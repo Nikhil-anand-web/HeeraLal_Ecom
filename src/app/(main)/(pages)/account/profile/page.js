@@ -3,6 +3,7 @@ import updateUserDetails from '@/app/actions/updateUserDetails';
 import debounce from '@/lib/debounce';
 import objectToFormData from '@/lib/objectToFormData';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -12,7 +13,13 @@ const Page = () => {
     const [isMounted, setisMounted] = useState(false);
     const [city, setCity] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const ses =  useSession()
     const rtr = useRouter()
+    console.log( ses.data)
+    if (ses.data) {
+        
+        var {firstName,lastName,pinCode:prepin,mobile,address,city:preCity,state} = ses.data
+    }
     useEffect(() => {
         setisMounted(true);
     }, []);
@@ -94,27 +101,27 @@ const Page = () => {
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
-                                <input {...register("firstName")} type="text" className="form-control" id="firstName" placeholder="First Name" />
+                                <input {...register("firstName")} type="text" className="form-control" id="firstName" placeholder={firstName?firstName:"please enter firstName"} />
                                 {errors.firstName && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName">Last Name</label>
-                                <input {...register("lastName")} type="text" className="form-control" id="lastName" placeholder="Last Name" />
+                                <input {...register("lastName")} type="text" className="form-control" id="lastName" placeholder={lastName?lastName:"please enter lastname"} />
                                 {errors.lastName && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="mobile">Mobile Number</label>
-                                <input {...register("mobile")} type="text" className="form-control" id="mobile" placeholder="Mobile" />
+                                <input {...register("mobile")} type="text" className="form-control" id="mobile" placeholder={mobile?mobile:"please enter mobile number"} />
                                 {errors.mobile && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="pinCode">Pincode</label>
-                                <input {...register("pinCode")} type="text" className="form-control" id="pinCode" placeholder="Pincode" />
+                                <input {...register("pinCode")} type="text" className="form-control" id="pinCode" placeholder={prepin?prepin:"please enter pincode"} />
                                 {errors.pinCode && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="address">Address</label>
-                                <input {...register("address", { required: pinCode ? true : false })} type="text" className="form-control" id="address" placeholder="Address" />
+                                <input {...register("address", { required: pinCode ? true : false })} type="text" className="form-control" id="address" placeholder={prepin?prepin:"please enter address"}/>
                                 {errors.address && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
@@ -125,7 +132,7 @@ const Page = () => {
                                     rules={{ required: pinCode ? 'City is required' : false }}
                                     render={({ field }) => (
                                         <select defaultValue={0} {...field} className="form-select" id="identifireSlug">
-                                            <option disabled value={0}>Select a valid city</option>
+                                            <option disabled value={0}>Select a valid city{preCity===null?"":` -current${preCity}`}</option>
                                             {city.map((cat, index) => (
                                                 <option key={index} value={cat}>{cat}</option>
                                             ))}
@@ -136,7 +143,7 @@ const Page = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="state">State</label>
-                                <input disabled {...register("state")} type="text" className="form-control" id="state" placeholder="State" />
+                                <input disabled {...register("state")} type="text" className="form-control" id="state" placeholder={state?state:"please enter pincode"} />
                             </div>
 
                             <button type="submit" className="btn me-2 btn-gradient-primary" disabled={isLoading}>

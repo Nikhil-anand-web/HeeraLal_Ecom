@@ -264,7 +264,7 @@ const Sidebar = () => {
 
                 </Accordion.Body>
               </Accordion.Item> : ''}
-              {user?.permissions[0].siteManagement ? <Accordion.Item eventKey="4">
+              {user?.permissions[0].offersAndDiscounts ? <Accordion.Item eventKey="4">
                 <Accordion.Header>Offers And Discounts</Accordion.Header>
                 <Accordion.Body>
 

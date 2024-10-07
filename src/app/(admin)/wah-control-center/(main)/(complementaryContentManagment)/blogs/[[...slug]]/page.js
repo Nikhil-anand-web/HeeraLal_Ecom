@@ -27,9 +27,10 @@ const page = async({params}) => {
 
     
  }
+
   return (
     ( user && user.permissions[0].productAndInventory? <>
-    <h3> Total{{count}}</h3>
+    <h3> Total{count}</h3>
      
         <MainModule pageNo={pageNo} itemsPerPage={itemsPerPage}  />
         <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />

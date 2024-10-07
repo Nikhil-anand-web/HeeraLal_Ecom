@@ -56,6 +56,7 @@ const AddVarientForm = ({ categories, productSlugs }) => {
         delete e.bredth
         const formData = objectToFormData(e);
         try {
+            setIsLoading(true)
             const resObj = await createVarient(formData); // Pass formData to createBlog
             if (resObj.success) {
                 toast.success(resObj.message);

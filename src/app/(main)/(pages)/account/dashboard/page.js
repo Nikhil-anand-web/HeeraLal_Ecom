@@ -1,4 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
+import ShareTheSiteButton from '@/components/ShareTheSiteButton'
 import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
@@ -79,6 +80,7 @@ const page = async () => {
                                 {orderCountTobeDel}
                             </div>
                         </div>
+                        <ShareTheSiteButton style={{ borderRadius: "21px", marginLeft: "15px" }} className="btn btn-success">Refer to a friend</ShareTheSiteButton>
                     </div>
                 </div>
 

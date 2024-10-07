@@ -15,6 +15,7 @@ const AddFAQForm = () => {
         const formData = new FormData(e.target);
 
         try {
+            setIsLoading(true)
             const resObj = await createFAQ(formData);
             if (resObj.success) {
                 toast.success(resObj.message);

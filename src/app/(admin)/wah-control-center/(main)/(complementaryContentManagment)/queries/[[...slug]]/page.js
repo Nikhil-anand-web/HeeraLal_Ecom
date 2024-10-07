@@ -61,7 +61,7 @@ const page = async ({ params }) => {
   return (
     (user && user.permissions[0].consumerAndOrderManagement ? <>
       <div style={{ display: "flex", justifyContent: "center" }}> <h2>Queries</h2></div>
-      <h3> Total{{ count }}</h3>
+      <h3> Total{ count }</h3>
 
       <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />
       <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />

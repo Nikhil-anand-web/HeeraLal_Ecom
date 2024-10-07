@@ -78,8 +78,11 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
 
                     {filteredPublicQuery.map((obj,index) => (
+                        <>
 
                         <QueryModel name={obj.name} message={obj.message} email={obj.email} key={index}/>
+                        
+                        </>
                     ))}</div>
 
             </div> : <Spinner />)

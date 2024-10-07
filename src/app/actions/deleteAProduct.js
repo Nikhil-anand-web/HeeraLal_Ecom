@@ -28,14 +28,14 @@ async function deleteAProduct(ids) {
                             id: ids
                         }
                     })
-                    // const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "product", `${formatString(delProduct.name)}`);
-                    // fs.rm(uploadDirectory, { recursive: true, force: true }, (err) => {
-                    //     if (err) {
-                    //         throw err
+                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "product", `${formatString(delProduct.name)}`);
+                    fs.rm(uploadDirectory, { recursive: true, force: true }, (err) => {
+                        if (err) {
+                            throw err
         
-                    //     }
+                        }
         
-                    // })
+                    })
             
                     revalidatePath('/wah-control-center/products')
                   

@@ -24,8 +24,16 @@ const Page = () => {
       if (!resObj.success) {
         throw resObj;
       }
-    
-      rtr.push('/sign-in')
+      const pass = formData.get('password')
+      const email = formData.get('email')
+      const res = await signIn("credentials", {
+        redirect: false,
+        identifire: email,
+        password: pass
+      })
+
+
+      rtr.push('/')
 
       toast.success(resObj.message);
     } catch (error) {
@@ -44,40 +52,40 @@ const Page = () => {
             <h1 className="text-center mb-3">Register Now</h1>
             <form onSubmit={onSubmit}>
               <div className="form-group mb-3">
-                <label htmlFor="username" className="mb-2">
+                <label htmlFor="firstName" className="mb-2">
                   First Name<span>*</span>
                 </label>
                 <input name="firstName" required type="text" className="form-control" />
               </div>
               <div className="form-group mb-3">
-                <label htmlFor="username" className="mb-2">
+                <label htmlFor="lastName" className="mb-2">
                   Last Name<span>*</span>
                 </label>
                 <input name="lastName" required type="text" className="form-control" />
               </div>
 
               <div className="form-group mb-2">
-                <label htmlFor="username" className="mb-2">
+                <label htmlFor="email" className="mb-2">
                   Email <span>*</span>
                 </label>
                 <input name="email" required type="email" className="form-control" />
               </div>
               <div className="form-group mb-2">
-                <label htmlFor="username" className="mb-2">
+                <label htmlFor="mobile" className="mb-2">
                   Phone Number <span>*</span>
                 </label>
                 <input name="mobile" required type="text" className="form-control" />
               </div>
 
               <div className="form-group mb-2">
-                <label htmlFor="username" className="mb-2">
+                <label htmlFor="password" className="mb-2">
                   Password <span>*</span>
                 </label>
                 <input name="password" required type="password" className="form-control" />
               </div>
 
               <div className="form-group mb-2">
-                <label htmlFor="username" className="mb-2">
+                <label htmlFor="cnfPassword" className="mb-2">
                   Confirm Password <span>*</span>
                 </label>
                 <input name="cnfPassword" required type="password" className="form-control" />

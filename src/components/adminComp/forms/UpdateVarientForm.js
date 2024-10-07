@@ -194,17 +194,17 @@ const UpdateVarientForm = ({ productSlugs }) => {
                                 </div>
                                 <div className="form-group" >
                                     <label htmlFor="length">Length</label>
-                                    <input {...register("length", { required: true })} type="text" className="form-control" id="length" placeholder="length" />
+                                    <input {...register("length")} type="text" className="form-control" id="length" placeholder="length" />
                                     {errors.size && <span>This field is required</span>}
                                 </div>
                                 <div className="form-group" >
                                     <label htmlFor="bredth">Bredth</label>
-                                    <input {...register("bredth", { required: true })} type="text" className="form-control" id="bredth" placeholder="bredth" />
+                                    <input {...register("bredth")} type="text" className="form-control" id="bredth" placeholder="bredth" />
                                     {errors.size && <span>This field is required</span>}
                                 </div>
                                 <div className="form-group" >
                                     <label htmlFor="height">Height</label>
-                                    <input {...register("height", { required: true })} type="text" className="form-control" id="height" placeholder="height" />
+                                    <input {...register("height")} type="text" className="form-control" id="height" placeholder="height" />
                                     {errors.size && <span>This field is required</span>}
                                 </div>
                                 <div className="form-group" >

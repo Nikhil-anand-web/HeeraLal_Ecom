@@ -13,6 +13,12 @@ export default async function deleteCoupon(ids = '') {
 
 
         try {
+            const cpn = await db.coupons.findUnique({
+                where:{
+                    id:ids
+                }
+            })
+           
             const deletedCoupon = await db.coupons.delete({
                 where:{
                     id:ids

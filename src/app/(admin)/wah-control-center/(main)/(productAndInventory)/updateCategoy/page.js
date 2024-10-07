@@ -27,7 +27,7 @@ const page = async () => {
      
   return (
    <>
-     <h3 className="page-title"> Add a Category </h3>
+     <h3 className="page-title"> Update a Category </h3>
      {user && user.permissions?.length &&user.permissions[0].productAndInventory? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><UpdateCategoryForm categories={categories}/></div>:<div>access denied</div>}
     
    </>

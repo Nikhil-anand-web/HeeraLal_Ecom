@@ -246,7 +246,8 @@ const UpdateCategoryForm = ({ categories }) => {
                                 
                                 rules={{ required: 'parent is required' }}
                                 render={({ field }) => (
-                                    <select defaultValue={"0"} className="form-select" {...field} id="parentId">
+                                    <select defaultValue={-2} className="form-select" {...field} id="parentId">
+                                        <option disabled value={-2}>select a valid state</option>
 
                                         <option value={"-1"}>Unchanged</option>
                                         <option value={"0"}>Root</option>
@@ -286,7 +287,7 @@ const UpdateCategoryForm = ({ categories }) => {
                         <div className="form-group">
                             <p>Upload samplePhotos</p>
                             <label style={{ fontSize: "2rem", cursor: "pointer" }} className="fa  fa-folder-open" htmlFor="samplePhotos"></label>
-                            <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple accept="image/*" />
+                            <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos"  accept="image/*" />
 
 
 

@@ -64,6 +64,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
 
         try {
+            setIsLoading(true)
 
             const samplePicArray = Array.from(e.samplePhotos);
             console.log(samplePicArray)

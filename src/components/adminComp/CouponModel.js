@@ -65,7 +65,7 @@ const CouponModel = ({ coupon }) => {
             toast.warning(error.message)
 
         }finally{
-            isLoading(false)
+            setIsLoadingisLoading(false)
         }
 
     }

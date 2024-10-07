@@ -76,7 +76,7 @@ const Header = async (props) => {
 
 
           </div>
-          <ShareTheSiteButton style={{ borderRadius: "21px", marginLeft: "15px" }} className="btn btn-success">Share</ShareTheSiteButton>
+         
 
 
 
