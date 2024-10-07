@@ -59,7 +59,7 @@ const page =  () => {
      <input value={searchQuery} onChange={(e)=>{setSearchQuery(e.target.value)}} type="text" className="form-control" />
      </div>
       
-      <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}>
+      <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "hidden", width: "100%" }}>
       {FilteredCategories.map((category)=><CategoryModel key={category.id} setstateRefresherDummyValue={setstateRefresherDummyValue} setCategories={setCategories} categoriesList ={category} />)}
         
      
