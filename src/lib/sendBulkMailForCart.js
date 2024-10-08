@@ -2,8 +2,8 @@
 
 const nodemailer = require("nodemailer");
 
-export default async function sendEmail() {
-    console.log("reci")
+export default async function sendBulkMailForCart(emailArr) {
+  
     try {
         // Create a Nodemailer transporter with SparkPost SMTP details
         const transporter = nodemailer.createTransport({
@@ -11,8 +11,8 @@ export default async function sendEmail() {
             port: 587, // or use 2525 as an alternative
             secure: false, // true for 465, false for other ports
             auth: {
-                user: 'SMTP_Injection', // your SparkPost SMTP username
-                pass: '2fa54083e7eaab4cc76552d4cf85e7bbecb19aef', // your SparkPost SMTP password
+                user: process.env.EMAIL_USERNAME, // your SparkPost SMTP username
+                pass: process.env.EMAIL_PASSWORD, // your SparkPost SMTP password
             },
             tls: {
                 ciphers: 'SSLv3',
@@ -21,10 +21,10 @@ export default async function sendEmail() {
 
         // Define the email options
         const mailOptions = {
-            from: '"Nikhil" <donotreply@heeralwahindiaspices.com>', // sender address (must be verified in SparkPost)
+            from: '"Heeral wahindia spices" <donotreply@heeralwahindiaspices.com>', // sender address (must be verified in SparkPost)
             to: "donotreply@heeralwahindiaspices.com", // recipient email
-            bcc:"anandnikhil799@gmail.com,na62m2002@gmail.com",
-            subject: "test", // Subject line
+            bcc:emailArr.join(","),
+            subject: "You have something left in your cart", // Subject line
             html: `
             <div style="text-align: center;">
     <div style="margin-bottom: 20px;">

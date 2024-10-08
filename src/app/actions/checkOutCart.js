@@ -13,7 +13,7 @@ export default async function checkOutCart() {
 
     if (user) {
         if (user.mobileVerified===false) {
-            redirect('/verifyPhone')
+            redirect('/verify-phone')
             
         }
 

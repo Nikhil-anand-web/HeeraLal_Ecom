@@ -21,7 +21,7 @@ import db from '@/lib/db'
 const Page = async () => {
 
     const user = await getServerSession(authOptions)
-    if (!user) {
+    if (!user || user.role!==3) {
         redirect('/sign-in')
 
     }

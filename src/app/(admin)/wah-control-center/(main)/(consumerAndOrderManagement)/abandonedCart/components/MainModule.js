@@ -7,6 +7,8 @@ import Spinner from '@/components/global/Spinner'
 import debounce from '@/lib/debounce'
 import React, { useCallback, useEffect, useState } from 'react'
 import AbCartModel from './AbCartModel'
+import { toast } from 'react-toastify';
+import sendBulkMilWithDuration from '@/app/actions/sendBulkMilWithDuration';
 
 const MainModule = ({ itemsPerPage, pageNo }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -46,11 +48,36 @@ const MainModule = ({ itemsPerPage, pageNo }) => {
     // In your case, both the search input (searchQuery) and the date range (dateRange) trigger the same API request (to fetch carts). If you change both inputs (e.g., type a search term and change the date range), you should only trigger the API call once after both inputs are settled.
 
     // If you debounce these inputs separately, it might result in multiple API calls being triggered, which is inefficient. To handle this, we need to debounce the entire API request, not just the individual inputs.
+    const onSendMail = async () => {
+        try {
+            setIsLoading(true)
+            const res = await sendBulkMilWithDuration(dateRange)
+            if (!res.success) {
+                throw res
 
+            }
+            toast.success(res.message)
+
+        } catch (error) {
+            console.log(error)
+            toast.warning(error.message)
+
+        }finally{
+            setIsLoading(false)
+        }
+    }
     return (
         <>
+         <div style={{display:"flex",justifyContent:"space-between"}}>
+        
             <h3>Abandoned Carts</h3>
-           Total- {filteredOrders.length}
+            <button className={` btn me-2 btn-gradient-primary`} disabled={isLoading} onClick={onSendMail}>
+                {isLoading?"please wait...":"send bulk alert"}
+            </button>
+
+         </div>
+            
+            Total- {filteredOrders.length}
             <div className="input-group">
                 <span className="input-group-text">Search</span>
                 <input

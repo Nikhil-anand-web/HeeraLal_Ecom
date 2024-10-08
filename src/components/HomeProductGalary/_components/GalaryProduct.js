@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link';
 import React from 'react'
 
-const GalaryProduct = ({ imageS, discount, nameOfProduct, price, stars, goTo = "/productDetails", varientId }) => {
+const GalaryProduct = ({ imageS, discount, nameOfProduct, price, stars, goTo = "/product-details", varientId }) => {
   const strel = Array(stars).fill(null).map((_, index) => <i key={index} className="fa-solid fa-star"></i>);
   return (
     <div style={{ marginBottom: "52px" }} className="gallery_product col-lg-2 col-md-2 col-sm-3 col-xs-6 filter border flours-instances p-3 col-6">

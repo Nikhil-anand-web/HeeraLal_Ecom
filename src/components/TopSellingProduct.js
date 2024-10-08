@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import ProductToCartControl from './ProductToCartControl'
 import calculateFinalPrice from '@/lib/calculateFinalPrice'
-const TopSellingProduct = ({ imageS, productName, discount, price,varientId, stars=1, goTo = "/productDetails" }) => {
+const TopSellingProduct = ({ imageS, productName, discount, price,varientId, stars=1, goTo = "/product-details" }) => {
   const strel = Array(stars).fill(null).map((_, index) => <i key={index} className="fa-solid fa-star"></i>);
    console.log(price,discount,"jygjty")
   return (

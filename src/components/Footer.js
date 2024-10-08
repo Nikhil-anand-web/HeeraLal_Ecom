@@ -114,7 +114,7 @@ const Footer = async () => {
               </div>
               <div className="footer-content">
                 <p className="mb-1">{footerPara}</p>
-                <a href="/aboutUs" className="primary-color">Read more</a>
+                <a href="/about-us" className="primary-color">Read more</a>
                 <div className="social-media mt-2">
                   <ul className="d-flex">
                     <li><Link href={facebook}><i className="fa-brands fa-facebook-f"></i></Link></li>
@@ -150,10 +150,10 @@ const Footer = async () => {
                   <h4>Quick Links</h4>
                   <ul>
                     <li><Link href="/"><i className="fa-solid fa-angle-right"></i> Home</Link></li>
-                    <li><Link href="/aboutUs"><i className="fa-solid fa-angle-right"></i> About Us</Link></li>
+                    <li><Link href="/about-us"><i className="fa-solid fa-angle-right"></i> About Us</Link></li>
                     <li><Link href="/recipes"><i className="fa-solid fa-angle-right"></i> Recipes</Link></li>
                     <li><Link href="/blogs"><i className="fa-solid fa-angle-right"></i> Blogs</Link></li>
-                    <li><Link href="/contactUs"><i className="fa-solid fa-angle-right"></i> Contact Us</Link></li>
+                    <li><Link href="/contact-us"><i className="fa-solid fa-angle-right"></i> Contact Us</Link></li>
 
                   </ul>
                 </div>
@@ -165,9 +165,9 @@ const Footer = async () => {
                   <ul>
                     <li><Link href="/terms"><i className="fa-solid fa-angle-right"></i> Terms Of Use </Link></li>
                     <li><Link href="/disclamer"><i className="fa-solid fa-angle-right"></i> Disclaimer</Link></li>
-                    <li><Link href="/privacyPolicy"><i className="fa-solid fa-angle-right"></i> Privacy Policy</Link></li>
-                    <li><Link href="/shipingPolicy"><i className="fa-solid fa-angle-right"></i> Shipping Policy</Link></li>
-                    <li><Link href="/refundPolicy"><i className="fa-solid fa-angle-right"></i> Refund Policy</Link></li>
+                    <li><Link href="/privacy-policy"><i className="fa-solid fa-angle-right"></i> Privacy Policy</Link></li>
+                    <li><Link href="/shiping-policy"><i className="fa-solid fa-angle-right"></i> Shipping Policy</Link></li>
+                    <li><Link href="/refund-policy"><i className="fa-solid fa-angle-right"></i> Refund Policy</Link></li>
 
                   </ul>
                 </div>

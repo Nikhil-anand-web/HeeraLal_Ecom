@@ -50,7 +50,7 @@ const page = () => {
             return
 
         }
-        router.push(`/forgotPassword/${identifire}`)
+        router.push(`/forgot-password/${identifire}`)
 
 
     }
@@ -91,7 +91,7 @@ const page = () => {
 
                         Not a member? <Link href="/sign-up" className="text-success">Register Now</Link> <br />
 
-                        <div onClick={onForgot} className="text-success">Forgot Password</div>
+                        <Link  href={`/forgot-password/${identifire}`} className="text-success">Forgot Password</Link>
 
 
                     </div>

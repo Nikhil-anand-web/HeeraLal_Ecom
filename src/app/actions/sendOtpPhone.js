@@ -31,7 +31,8 @@ export default async function sendOtpPhone(identifire) {
             };
         }
 
-       await messageOtp(`${tokenForMessage}`, userAccount.mobile,userAccount.firstName);
+      const res = await messageOtp(`${tokenForMessage}`, userAccount.mobile,userAccount.firstName);
+    
    
         return {
             message: "OTP has been sent to your phone",

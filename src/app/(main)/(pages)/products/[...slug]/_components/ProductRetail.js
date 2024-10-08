@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const ProductRetail = ({ imageS, ProductName, varienId, discount, Price, goto = "/productDetails" }) => {
+const ProductRetail = ({ imageS, ProductName, varienId, discount, Price, goto = "/product-details" }) => {
     return (
         <div className="col-md-3 product-inner">
             <div className="prod-container">

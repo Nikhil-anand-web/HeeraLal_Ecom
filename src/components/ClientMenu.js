@@ -14,13 +14,13 @@ const ClientMenu = () => {
                 <Link className={`nav-link  ${active==='' && 'active'}`} aria-current="page" href="/">Home</Link>
               </li>
               <li  >
-                <Link className={`nav-link  ${active==='aboutUs' && 'active'}`} href="/aboutUs">Company</Link>
+                <Link className={`nav-link  ${active==='about-us' && 'active'}`} href="/about-us">Company</Link>
               </li>
               <li className="nav-item">
                 <Link className={`nav-link  ${active==='products' && 'active'}`} href="/products/all">Products</Link>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link   ${active==='bulkOrder' && 'active'}`}  href="/bulkOrder">Bulk Orders</Link>
+                <Link className={`nav-link   ${active==='bulk-order' && 'active'}`}  href="/bulk-order">Bulk Orders</Link>
               </li>
               <li className="nav-item">
                 <Link className={`nav-link  ${active==='recipes' && 'active'}`} href="/recipes">Recipes</Link>
