@@ -25,7 +25,7 @@ async function createProduct(formData) {
 
 
                     // console.log(formData)
-                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "product", `${formatString(formData.get('slugProduct'))}`);
+                    const uploadDirectory = path.join(process.cwd(),'asset', "product", `${formatString(formData.get('slugProduct'))}`);
 
                     const thumbNail = formData.getAll('thumbnailProduct');
                     const otherImages = formData.getAll('samplePhotos');

@@ -22,7 +22,7 @@ async function updateABanner(formData) {
         if (user.role === 1 || user.role === 2) {
             try {
                 if (user.permissions[0].siteManagement) {
-                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "banners", `${formData.get('identifireSlug')}`);
+                    const uploadDirectory = path.join(process.cwd(), 'asset', "banners", `${formData.get('identifireSlug')}`);
 
                     // Access uploaded files
                     const jsonToDb = [];

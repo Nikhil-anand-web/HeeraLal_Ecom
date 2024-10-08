@@ -63,7 +63,7 @@ async function updateProduct(formData) {
 
 
 
-                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "product", `${formatString(finalSlugProduct)}`);
+                    const uploadDirectory = path.join(process.cwd(), 'asset', "product", `${formatString(finalSlugProduct)}`);
 
                     const thumbNail = formData.getAll('thumbnailProduct');
                     const otherImages = formData.getAll('samplePhotos');

@@ -31,7 +31,7 @@ export async function POST(req) {
 
                 if (user.permissions[0].productAndInventory) {
                     
-                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "categories", `${formData.get('slug')}`);
+                    const uploadDirectory = path.join(process.cwd(),  'asset', "categories", `${formData.get('slug')}`);
 
                     // Access uploaded files
                     const files = formData.getAll('samplePhotos');

@@ -22,7 +22,7 @@ async function updateSlider(formData) {
         if (user.role === 1 || user.role === 2) {
             try {
                 if (user.permissions[0].siteManagement) {
-                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "slider", `${formData.get('identifireSlug')}`);
+                    const uploadDirectory = path.join(process.cwd(), 'asset', "slider", `${formData.get('identifireSlug')}`);
 
                     // Access uploaded files
                     const jsonToDb = [];

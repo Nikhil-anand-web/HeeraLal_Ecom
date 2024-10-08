@@ -46,7 +46,7 @@ export async function POST(req) {
                 if (user.permissions[0].productAndInventory) {
                     console.log(formData)
 
-                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "categories", `${finalSlug}`);
+                    const uploadDirectory = path.join(process.cwd(), 'asset', "categories", `${finalSlug}`);
 
                     // Access uploaded files
                     const jsonToDb = [];

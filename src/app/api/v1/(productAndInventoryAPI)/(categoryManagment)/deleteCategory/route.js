@@ -29,7 +29,7 @@ export async function DELETE(req) {
               
             },
           });
-          const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "categories", `${deletedCat.urlSlug}`);
+          const uploadDirectory = path.join(process.cwd(), 'asset', "categories", `${deletedCat.urlSlug}`);
             fs.rm(uploadDirectory, { recursive: true, force: true }, (err) => {
                 if (err) {
                     throw err

@@ -24,7 +24,7 @@ async function createBlog(formData) {
         if (user.role === 1 || user.role === 2) {
             try {
                 if (user.permissions[0].complementaryContentManagment) {
-                    const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "blog", `${formData.get('slug')}`);
+                    const uploadDirectory = path.join(process.cwd(), 'asset', "blog", `${formData.get('slug')}`);
 
                     const urlSlug = formData.getAll('slug');
                     

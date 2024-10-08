@@ -19,7 +19,7 @@ async function deleteABlog(ids) {
                     id: ids
                 }
             })
-            const uploadDirectory = path.join(process.cwd(), 'public', 'asset', "blog", `${delBlog.urlSlug}`);
+            const uploadDirectory = path.join(process.cwd(), 'asset', "blog", `${delBlog.urlSlug}`);
             fs.rm(uploadDirectory, { recursive: true, force: true }, (err) => {
                 if (err) {
                     throw err
