@@ -28,7 +28,7 @@ const MarkAsCompleated = ({ orderId, className, style }) => {
     return (
         <>
             {(!isloading) ? <button className={className} style={style} onClick={onClk} >
-                Mark as Cancelled
+                Mark as Compleated
             </button> : "Submiting Request"}
         </>
     )
