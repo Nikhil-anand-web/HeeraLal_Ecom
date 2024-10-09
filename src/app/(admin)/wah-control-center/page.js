@@ -184,7 +184,7 @@ const Page = async () => {
           </div>
 
         </div>
-        <SendEmail/>
+       
         <div style={{ backgroundColor: "white", marginBottom: "50px", padding: "50px" }} className="row">
           <SalesChart style={{ width: "50%", height: "50vh", display: "flex" }} />
 

@@ -8,12 +8,12 @@ import createProduct from '@/app/actions/createProduct';
 import objectToFormData from '@/lib/objectToFormData';
 
 function validateNoSpaces(value) {
-
-    if (!(/^[a-z][a-zA-Z0-9]*$/.test(value))) {
-        return 'Maintain camelcasing';
+    if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
+        return 'Use lowercase words separated by hyphens, without spaces';
     }
     return true;
 }
+
 
 
 const AddProductForm = ({ categories }) => {

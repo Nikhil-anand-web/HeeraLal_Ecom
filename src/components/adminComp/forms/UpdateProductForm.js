@@ -12,13 +12,8 @@ import objectToFormData from '@/lib/objectToFormData';
 import updateProduct from '@/app/actions/updateProduct';
 
 function validateNoSpaces(value) {
-    if (value === '') {
-        return true
-
-    }
-
-    if (!(/^[a-z][a-zA-Z0-9]*$/.test(value))) {
-        return 'Maintain the camelcasing';
+    if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
+        return 'Use lowercase words separated by hyphens, without spaces';
     }
     return true;
 }

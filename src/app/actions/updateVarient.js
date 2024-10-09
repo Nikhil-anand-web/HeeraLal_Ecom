@@ -96,7 +96,7 @@ async function updateVarient(formData) {
 
                 return {
                     success: false,
-                    message: error.meta?.cause || "internal server error",
+                    message:error.code==='P2002'?"unique constrain void": error.meta?.cause || "internal server error",
 
                 }
 

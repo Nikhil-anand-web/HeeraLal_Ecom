@@ -148,7 +148,7 @@ async function createProduct(formData) {
 
                 return {
                     success: false,
-                    message: error.meta?.cause || "internal server error",
+                    message: error.code==='P2002'?"one of the slug already present": error.meta?.cause || "internal server error",
 
                 }
 

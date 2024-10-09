@@ -8,17 +8,13 @@ import Image from 'next/image';
 import getDistinctDisplayOrderSlider from '@/app/actions/getDistinctDisplayOrderSlider';
 import getAllSliderImages from '@/app/actions/getAllSliderImages';
 import updateSlider from '@/app/actions/updateSlider';
-function validateNoSpacesInUpdate(value) {
-
-    if (!(/^[a-z][a-zA-Z0-9]*$/.test(value))) {
-        if (value.length === 0) {
-            return true
-
-        }
-        return 'No spaces allowed and must be lowercase';
+function validateNoSpaces(value) {
+    if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
+        return 'Use lowercase words separated by hyphens, without spaces';
     }
     return true;
 }
+
 
 
 const SliderSettingForm = ({ pages }) => {
