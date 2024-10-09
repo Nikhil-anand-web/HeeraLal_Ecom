@@ -16,7 +16,7 @@ const page = async ({ params }) => {
 
 
   var count = 0
-  var itemsPerPage = getPaginationLimit()
+  var itemsPerPage =await getPaginationLimit()
 
   if (user) {
     if (user.role === 1 || user.role === 2) {

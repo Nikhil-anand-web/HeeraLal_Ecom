@@ -59,7 +59,7 @@ const page = async ({ params }) => {
 
 
   return (
-    (user && user.permissions[0].consumerAndOrderManagement ? <>
+    (true? <>
     <div style={{display:"flex",justifyContent:"center"}}> <h2>FAQ's</h2></div>
    
        <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />

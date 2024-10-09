@@ -16,7 +16,7 @@ const page = async ({ params }) => {
 
  
   var count = 0
-  var itemsPerPage = getPaginationLimit()
+  var itemsPerPage = await getPaginationLimit()
   
   if (user) {
     if (user.role === 1 || user.role === 2) {
@@ -64,9 +64,9 @@ const page = async ({ params }) => {
   return (
     (user && user.permissions[0].consumerAndOrderManagement ? <>
      <h3>Total-{count}</h3>
+      <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />
       <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
 
-      <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />
 
 
 
