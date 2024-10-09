@@ -8,12 +8,12 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 function validateNoSpaces(value) {
-    
-    if (!(/^[a-z][a-zA-Z0-9]*$/.test(value)) ) {
-        return 'No spaces allowed and must be lowercase';
+    if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
+        return 'Use lowercase words separated by hyphens, without spaces';
     }
     return true;
 }
+
 
 
 const AddCategoriesForm = ({ categories }) => {
