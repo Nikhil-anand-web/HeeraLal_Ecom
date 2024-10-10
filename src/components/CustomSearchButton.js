@@ -41,7 +41,7 @@ function CustomSearchButton() {
         helper()
     }, [searchQuery])
     const onclk = (slug) => {
-        rtr.push(`/productDetails/${slug}`)
+        rtr.push(`/product-details/${slug}`)
     }
 
 

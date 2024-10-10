@@ -49,25 +49,25 @@ const page = async() => {
         <div className="row aboutbox">
             <div className="col-md-6">
                 <h5>OUR MISSION</h5>
-                <p>{ourMission}</p>
+                <DangerDiv htmlEl={ourMission} />
 
             </div>
 
             <div className="col-md-6">
                 <h5>OUR STORIES</h5>
-                <p>{ourStories}</p>
+                <DangerDiv htmlEl={ourStories} />
                 
             </div>
 
             <div className="col-md-6 mt-2">
                 <h5>OUR APPROACH</h5>
-                <p>{ourApproach}</p>
+                 <DangerDiv htmlEl={ourApproach} />
                 
             </div>
 
             <div className="col-md-6 mt-2">
                 <h5>OUR PHILOSOPHY</h5>
-                <p>{ourPhilosophy}</p>
+                <DangerDiv htmlEl={ourPhilosophy} />
                 
             </div>
         </div>

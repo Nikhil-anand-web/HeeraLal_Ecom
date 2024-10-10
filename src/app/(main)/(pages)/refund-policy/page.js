@@ -1,10 +1,11 @@
 
+import DangerDiv from '@/components/DangerDiv'
 import React from 'react'
 
-const page =  async() => {
+const page = async () => {
     const refundPolicy = (await db.staticInfo.findFirst({
-        where:{
-            key:"refundPolicy"
+        where: {
+            key: "refundPolicy"
         }
     })).value[0].data
     return (
@@ -19,9 +20,9 @@ const page =  async() => {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="terms-policy">
-                           
-                            <p>{refundPolicy}</p>
-                            
+
+                            <DangerDiv htmlEl={refundPolicy} />
+
 
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 "use client"
+import DangerDiv from '@/components/DangerDiv';
 import React, { useState } from 'react';
 
 
@@ -45,7 +46,7 @@ const MoreTabs = ({description,recipe}) => {
         <div className="tab-content">
           <div id="description" className={`container tab-pane ${activeTab === 'description' ? 'active' : 'fade'}`}>
             <br />
-            {description}
+            <DangerDiv htmlEl={description}/>
           </div>
           <div id="recipes" className={`container tab-pane ${activeTab === 'recipes' ? 'active' : 'fade'}`}>
             <br />

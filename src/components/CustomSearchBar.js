@@ -33,7 +33,7 @@ const CustomSearchBar = () => {
         helper()
     }, [searchQuery])
     const onclk = (slug) => {
-        rtr.push(`/productDetails/${slug}`)
+        rtr.push(`/product-details/${slug}`)
     }
     return (
         <li className="nav-item me-3 d-none d-lg-block">

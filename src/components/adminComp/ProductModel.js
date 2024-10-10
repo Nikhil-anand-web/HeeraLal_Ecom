@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';  // Add Font Awesome icons
 import Link from 'next/link';
+import DangerDiv from '../DangerDiv';
 
 const ProductModel = ({ product, setRefetchComp }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -185,7 +186,7 @@ const ProductModel = ({ product, setRefetchComp }) => {
                     <p style={styles.details}><small className="text-muted">Product Slug: {product.slug}</small></p>
                     <p style={styles.details}><small className="text-muted">Category Slug: {product.category.slug}</small></p>
                     <p style={styles.details}><small className="text-muted">Cost of Inventory (MRP): ₹{mrpTotalInventory}</small></p>
-                    <p style={styles.details}><small className="text-muted">Description: {product.description}</small></p>
+                    <p style={styles.details}><small className="text-muted"> Description: <DangerDiv htmlEl={product.description}/></small></p>
                     <p style={styles.details}><small className="text-muted">Stars: {product.stars}</small></p>
                     <p style={styles.details}><small className="text-muted">Tags: {tagString}</small></p>
                     <p style={styles.details}><small className="text-muted">Variants: {product._count.varient}</small></p>

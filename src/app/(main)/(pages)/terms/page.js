@@ -1,3 +1,4 @@
+import DangerDiv from '@/components/DangerDiv'
 import React from 'react'
 
 const page =  async() => {
@@ -19,7 +20,8 @@ const page =  async() => {
                     <div className="col-md-12">
                         <div className="terms-policy">
                             <h4 className="mb-2">Acceptance of terms</h4>
-                            <p>{termsOfUse}</p>
+                           
+                            <DangerDiv htmlEl={termsOfUse}/>
                             
 
                         </div>

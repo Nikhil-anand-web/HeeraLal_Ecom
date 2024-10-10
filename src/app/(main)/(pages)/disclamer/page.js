@@ -1,3 +1,4 @@
+import DangerDiv from '@/components/DangerDiv'
 import React from 'react'
 
 const page =  async() => {
@@ -6,6 +7,7 @@ const page =  async() => {
             key:"disclamer"
         }
     })).value[0].data
+    console.log(disclamer)
     return (
         <section className="login-page">
             <div className="container">
@@ -19,7 +21,7 @@ const page =  async() => {
                     <div className="col-md-12">
                         <div className="terms-policy">
                            
-                            <p>{disclamer}</p>
+                          <DangerDiv htmlEl={disclamer}/>
                             
 
                         </div>

@@ -30,9 +30,9 @@ const page = async ({ params }) => {
             highLights: true,
             isVegiterian: true,
             varient: {
-                where:{
+                where: {
 
-                    status:true
+                    status: true
 
                 },
                 select: {
@@ -53,15 +53,17 @@ const page = async ({ params }) => {
                     slug: productSlug
                 }
             },
-            AND:[{products: {
-                some: {
-                    slug: productSlug
+            AND: [{
+                products: {
+                    some: {
+                        slug: productSlug
+                    }
                 }
-            }},{status:true}]
-            
+            }, { status: true }]
+
         }, select: {
             videoLink: true,
-            name:true
+            name: true
         }
     })
     const comboWithProduct = await db.combo.findMany({
@@ -98,9 +100,9 @@ const page = async ({ params }) => {
     });
 
     if (!product) {
-        return  <Image src={'/images/pageNotFound.jpg'} layout='responsive' width={100} height={100} />
-  
-      }
+        return <Image src={'/images/pageNotFound.jpg'} layout='responsive' width={100} height={100} />
+
+    }
 
     const categoryProducts = await db.varient.findMany({
         where: {
@@ -133,7 +135,7 @@ const page = async ({ params }) => {
     })
 
     console.log(categoryProducts)
-    
+
 
     return (
         <>
@@ -174,25 +176,32 @@ const page = async ({ params }) => {
                                 </div>
 
                                 <VarientControl varients={product.varient} />
-                                <PincodeServiceabilityCheck/>
+                                <PincodeServiceabilityCheck />
 
-                                <div className="info-block d-flex row">
-                                    <div className="col-4">
 
-                                        <Image src={quality} width={50} alt='' /><br />
+                                <div className="info-block">
+                                    {/* d-flex row */}
+                                    <div className={"d-flex row "}>
+                                        <div className="col-4">
 
-                                        No Adultering
+                                            <Image src={quality} width={50} alt='' /><br />
+
+                                            No Adultering
+                                        </div>
+                                        <div className="col-4">
+
+                                            <Image src={fryingPan} width={50} alt='' />    <br />
+                                            Ready to Use
+                                        </div>
+                                        <div className="col-4">
+
+                                            <Image src={india} width={50} alt='' />    <br />
+                                            Made in India
+                                        </div>
+
+
                                     </div>
-                                    <div className="col-4">
 
-                                        <Image src={fryingPan} width={50} alt='' />    <br />
-                                        Ready to Use
-                                    </div>
-                                    <div className="col-4">
-
-                                        <Image src={india} width={50} alt='' />    <br />
-                                        Made in India
-                                    </div>
                                 </div>
 
 

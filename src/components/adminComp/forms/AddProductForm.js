@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import ImageUploader from './formComponent/ImageUploader';
 import createProduct from '@/app/actions/createProduct';
 import objectToFormData from '@/lib/objectToFormData';
+import RichTextEditor from '../RichTextEditor';
 
 function validateNoSpaces(value) {
     if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
@@ -23,6 +24,7 @@ const AddProductForm = ({ categories }) => {
     }, [])
 
     const rtr = useRouter()
+    const [editorValue, setEditorValue] = useState('');
 
 
 
@@ -47,9 +49,9 @@ const AddProductForm = ({ categories }) => {
 
     const onSubmit = async (e) => {
         const sizeobj = {
-            length:e.length,
-            bredth:e.bredth,
-            height:e.height
+            length: e.length,
+            bredth: e.bredth,
+            height: e.height
         }
         const str = JSON.stringify(sizeobj)
         e.size = str
@@ -58,7 +60,6 @@ const AddProductForm = ({ categories }) => {
         delete e.bredth
 
         const formData = objectToFormData(e); // Collect form data
-
 
 
 
@@ -97,7 +98,7 @@ const AddProductForm = ({ categories }) => {
     const handleFileChange = (event) => {
         setImagePreview([])
         const files = Array.from(event.target.files);
-        const validFiles = files.filter(file => (file.type === 'image/jpeg' || file.type === 'image/png'||file.type === 'image/jpg' ||file.type === 'image/webp'));
+        const validFiles = files.filter(file => (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/webp'));
 
         if (files.length !== validFiles.length) {
             alert('Only JPEG images are allowed.');
@@ -165,6 +166,11 @@ const AddProductForm = ({ categories }) => {
         setImagePreview(restImage)
 
     }
+    const handleEditorChange = (content) => {
+        setEditorValue(content);
+        setValue('description', content); // Manually set the value for description
+    };
+
 
 
 
@@ -196,12 +202,18 @@ const AddProductForm = ({ categories }) => {
                             <input {...register("highLights", { required: true })} type="text" className="form-control" id="highLights" placeholder="HighLights" />
                             {errors.highLights && <span>This field is required</span>}
                         </div>
-                        <div className="form-group" >
+                        {/* <div className="form-group" >
                             <label htmlFor="description">Description</label>
                             <input {...register("description", { required: true })} type="text" className="form-control" id="description" placeholder="HighLights" />
                             {errors.description && <span>This field is required</span>}
+                        </div> */}
+                        <div className="form-group">
+                            <label htmlFor="description">Description</label>
+                            <RichTextEditor value={editorValue} onChange={handleEditorChange} />
+                            {errors.description && <span>This field is required</span>}
                         </div>
-                        
+                        {/* <input type="hidden" {...register('description', { required: true, validate: value => value !== '<p><br></p>' })} /> */}
+
                         <div className="form-group" >
                             <label htmlFor="slugProduct">Slug for Product </label>
                             <input {...register("slugProduct", {
@@ -249,7 +261,7 @@ const AddProductForm = ({ categories }) => {
 
                                 render={({ field }) => (
                                     <select defaultValue={0} className="form-select" {...field} id="showOnHome">
-                                         <option disabled value={0}>select a valid option</option>
+                                        <option disabled value={0}>select a valid option</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -271,7 +283,7 @@ const AddProductForm = ({ categories }) => {
 
                                 render={({ field }) => (
                                     <select defaultValue={0} className="form-select" {...field} id="isFeatured">
-                                         <option disabled value={0}>select a valid option</option>
+                                        <option disabled value={0}>select a valid option</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -293,7 +305,7 @@ const AddProductForm = ({ categories }) => {
 
                                 render={({ field }) => (
                                     <select defaultValue={0} className="form-select" {...field} id="isVegiterian">
-                                         <option disabled value={0}>select a valid option</option>
+                                        <option disabled value={0}>select a valid option</option>
 
                                         <option value={true}>True</option>
                                         <option value={false}>False</option>
@@ -333,7 +345,7 @@ const AddProductForm = ({ categories }) => {
                         <div className="form-group">
                             <p>Upload samplePhotos</p>
                             <label style={{ fontSize: "2rem", cursor: "pointer" }} className="fa  fa-folder-open" htmlFor="samplePhotos"></label>
-                            <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple ="true" accept="image/*" />
+                            <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple="true" accept="image/*" />
 
 
 
@@ -402,7 +414,7 @@ const AddProductForm = ({ categories }) => {
                                 <input {...register("qty", { required: true })} type="number" className="form-control" id="qty" placeholder="qty" />
                                 {errors.qty && <span>This field is required</span>}
                             </div>
-                           
+
                             <div className="form-group" >
                                 <label htmlFor="mrp">MRP</label>
                                 <input {...register("mrp", { required: true })} type="text" className="form-control" id="mrp" placeholder="mrp" />
