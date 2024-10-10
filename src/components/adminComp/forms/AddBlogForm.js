@@ -13,15 +13,15 @@ const AddBlogForm = () => {
         e.preventDefault(); // Prevent default form submission
 
         setIsLoading(true); // Set loading state
-        if (editorValue==='') {
+        if (editorValue === '') {
             toast.warning("content required")
             return
-            
+
         }
 
         const formData = new FormData(e.target); // Collect form data
-        formData.set("content",editorValue)
-       
+        formData.set("content", editorValue)
+
 
         try {
             const resObj = await createBlog(formData); // Pass formData to createBlog
@@ -39,7 +39,7 @@ const AddBlogForm = () => {
     };
     const handleEditorChange = (content) => {
         setEditorValue(content);
-      
+
     };
 
 
@@ -47,7 +47,7 @@ const AddBlogForm = () => {
         <div className="col-12 grid-margin stretch-card">
             <div className="card">
                 <div className="card-body">
-                    
+
                     <form onSubmit={onSubmit} className="forms-sample">
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
@@ -64,10 +64,10 @@ const AddBlogForm = () => {
                         <div className="form-group">
                             <label htmlFor="content">Content</label>
                             <div className="form-group">
-                           
-                            <RichTextEditor value={editorValue} onChange={handleEditorChange} />
-                          
-                        </div>
+
+                                <RichTextEditor value={editorValue} onChange={handleEditorChange} />
+
+                            </div>
                         </div>
                         <ImageUploader name="thumbnail" label="Thumbnail" />
                         <ImageUploader name="otherImages" label="Other Images" multiple={true} />

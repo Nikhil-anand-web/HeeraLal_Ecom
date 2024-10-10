@@ -6,9 +6,11 @@ import objectToFormData from '@/lib/objectToFormData';
 import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import RichTextEditor from '../RichTextEditor';
 
 const AddComboForm = ({ productSlug }) => {
     const [maxLimitProduct, setMaxLimitProduct] = useState(0)
+    const [editorValue, setEditorValue] = useState('');
     useEffect(() => {
         const fetch = async () => {
             try {
@@ -34,7 +36,8 @@ const AddComboForm = ({ productSlug }) => {
         register,
         handleSubmit,
         control,
-      
+        setValue,
+
 
 
         formState: { errors },
@@ -45,14 +48,14 @@ const AddComboForm = ({ productSlug }) => {
 
     const onSubmit = async (e) => {
         const formData = objectToFormData(e)
-        formData.set('noOfProduct',noOfProductInvolve)
+        formData.set('noOfProduct', noOfProductInvolve)
 
         try {
             setIsLoading(true)
-            const res =await createRecipe(formData)
+            const res = await createRecipe(formData)
             if (!res.success) {
                 throw res
-                
+
             }
             toast.success(res.message)
 
@@ -61,16 +64,21 @@ const AddComboForm = ({ productSlug }) => {
             toast.warning(error.message)
 
 
-        }finally{
+        } finally {
             setIsLoading(false)
         }
 
     }
+    // instructions
+    const handleEditorChange = (content) => {
+        setEditorValue(content);
+        setValue('instructions', content); // Manually set the value for description
+    };
     return (
         <div className="col-12 grid-margin stretch-card">
             <div className="card">
                 <div className="card-body">
-                <label htmlFor="name">Number of product involve in this recipe</label>
+                    <label htmlFor="name">Number of product involve in this recipe</label>
                     <input name='noOfProduct' type='number' value={noOfProductInvolve} onChange={(e) => (e.target.value <= parseInt(maxLimitProduct) && e.target.value >= 0) ? setNoOfProductInvolvr(e.target.value) : true} className="form-control" placeholder="no. of brand product" />
 
                     {parseInt(noOfProductInvolve) >= 1 && <form onSubmit={handleSubmit(onSubmit)} className="forms-sample">
@@ -86,21 +94,19 @@ const AddComboForm = ({ productSlug }) => {
                             <label htmlFor="videoLink">videoLink</label>
                             <input name='videoLink' {...register("videoLink", { required: true })} required className="form-control" id="videoLink" placeholder="videoLink" />
                         </div>
-                        
+
 
                         <div className="form-group">
-                            <label htmlFor="instructions">Instructions</label>
-                            <textarea
-                                {...register("instructions", { required: true })}
-                                name='instructions'
-                                required
-                                className="form-control"
-                                id="instructions"
-                                placeholder="instructions"
-                                style={{ resize: "vertical", overflow: "auto" }}
-                            />
+                           
+                                <label htmlFor="content">Instruction</label>
+                                <div className="form-group">
+
+                                    <RichTextEditor value={editorValue} onChange={handleEditorChange} />
+
+                            
+                            </div>
                         </div>
-                        
+
                         {Array(parseInt(noOfProductInvolve ? noOfProductInvolve : 0)).fill(null).map((_, index) => <div key={index} className="form-group">
                             <label htmlFor="slug"> Product Slug </label>
                             <Controller

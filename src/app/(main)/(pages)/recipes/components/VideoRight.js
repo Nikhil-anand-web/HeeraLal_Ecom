@@ -1,15 +1,16 @@
+import DangerDiv from '@/components/DangerDiv'
 import Link from 'next/link'
 import React from 'react'
 
 const VideoRight = ({ recipe }) => {
-    console.log(recipe)
+   
     return (
         <div className="row  my-5">
             <div className="col-md-7 col-12 order-2 order-md-1">
                 <h2>{recipe.name}</h2>
                 <hr />
 
-                <p className="text-justify">{recipe.instructions}</p>
+                <p className="text-justify"><DangerDiv htmlEl={recipe.instructions}/></p>
                 <div style={{ marginTop: "20px" }}>
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Ingridents:-</h4>
 
