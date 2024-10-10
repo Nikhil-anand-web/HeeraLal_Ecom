@@ -141,7 +141,7 @@ model product {
   categoryId   String
   name         String
   highLights   String
-  description  String
+  description  String   @db.LongText
   slug         String    @unique
   thumbNail    Json
   images       Json
