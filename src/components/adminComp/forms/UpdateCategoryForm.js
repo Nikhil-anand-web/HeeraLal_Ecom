@@ -226,7 +226,7 @@ const UpdateCategoryForm = ({ categories }) => {
                         <div className="form-group">
                             <label htmlFor="slug">Slug</label>
                             <input  {...register("slug", {
-                                 validate: validateNoSpacesInUpdate,
+                                 validate: validateNoSpaces,
                                 setValueAs: value => value.trim()
                             })} className="form-control" id="slug" placeholder="slug" />
                          

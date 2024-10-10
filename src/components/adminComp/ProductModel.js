@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from 'next/image';
 import { toast } from 'react-toastify';
@@ -56,7 +56,7 @@ const ProductModel = ({ product, setRefetchComp }) => {
     }
 
     const onClick = () => {
-        router.push(`/wah-control-center/varients/${product.id}`);
+        router.push(`/wah-control-center/updateProduct/${product.slug}`);
     };
 
     const toggleExpand = () => {
@@ -116,7 +116,7 @@ const ProductModel = ({ product, setRefetchComp }) => {
         },
         buttonsContainer: {
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end', // Align buttons to the right
             marginTop: '10px',
         },
         button: {
@@ -126,7 +126,6 @@ const ProductModel = ({ product, setRefetchComp }) => {
             fontSize: '14px',
             fontWeight: '500',
             cursor: 'pointer',
-            flexGrow: 1,
         },
         deleteButton: {
             backgroundColor: '#e74c3c',
@@ -136,10 +135,22 @@ const ProductModel = ({ product, setRefetchComp }) => {
         activateButton: {
             backgroundColor: '#27ae60',
             color: '#fff',
+            marginRight: '8px',  // Space between buttons
         },
         deactivateButton: {
             backgroundColor: '#f39c12',
             color: '#fff',
+            marginRight: '8px',  // Space between buttons
+        },
+        editButton: {
+            backgroundColor: '#3498db',  // Blue background
+            color: '#fff',
+            padding: '8px 12px',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: '500',
         },
         toggleButton: {
             position: 'absolute',
@@ -160,7 +171,6 @@ const ProductModel = ({ product, setRefetchComp }) => {
     };
 
     return (
-
         <div id={product.id} style={styles.container}>
             <Link href={`/wah-control-center/varients/${product.id}`}>
                 <Image
@@ -186,7 +196,7 @@ const ProductModel = ({ product, setRefetchComp }) => {
                     <p style={styles.details}><small className="text-muted">Product Slug: {product.slug}</small></p>
                     <p style={styles.details}><small className="text-muted">Category Slug: {product.category.slug}</small></p>
                     <p style={styles.details}><small className="text-muted">Cost of Inventory (MRP): ₹{mrpTotalInventory}</small></p>
-                    <p style={styles.details}><small className="text-muted"> Description: <DangerDiv htmlEl={product.description}/></small></p>
+                    <p style={styles.details}><small className="text-muted"> Description: <DangerDiv htmlEl={product.description} /></small></p>
                     <p style={styles.details}><small className="text-muted">Stars: {product.stars}</small></p>
                     <p style={styles.details}><small className="text-muted">Tags: {tagString}</small></p>
                     <p style={styles.details}><small className="text-muted">Variants: {product._count.varient}</small></p>
@@ -196,33 +206,21 @@ const ProductModel = ({ product, setRefetchComp }) => {
                     </p>
                     <p style={styles.details}><small className="text-muted">Featured: {product.isFeatured ? <span style={{ ...styles.badge, ...styles.successBadge }}>True</span> : <span style={{ ...styles.badge, ...styles.dangerBadge }}>False</span>}</small></p>
                     <p style={styles.details}><small className="text-muted">Best Seller: {product.isBestSeller ? <span style={{ ...styles.badge, ...styles.successBadge }}>True</span> : <span style={{ ...styles.badge, ...styles.dangerBadge }}>False</span>}</small></p>
-                    <p style={styles.details}><small className="text-muted">Last Updated: {new Date(product.updatedAt).toLocaleDateString()}</small></p>
-                    <p style={styles.details}><small className="text-muted">Created By: {product.createdBy.userName}</small></p>
+                    <p style={styles.details}><small className="text-muted">Active: {product.isActive ? <span style={{ ...styles.badge, ...styles.successBadge }}>True</span> : <span style={{ ...styles.badge, ...styles.dangerBadge }}>False</span>}</small></p>
                 </div>
 
                 <div style={styles.buttonsContainer}>
-                    <button
-                        onClick={onDelete}
-                        style={{ ...styles.button, ...styles.deleteButton }}
-                    >
-                        Delete
-                    </button>
-                    <button
-                        onClick={onStatusFlip}
-                        style={{
-                            ...styles.button,
-                            ...(product.status ? styles.deactivateButton : styles.activateButton),
-                        }}
-                    >
-                        {product.status ? 'Deactivate' : 'Activate'}
-                    </button>
+                    <button style={{ ...styles.button, ...styles.deleteButton }} onClick={onDelete}>Delete</button>
+                    {product.status
+                        ? <button style={{ ...styles.button, ...styles.deactivateButton }} onClick={onStatusFlip}>Deactivate</button>
+                        : <button style={{ ...styles.button, ...styles.activateButton }} onClick={onStatusFlip}>Activate</button>
+                    }
+                    {/* Edit Button next to Activate/Deactivate */}
+                    <button style={styles.editButton} onClick={onClick}>Edit</button>
                 </div>
             </div>
         </div>
-
     );
 };
 
 export default ProductModel;
-
-

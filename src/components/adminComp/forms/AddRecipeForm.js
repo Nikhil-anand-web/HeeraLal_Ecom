@@ -70,9 +70,10 @@ const AddComboForm = ({ productSlug }) => {
         <div className="col-12 grid-margin stretch-card">
             <div className="card">
                 <div className="card-body">
+                <label htmlFor="name">Number of product involve in this recipe</label>
                     <input name='noOfProduct' type='number' value={noOfProductInvolve} onChange={(e) => (e.target.value <= parseInt(maxLimitProduct) && e.target.value >= 0) ? setNoOfProductInvolvr(e.target.value) : true} className="form-control" placeholder="no. of brand product" />
 
-                    {parseInt(noOfProductInvolve) > 1 && <form onSubmit={handleSubmit(onSubmit)} className="forms-sample">
+                    {parseInt(noOfProductInvolve) >= 1 && <form onSubmit={handleSubmit(onSubmit)} className="forms-sample">
                         <div className="form-group">
                             <label htmlFor="name">Recipe Name</label>
                             <input name='name' {...register("name", { required: true })} required className="form-control" id="name" placeholder="name" />

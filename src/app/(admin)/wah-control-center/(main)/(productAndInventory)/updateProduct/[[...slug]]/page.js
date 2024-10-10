@@ -6,7 +6,8 @@ import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import React from 'react'
 
-const page = async () => {
+const page = async ({params}) => {
+    const reqTOEdit = params.slug?.at(0) || ''
     const user = await getServerSession(authOptions);
     var categories =[]
     var productSlugs =[]
@@ -32,7 +33,7 @@ const page = async () => {
   return (
    <>
      <h3 className="page-title"> Update a product</h3>
-     {user && user.permissions?.length && user.permissions.length>0 &&user.permissions[0].productAndInventory? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><UpdateProductForm productSlugs={productSlugs} categories={categories}/></div>:<div>access denied</div>}
+     {user && user.permissions?.length && user.permissions.length>0 &&user.permissions[0].productAndInventory? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><UpdateProductForm reqTOEdit={reqTOEdit} productSlugs={productSlugs} categories={categories}/></div>:<div>access denied</div>}
     
    </>
   )

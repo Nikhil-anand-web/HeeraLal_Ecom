@@ -11,11 +11,16 @@ import ImageUploader from './formComponent/ImageUploader';
 import objectToFormData from '@/lib/objectToFormData';
 import updateProduct from '@/app/actions/updateProduct';
 import RichTextEditor from '../RichTextEditor';
+import getProductBySlug from '@/app/actions/getProductBySlug';
+import CheckBox from './formComponent/CheckBox';
+import camelCaseToNormal from '@/lib/camelCaseToNormal';
+import getTags from '@/lib/tags';
+import CheckBoxType2 from './formComponent/CheckBoxType2';
 
 function validateNoSpaces(value) {
-    if (value=="") {
+    if (value == "") {
         return true
-        
+
     }
     if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
         return 'Use lowercase words separated by hyphens, without spaces';
@@ -24,7 +29,7 @@ function validateNoSpaces(value) {
 }
 
 
-const UpdateProductForm = ({ categories, productSlugs }) => {
+const UpdateProductForm = ({ categories, productSlugs, reqTOEdit }) => {
     const [isMounted, setisMounted] = useState(false)
     useEffect(() => {
         setisMounted(true)
@@ -32,22 +37,81 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
     const rtr = useRouter()
     const [editorValue, setEditorValue] = useState('');
-
-
-
-
-    console.log(categories)
-
-    const [isLoading, setIsLoading] = useState(false);
     const {
         register,
         handleSubmit,
         control,
         setValue,
         getValues,
-
+        watch,
         formState: { errors },
     } = useForm({ mode: "onChange" })
+    const identifireState = watch("identifireSlug");
+    useEffect(() => {
+        if (reqTOEdit && reqTOEdit !== '') {
+
+            setValue("identifireSlug", reqTOEdit);
+        }
+    })
+    useEffect(() => {
+        const setCurrentStates = async () => {
+
+            try {
+                if (identifireState) {
+                    const { product, success, message } = await getProductBySlug(identifireState)
+                    if (!success) {
+                        throw {
+                            success,
+                            message
+
+                        }
+
+                    }
+                    setValue("productName", product.name);
+                    setValue("stars", product.stars);
+                    setValue("highLights", product.highLights);
+
+                    setEditorValue(product.description)
+                    setValue("slugProduct", product.slug);
+                    setValue("category", product.category.id);
+                    setValue("showOnHome", product.showOnHome);
+                    setValue("isFeatured", product.isFeatured);
+                    setValue("isVegiterian", product.isVegiterian);
+                    setValue("isBestSeller", product.isBestSeller);
+
+                    const orgTags = getTags();
+                    orgTags.forEach((tag) => {
+                        console.log(1)
+                        const hasTag = product.tags.includes(tag); // Check if the product has this tag
+
+                        setValue(tag, hasTag); // Set the checkbox value
+                    });
+
+                }
+
+
+
+
+
+            } catch (error) {
+                console.log(error)
+                toast.warning(error.message)
+
+            }
+
+
+
+        }
+        setCurrentStates()
+    }, [identifireState])
+
+
+
+
+
+
+    const [isLoading, setIsLoading] = useState(false);
+
     const [imagePreview, setImagePreview] = useState([]);
     if (!isMounted) {
         return
@@ -55,8 +119,32 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
     }
 
     const onSubmit = async (e) => {
+        const tagArr = []
+        Object.entries(e).forEach(([key, value]) => {
+            if (value === true) {
+                tagArr.push(key)
+
+            }
+
+
+        })
+        const orgTags = getTags()
+        orgTags.forEach((tg) => {
+            delete e[tg];
+
+        })
+        e.tags = tagArr.join(',')
+        if (tagArr.length === 0) {
+            e.tags = ''
+
+        }
+
+
+        console.log(e)
 
         const formData = objectToFormData(e); // Collect form data
+
+
 
 
 
@@ -68,7 +156,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
             setIsLoading(true)
 
             const samplePicArray = Array.from(e.samplePhotos);
-            console.log(samplePicArray)
+
             samplePicArray.forEach(file => {
                 formData.append('samplePhotos', file);
             });
@@ -179,23 +267,23 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
             <div style={{ height: "20px", width: "20px" }}>
 
 
+
             </div>
             <div className="card">
                 <div className="card-body">
                     <div className="form-group">
-                        <label htmlFor="identifireSlug"> Identifier Slug</label>
+                        <label htmlFor="identifireSlug"> Product to update</label>
                         <Controller
 
                             name="identifireSlug"
                             control={control}
                             rules={{ required: 'identifireSlug is required' }}
-
                             render={({ field }) => (
-                                <select defaultValue={0} className="form-select" {...field}>
+                                <select disabled={reqTOEdit || reqTOEdit !== ''} defaultValue={0} className="form-select" {...field}>
 
                                     <option disabled value={0}>select a valid identifire</option>
                                     {
-                                        productSlugs.map((obj) => <option value={obj.slug}>{obj.slug}</option>)
+                                        productSlugs.map((obj, index) => <option key={index} value={obj.slug}>{obj.slug}</option>)
                                     }
 
 
@@ -216,10 +304,17 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
                             <input {...register("stars")} type="text" className="form-control" id="stars" placeholder="stars" />
                             {errors.productName && <span>This field is required</span>}
                         </div>
-                        <div className="form-group" >
-                            <label htmlFor="tags">Tags(write the tags in camelcasing)</label>
-                            <input {...register("tags")} type="text" className="form-control" id="tags" placeholder="Tags" />
 
+                        <div className="form-group">
+                            <label htmlFor="tags"> Tags</label>
+
+                            {getTags().map((tg, index) => {
+
+                                return <CheckBoxType2 errors={errors} key={index} control={control} id={tg}>
+
+                                    {camelCaseToNormal(tg)}
+                                </CheckBoxType2>
+                            })}
                         </div>
                         <div className="form-group" >
                             <label htmlFor="highLights">HighLights</label>
@@ -258,7 +353,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
 
                                         <option disabled value={0}>select a valid category</option>
                                         {
-                                            categories.map((cat) => <option value={cat.id}>{cat.slug}</option>)
+                                            categories.map((cat, index) => <option key={index} value={cat.id}>{cat.slug}</option>)
                                         }
 
 

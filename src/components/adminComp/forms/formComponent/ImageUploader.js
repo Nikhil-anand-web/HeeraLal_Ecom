@@ -18,7 +18,7 @@ const ImageUploader = ({label,multiple = false,name,required , register=null}) =
         });
     }
   return (
-    <div class="mb-3">
+    <div className="mb-3">
   <label htmlFor={name}className="form-label">{label}</label>
  {!register? <input name={name} onChange={val}  className="form-control" type="file" id={name} multiple={multiple}  accept="image/*"/>:
   <input name={name} onChange={val}  className="form-control" type="file" id={name} multiple={multiple} {...register(name, { required: required })}accept="image/*"/>}

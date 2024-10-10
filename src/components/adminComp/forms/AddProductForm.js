@@ -7,6 +7,9 @@ import ImageUploader from './formComponent/ImageUploader';
 import createProduct from '@/app/actions/createProduct';
 import objectToFormData from '@/lib/objectToFormData';
 import RichTextEditor from '../RichTextEditor';
+import CheckBoxType2 from './formComponent/CheckBoxType2';
+import getTags from '@/lib/tags';
+import camelCaseToNormal from '@/lib/camelCaseToNormal';
 
 function validateNoSpaces(value) {
     if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
@@ -48,6 +51,28 @@ const AddProductForm = ({ categories }) => {
     }
 
     const onSubmit = async (e) => {
+        const tagArr = []
+        Object.entries(e).forEach(([key, value]) => {
+            if (value === true) {
+                tagArr.push(key)
+
+            }
+
+
+        })
+        const orgTags = getTags()
+        orgTags.forEach((tg) => {
+            delete e[tg];
+
+        })
+        e.tags = tagArr.join(',')
+        if (tagArr.length === 0) {
+            e.tags = ''
+
+        }
+
+
+        
         const sizeobj = {
             length: e.length,
             bredth: e.bredth,
@@ -192,27 +217,29 @@ const AddProductForm = ({ categories }) => {
                             <input {...register("productName", { required: true })} type="text" className="form-control" id="productName" placeholder="product Name" />
                             {errors.productName && <span>This field is required</span>}
                         </div>
-                        <div className="form-group" >
-                            <label htmlFor="tags">Tags(write the tags in camelcasing)</label>
-                            <input {...register("tags", { required: true })} type="text" className="form-control" id="tags" placeholder="Tags" />
+                        <div className="form-group">
+                            <label htmlFor="tags"> Tags</label>
 
+                            {getTags().map((tg, index) => {
+
+                                return <CheckBoxType2 errors={errors} key={index} control={control} id={tg}>
+
+                                    {camelCaseToNormal(tg)}
+                                </CheckBoxType2>
+                            })}
                         </div>
                         <div className="form-group" >
                             <label htmlFor="highLights">HighLights</label>
                             <input {...register("highLights", { required: true })} type="text" className="form-control" id="highLights" placeholder="HighLights" />
                             {errors.highLights && <span>This field is required</span>}
                         </div>
-                        {/* <div className="form-group" >
-                            <label htmlFor="description">Description</label>
-                            <input {...register("description", { required: true })} type="text" className="form-control" id="description" placeholder="HighLights" />
-                            {errors.description && <span>This field is required</span>}
-                        </div> */}
+
                         <div className="form-group">
                             <label htmlFor="description">Description</label>
                             <RichTextEditor value={editorValue} onChange={handleEditorChange} />
                             {errors.description && <span>This field is required</span>}
                         </div>
-                        {/* <input type="hidden" {...register('description', { required: true, validate: value => value !== '<p><br></p>' })} /> */}
+
 
                         <div className="form-group" >
                             <label htmlFor="slugProduct">Slug for Product </label>
