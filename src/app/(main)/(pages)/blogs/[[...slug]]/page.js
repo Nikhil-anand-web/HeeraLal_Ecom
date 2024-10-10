@@ -37,7 +37,7 @@ const page = async ({params}) => {
         <section className="our-blog pt-5">
             <div className="container">
                 <div className="row mt-3 ">
-                {blogs.map((bl)=> <BlogContent goTo={`/blogDetails/${bl.urlSlug}`} heading={bl.title} paragraph={bl.brief} by={"admin"} dateString={bl.createdAt} imageS={bl.thumbnailImage[0].url} />)}
+                {blogs.map((bl)=> <BlogContent goTo={`/blog-details/${bl.urlSlug}`} heading={bl.title} paragraph={bl.brief} by={"admin"} dateString={bl.createdAt} imageS={bl.thumbnailImage[0].url} />)}
                 </div>
             </div>
             <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />

@@ -288,7 +288,7 @@ const Page = async () => {
                             </div>
 
                            {freeShiping.value===1 && <div>
-                           { ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) )<freeShiping.dependency?<p style={{color:"green",fontWeight:"bold"}} >{`Add item worth ₹${freeShiping.dependency - ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) + taxAmount).toPrecision(3)} to unlock FREE SHIPING!`}</p>:<p style={{color:"green",fontWeight:"bold"}}>FREE SHIPING unlocked</p>}
+                           { ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) )<freeShiping.dependency?<p style={{color:"green",fontWeight:"bold"}} >{`Add item worth ₹${freeShiping.dependency - ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) ).toPrecision(3)} to unlock FREE SHIPING!`}</p>:<p style={{color:"green",fontWeight:"bold"}}>FREE SHIPING unlocked</p>}
                                 
                             </div>}
 

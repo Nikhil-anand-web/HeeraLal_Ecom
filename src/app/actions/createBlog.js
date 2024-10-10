@@ -10,13 +10,14 @@ import { writeFile } from 'fs/promises'
 async function createBlog(formData) {
     "use server"
     
-    function validateSlug(value) {
     
-        if (!(/^[a-z][a-zA-Z0-9]*$/.test(value)) ) {
-            return false;
+    function validateSlug(value) {
+        if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
+            return 'Use lowercase words separated by hyphens, without spaces';
         }
         return true;
     }
+    
    
     
     const user = await getServerSession(authOptions)
@@ -28,7 +29,8 @@ async function createBlog(formData) {
 
                     const urlSlug = formData.getAll('slug');
                     
-                    if (!validateSlug(urlSlug)) {
+                    
+                    if (!validateSlug(urlSlug[0])) {
                         throw Error("URL Slug not Valid")
                     }
                     const thumbNail = formData.get('thumbnail');

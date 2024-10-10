@@ -3,16 +3,25 @@ import React, { useState } from 'react';
 import ImageUploader from './formComponent/ImageUploader';
 import createBlog from '@/app/actions/createBlog';
 import { toast } from 'react-toastify';
+import RichTextEditor from '../RichTextEditor';
 
 const AddBlogForm = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [editorValue, setEditorValue] = useState('');
 
     const onSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
 
         setIsLoading(true); // Set loading state
+        if (editorValue==='') {
+            toast.warning("content required")
+            return
+            
+        }
 
         const formData = new FormData(e.target); // Collect form data
+        formData.set("content",editorValue)
+       
 
         try {
             const resObj = await createBlog(formData); // Pass formData to createBlog
@@ -28,6 +37,11 @@ const AddBlogForm = () => {
             setIsLoading(false); // Reset loading state
         }
     };
+    const handleEditorChange = (content) => {
+        setEditorValue(content);
+      
+    };
+
 
     return (
         <div className="col-12 grid-margin stretch-card">
@@ -49,14 +63,11 @@ const AddBlogForm = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="content">Content</label>
-                            <textarea
-                                name='content'
-                                required
-                                className="form-control"
-                                id="content"
-                                placeholder="Content"
-                                style={{ resize: "vertical", overflow: "auto" }}
-                            />
+                            <div className="form-group">
+                           
+                            <RichTextEditor value={editorValue} onChange={handleEditorChange} />
+                          
+                        </div>
                         </div>
                         <ImageUploader name="thumbnail" label="Thumbnail" />
                         <ImageUploader name="otherImages" label="Other Images" multiple={true} />

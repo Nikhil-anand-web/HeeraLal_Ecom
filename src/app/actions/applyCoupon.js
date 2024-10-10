@@ -13,7 +13,7 @@ export default async function applyCoupon(code = '') {
 
         
         
-        console.log(code)
+       
         try {
             if (code === '' || !code) {
                 return {
@@ -70,6 +70,7 @@ export default async function applyCoupon(code = '') {
                 }
                 
             }
+          
 
             const cart = await db.cart.findUnique({
                 where: { userId: user.id },
@@ -150,7 +151,11 @@ export default async function applyCoupon(code = '') {
         
                 }
             })
-            if (cart.coupon) {
+            
+            if (cart?.coupon) {
+
+               
+
                 return {
                     success: false,
                     message: "first remove previous coupon then try again",
@@ -160,6 +165,8 @@ export default async function applyCoupon(code = '') {
                 
                 
             }
+            console.log(cart,"ddd")
+
             const value = totalCartValue(cart)
             if (value<coupon.minOrderValue) {
                 return {

@@ -3,6 +3,7 @@ import React from 'react'
 
 import Image from 'next/image'
 import db from '@/lib/db'
+import DangerDiv from '@/components/DangerDiv'
 const page =  async({params}) => {
  
     const blogSlug = params.slug
@@ -36,7 +37,10 @@ const page =  async({params}) => {
                                     <a href="#">  <span><i className="fa-solid fa-comments"></i> Comments</span></a>
                                 </div>
                                 <div className="blog-content mt-5">
-                               <p>{blogDetail.content}</p>
+                                    <DangerDiv htmlEl={blogDetail.content}/>
+
+                                  
+                             
                                 </div>
                             </div>
                         </div>

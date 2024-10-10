@@ -62,13 +62,13 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
         <>
         
          
-            <div style={{ marginBottom: "5rem" }} className="input-group">
+            {/* <div style={{ marginBottom: "5rem" }} className="input-group">
 
                 <span className="input-group-text" id="">Search</span>
 
                 <input style={{border:"2px"}} value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value) }} type="text" className="form-control border-r-emerald-500" />
 
-            </div>
+            </div> */}
 
             {(!isLoading ? <div style={{display:"flex",justifyContent:"center"}}>
 
