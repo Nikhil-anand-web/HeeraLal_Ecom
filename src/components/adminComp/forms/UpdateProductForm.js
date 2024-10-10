@@ -10,8 +10,13 @@ import ImageUploader from './formComponent/ImageUploader';
 
 import objectToFormData from '@/lib/objectToFormData';
 import updateProduct from '@/app/actions/updateProduct';
+import RichTextEditor from '../RichTextEditor';
 
 function validateNoSpaces(value) {
+    if (value=="") {
+        return true
+        
+    }
     if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
         return 'Use lowercase words separated by hyphens, without spaces';
     }
@@ -26,6 +31,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
     }, [])
 
     const rtr = useRouter()
+    const [editorValue, setEditorValue] = useState('');
 
 
 
@@ -158,6 +164,11 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
         setImagePreview(restImage)
 
     }
+    const handleEditorChange = (content) => {
+        setEditorValue(content);
+        setValue('description', content); // Manually set the value for description
+    };
+
 
 
 
@@ -172,7 +183,7 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
             <div className="card">
                 <div className="card-body">
                     <div className="form-group">
-                        <label htmlFor="identifireSlug"> Identifire Slug</label>
+                        <label htmlFor="identifireSlug"> Identifier Slug</label>
                         <Controller
 
                             name="identifireSlug"
@@ -215,9 +226,9 @@ const UpdateProductForm = ({ categories, productSlugs }) => {
                             <input {...register("highLights")} type="text" className="form-control" id="highLights" placeholder="HighLights" />
                             {errors.highLights && <span>This field is required</span>}
                         </div>
-                        <div className="form-group" >
+                        <div className="form-group">
                             <label htmlFor="description">Description</label>
-                            <input {...register("description")} type="text" className="form-control" id="description" placeholder="HighLights" />
+                            <RichTextEditor value={editorValue} onChange={handleEditorChange} />
                             {errors.description && <span>This field is required</span>}
                         </div>
                         <div className="form-group" >

@@ -9,12 +9,15 @@ import CheckBox from './formComponent/CheckBox';
 import updateVarient from '@/app/actions/updateVarient';
 
 function validateNoSpaces(value) {
+    if (value=="") {
+        return true
+        
+    }
     if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
         return 'Use lowercase words separated by hyphens, without spaces';
     }
     return true;
 }
-
 const UpdateVarientForm = ({ productSlugs }) => {
     const [isMounted, setisMounted] = useState(false)
     const [varients, setVarients] = useState([{}])

@@ -100,7 +100,7 @@ const Sidebar = () => {
                       <Accordion.Body >
                         <span className="nav-item">
                           <Link className="nav-link" href="/wah-control-center/addProduct">
-                            Add product
+                            Add Product
                           </Link>
 
                         </span>
@@ -113,7 +113,7 @@ const Sidebar = () => {
                         </span>
                         <span className="nav-item">
                           <Link className="nav-link" href="/wah-control-center/updateProduct">
-                            Update product
+                            Update Product
                           </Link>
 
 
