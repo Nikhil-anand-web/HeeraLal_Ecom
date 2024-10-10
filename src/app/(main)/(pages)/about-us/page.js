@@ -2,6 +2,7 @@ import React from 'react'
 
 
 import Image from 'next/image'
+import DangerDiv from '@/components/DangerDiv'
 const page = async() => {
     const ourMission = (await db.staticInfo.findFirst({
         where:{

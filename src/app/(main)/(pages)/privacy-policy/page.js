@@ -21,7 +21,7 @@ const page =  async() => {
                     <div className="col-md-12">
                         <div className="terms-policy">
                            
-                        <DangerDiv htmlEl={refundPolicy} />
+                        <DangerDiv htmlEl={privacyPolicy} />
                             
 
                         </div>
