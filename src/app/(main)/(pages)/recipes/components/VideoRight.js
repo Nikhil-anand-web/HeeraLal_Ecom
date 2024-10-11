@@ -10,7 +10,7 @@ const VideoRight = ({ recipe }) => {
                 <Link href={`/recipe-details/${recipe.id}`}><h2>{recipe.name}</h2></Link>
                 <hr />
 
-                <p className="text-justify"><DangerDiv htmlEl={recipe.instructions}/></p>
+               
                 <div style={{ marginTop: "20px" }}>
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Ingridents:-</h4>
 

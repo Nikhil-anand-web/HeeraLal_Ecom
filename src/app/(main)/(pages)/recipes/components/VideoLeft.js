@@ -12,7 +12,7 @@ const VideoLeft = ({ recipe }) => {
             <div style={{marginLeft:"30px"}} className="col-md-7 col-12 order-2 order-md-2"> {/* Content Div */}
                 <h2>{recipe.name}</h2>
                 <hr />
-                <p className="text-justify"><DangerDiv htmlEl={recipe.instructions} /></p>
+                
                 <div style={{ marginTop: "20px" }}>
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Ingredients:</h4>
                     <div style={{ display: "flex" }} className="social-list">
