@@ -24,42 +24,60 @@
 @import '../vendors/ti-icons/css/themify-icons.css';
 @import '../vendors/css/vendor.bundle.base.css';
 @import 'react-toastify/dist/ReactToastify.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif!important;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
-   display: none; /* Chrome, Safari */
- }
- 
- .hide-scrollbar {
-   scrollbar-width: none; /* Firefox */
-   -ms-overflow-style: none; /* Edge */
- }
+  display: none;
+  /* Chrome, Safari */
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* Edge */
+}
 
 .spinner {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: conic-gradient(#0000 10%,#0da487);
-    -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 9px),#000 0);
-    animation: spinner-zp9dbg 1s infinite linear;
- }
- 
- @keyframes spinner-zp9dbg {
-    to {
-       transform: rotate(1turn);
-    }
- }
- .no-border-children * {
-   border: none !important;
- }
- .social-list {
-   list-style-type: none; /* Remove default bullets */
-   padding: 0; /* Remove default padding */
-   margin: 0; /* Remove default margin */
-   font-family: 'Helvetica Neue', Arial, sans-serif; /* Use a clean, modern font */
-   font-size: 18px; /* Adjust font size for readability */
-   color: #999898d7; /* Use a neutral dark color */
-   
- }
- .dropdown-item {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, #0da487);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 9px), #000 0);
+  animation: spinner-zp9dbg 1s infinite linear;
+}
+
+@keyframes spinner-zp9dbg {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.no-border-children * {
+  border: none !important;
+}
+
+.social-list {
+  list-style-type: none;
+  /* Remove default bullets */
+  padding: 0;
+  /* Remove default padding */
+  margin: 0;
+  /* Remove default margin */
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  /* Use a clean, modern font */
+  font-size: 18px;
+  /* Adjust font size for readability */
+  color: #999898d7;
+  /* Use a neutral dark color */
+
+}
+
+.dropdown-item {
   display: flex;
   align-items: center;
   padding: 8px;
@@ -79,6 +97,7 @@
   font-size: 20px;
   color: #333;
 }
+
 .dropdown-item:hover {
   background-color: #f0f0f0;
   transform: translateY(-2px);
@@ -88,6 +107,7 @@
 .thumbnail-image:hover {
   transform: scale(1.05);
 }
+
 .pagination {
   display: flex;
   gap: 8px;
@@ -116,7 +136,7 @@
 
 
 
- 
+
 .sidebar {
   width: 250px;
   transition: width 0.3s ease-in-out;
@@ -126,8 +146,11 @@
   width: 0;
   overflow: hidden;
 }
-.product-name { font-size: 13px;
+
+.product-name {
+  font-size: 13px;
   font-weight: bold;
   color: #333;
   text-wrap: wrap;
-  text-align: left; }
+  text-align: left;
+}

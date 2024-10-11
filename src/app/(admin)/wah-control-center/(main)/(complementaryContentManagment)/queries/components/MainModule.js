@@ -2,10 +2,9 @@
 "use client"
 
 
-import getSearchedFAQ from '@/app/actions/getSearchedFAQ'
 import getSearchedPublicQuery from '@/app/actions/getSearchedPublicQuery'
 import QueryModel from '@/components/adminComp/QueryModel'
-import FAQItem from '@/components/FAQItem'
+
 
 
 import Spinner from '@/components/global/Spinner'
