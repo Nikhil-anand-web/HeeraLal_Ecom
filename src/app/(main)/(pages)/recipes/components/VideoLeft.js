@@ -23,7 +23,7 @@ const VideoLeft = ({ recipe }) => {
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Our Product:</h4>
                     <div style={{ display: "flex" }} className="social-list">
                         {recipe.products.map((obj, i) => (
-                            <Link key={obj.slug} href={`/productDetails/${obj.slug}`}>
+                            <Link key={obj.slug} href={`/product-details/${obj.slug}`}>
                                 {obj.name} {(i < recipe.products.length - 1) ? "," : ""}
                             </Link>
                         ))}

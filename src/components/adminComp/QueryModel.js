@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ExpandableInfo = ({ name, email, message }) => {
+const ExpandableInfo = ({ name, email, message,createdAt }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleExpand = () => setIsOpen(!isOpen);
 
@@ -60,6 +60,8 @@ const ExpandableInfo = ({ name, email, message }) => {
       fontSize: '14px',
     },
   };
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const formattedDate = createdAt.toLocaleDateString('en-US', options);
 
   return (
     <div style={styles.container}>
@@ -80,6 +82,7 @@ const ExpandableInfo = ({ name, email, message }) => {
                 </span>
               )}
             </p>
+            <p>{formattedDate}</p>
           </div>
         )}
       </div>

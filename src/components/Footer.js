@@ -61,6 +61,11 @@ const Footer = async () => {
       key: "companyAddress"
     }
   })).value
+  const freeShiping = (await db.globalSettings.findFirst({
+    where:{
+      settingName:"freeShipingCartValue"
+    }
+  }))
  
   return (
     <footer className="footer">
@@ -81,7 +86,7 @@ const Footer = async () => {
           <div className="col-md-3">
             <div className="quality d-flex align-items-center">
               <div className="quality-img me-3">   <Image alt='logo' layout='responsive' src={dilivaryImg} /></div>
-              <div className="quality-txt">Free Delivery for Order Over ₹50</div>
+              <div className="quality-txt">{ freeShiping.value===1? `Free Delivery for Order Over ₹${freeShiping.dependency}`:"Free shiping soon"}</div>
 
             </div>
 
