@@ -8,6 +8,7 @@ import footerLogo from '../images/footer-logo.png'
 import paymentImg from "../images/payments.png"
 import Link from 'next/link'
 import db from '@/lib/db'
+import DangerDiv from './DangerDiv'
 const Footer = async () => {
   const ftrlogo = await db.banners.findFirst({
     where: {
@@ -113,7 +114,7 @@ const Footer = async () => {
                 <Image alt='logo' width={120} height={60} src={ftrlogo.images[0].url} />
               </div>
               <div className="footer-content">
-                <p className="mb-1">{footerPara}</p>
+                <DangerDiv htmlEl={footerPara}/>
                 <a href="/about-us" className="primary-color">Read more</a>
                 <div className="social-media mt-2">
                   <ul className="d-flex">
