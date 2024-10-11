@@ -16,20 +16,30 @@ async function updateSlider(formData) {
                 if (user.permissions[0].siteManagement) {
                     const uploadDirectory = path.join(process.cwd(), 'asset', 'slider', `${formData.get('identifireSlug')}`);
 
+                    // Check if the upload directory exists, if yes, clean it
+                    if (fs.existsSync(uploadDirectory)) {
+                        const existingFiles = fs.readdirSync(uploadDirectory);
+                        for (const file of existingFiles) {
+                            const filePath = path.join(uploadDirectory, file);
+                            fs.unlinkSync(filePath); // Delete existing files
+                        }
+                    } else {
+                        fs.mkdirSync(uploadDirectory, { recursive: true }); // Create directory if it doesn't exist
+                    }
+
                     // Access uploaded files
                     const jsonToDb = [];
                     const files = formData.getAll('samplePhotos');
 
                     if (files.length > 0) {
-                        console.log(files)
-                        if (!fs.existsSync(uploadDirectory)) {
-                            fs.mkdirSync(uploadDirectory, { recursive: true });
-                        }
+                       
 
-                        // Synchronous file writing, but we still need to await arrayBuffer resolution
+                        // Synchronous file writing
                         for (let index = 0; index < files.length; index++) {
                             const file = files[index];
-                            const filePath = path.join(uploadDirectory, `${index}.jpeg`);
+                            const timestamp = Date.now(); // Get the current timestamp
+                            const filePath = path.join(uploadDirectory, `${timestamp}.jpeg`); // Filename with timestamp
+                            console.log(filePath)
 
                             // Await the arrayBuffer and then write synchronously
                             const bytes = await file.arrayBuffer(); // Await the async operation
@@ -37,13 +47,12 @@ async function updateSlider(formData) {
 
                             // Synchronously write the file
                             fs.writeFileSync(filePath, buffer);
-                        }
 
-                        for (let i = 0; i < files.length; i++) {
+                            // Push the corresponding URL to the array
                             jsonToDb.push({
-                                url: `/asset/slider/${formData.get('identifireSlug')}/${i}.jpeg`,
+                                url: `/asset/slider/${formData.get('identifireSlug')}/${timestamp}.jpeg`, // URL with timestamp
                                 alt: 'slider image',
-                                link: formData.get(`lnk_${i}`).trim(),
+                                link: formData.get(`lnk_${index}`).trim(),
                             });
                         }
                     }

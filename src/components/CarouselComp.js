@@ -14,7 +14,7 @@ const CarouselComp = ({ images }) => {
             <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
               <Link href={!image.link?'#':image.link}>
                 <Image 
-                  src={image.url} 
+                  src={image.url}
                   className="img-fluid" 
                   height={720} 
                   width={1920} 
