@@ -1,133 +1,141 @@
 "use client"
 
-
 import Image from 'next/image'
 import axios from 'axios';
 import tempImg from '../../../public/images/dashboard/ecommerce/img_2.png'
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
+const CategoryModel = ({ categoriesList: categoryDetail, setstateRefresherDummyValue }) => {
 
+  const router = useRouter();
 
-
-const CategoryModel = ({ categoriesList:categoryDetail,setstateRefresherDummyValue}) => {
-  
-
-const rtr = useRouter()
- 
-  const onDelete= async()=>{
+  const onDelete = async () => {
     try {
       const res = await axios.delete(`/api/v1/deleteCategory`, {
-        data:[{id:categoryDetail.id}]
+        data: [{ id: categoryDetail.id }]
       });
       if (res.data.success) {
         toast.success(res.data.message)
-        setstateRefresherDummyValue((pre)=>!pre)
-    
-        
-        
+        setstateRefresherDummyValue(prev => !prev);
       }
-      
     } catch (error) {
-      console.log(error,"error")
-            
-        toast.warning(error.response.data.message)
-      
+      console.log(error, "error")
+      toast.warning(error.response.data.message)
     }
-
   }
-  const onStatusFlip= async()=>{
+
+  const onStatusFlip = async () => {
     try {
-      const res = await axios.post('/api/v1/categoryStatusToggle',{id:categoryDetail.id})
-        console.log(res)
-      
+      const res = await axios.post('/api/v1/categoryStatusToggle', { id: categoryDetail.id });
       if (res.data.success) {
         toast.success(res.data.message)
-        setstateRefresherDummyValue((pre)=>!pre)
-   
-        
+        setstateRefresherDummyValue(prev => !prev);
       }
-      
     } catch (error) {
-      console.log(error)
-            
-            toast.warning(error.response.data.message)
-      
+      console.log(error);
+      toast.warning(error.response.data.message);
     }
-
   }
+
+  const onClickEdit = () => {
+    router.push(`/wah-control-center/updateCategoy/${categoryDetail.id}`);
+  }
+
   if (!categoryDetail) {
-    return<div>the category is empty</div>
-    
-  }
-  const onClickModel = ()=>{
-    rtr.push(`/wah-control-center/categoryDetails/${categoryDetail.id}`)
+    return <div>The category is empty</div>;
   }
 
-
+  const onClickModel = () => {
+    router.push(`/wah-control-center/categoryDetails/${categoryDetail.id}`);
+  }
 
   return (
-    <div id={categoryDetail.id} className="card mb-2 text-start" style={{ border: 'none', cursor: 'pointer' }} >
-      <div  className="row g-0">
-      
-          <Image alt={"cat Image"} width={500} height={500} style={{height:"100px",width:"100px"}} src={categoryDetail.image[0]?.url || tempImg} />
-      
-        <div onClick={onClickModel}   className="col-8">
-          <div className="card-body py-2 px-3">
-            <h6 className="card-title mb-1">Category Name :- {categoryDetail.categoryName}</h6>
-            <p className="card-text mb-1"><small className="text-muted">Category Slug :- {categoryDetail.slug}</small></p>
-            <p className="card-text mb-1"><small className="text-muted">Parent Category :- {categoryDetail.parent===null?"Root":categoryDetail.parent.categoryName}</small></p>
-            
-          </div>
-          
+    <div id={categoryDetail.id} className="card mb-3 category-card shadow-sm" style={styles.card}>
+      <div className="row g-0 align-items-center">
+        <div className="col-3">
+          <Image alt="Category Image" width={100} height={100} style={styles.image} src={categoryDetail.image[0]?.url || tempImg} />
         </div>
-      
-        <button onClick={onDelete}  type="button"  style={{
-          margin: "10px",
-          background: "red",
-          border: "none",
-          borderRadius: "inherit",
-          color: "#fff",
-          fontSize: "14px",
-          padding: "8px 15px"
-        }}>Delete</button>
-       
-       
-        {!categoryDetail.status ?
-        <button onClick={onStatusFlip} type="button"  style={{
-          margin: "10px",
-          background: "green",
-          border: "none",
-          borderRadius: "inherit",
-          color: "#fff",
-          fontSize: "14px",
-          padding: "8px 15px"
-        }}>Activate</button>
-        :
-
-        <button onClick={onStatusFlip}  type="button" style={{
-          margin: "10px",
-          background: "yellow",
-          border: "none",
-          borderRadius: "inherit",
-          color: "black",
-          fontSize: "14px",
-          padding: "8px 15px"
-        }}>Deactivate</button>
-
-      }
-
-
+        <div onClick={onClickModel} className="col-7">
+          <div className="card-body py-2 px-3">
+            <h6 className="card-title mb-1" style={styles.title}>Category: {categoryDetail.categoryName}</h6>
+            <p className="card-text mb-1" style={styles.text}><small>Slug: {categoryDetail.slug}</small></p>
+            <p className="card-text mb-1" style={styles.text}><small>Parent: {categoryDetail.parent ? categoryDetail.parent.categoryName : "Root"}</small></p>
+          </div>
+        </div>
+        <div className="col-2 d-flex flex-column align-items-end">
+          <button onClick={onClickEdit} className="btn btn-sm mb-2" style={styles.editButton}>
+            Edit
+          </button>
+          {!categoryDetail.status ? (
+            <button onClick={onStatusFlip} className="btn btn-sm mb-2" style={styles.activateButton}>
+              Activate
+            </button>
+          ) : (
+            <button onClick={onStatusFlip} className="btn btn-sm mb-2" style={styles.deactivateButton}>
+              Deactivate
+            </button>
+          )}
+          <button onClick={onDelete} className="btn btn-sm" style={styles.deleteButton}>
+            Delete
+          </button>
+        </div>
       </div>
-
-     
-     
-
-
-
-
     </div>
-  )
+  );
 }
 
-export default CategoryModel
+const styles = {
+  card: {
+    borderRadius: '12px',
+    backgroundColor: '#f7f7f7',
+    cursor: 'pointer',
+    padding: '10px',
+    transition: '0.3s all ease',
+  },
+  image: {
+    height: '100px',
+    width: '100px',
+    borderRadius: '8px',
+    objectFit: 'cover',
+  },
+  title: {
+    fontSize: '16px',
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  text: {
+    fontSize: '14px',
+    color: '#666',
+  },
+  editButton: {
+    backgroundColor: '#007bff',
+    color: '#fff',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+  },
+  activateButton: {
+    backgroundColor: '#28a745',
+    color: '#fff',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+  },
+  deactivateButton: {
+    backgroundColor: '#ffc107',
+    color: '#000',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+  },
+  deleteButton: {
+    backgroundColor: '#dc3545',
+    color: '#fff',
+    border: 'none',
+    padding: '5px 10px',
+    borderRadius: '5px',
+  }
+};
+
+export default CategoryModel;

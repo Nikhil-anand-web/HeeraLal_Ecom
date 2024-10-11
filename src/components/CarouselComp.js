@@ -1,8 +1,11 @@
+
+
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const CarouselComp = ({ images }) => {
+  
   return (
     <section className="slider">
       <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">

@@ -1,4 +1,4 @@
 export default function getEditorNeedKeysStaticData() {
-    return ["disclamer","privacyPollicy","refundPolicy","footerParaGraph","shipingPolicy","privacyPolicy"]
+    return ["disclamer","privacyPollicy","refundPolicy","footerParaGraph","shipingPolicy","privacyPolicy","termsOfUse"]
     
 }

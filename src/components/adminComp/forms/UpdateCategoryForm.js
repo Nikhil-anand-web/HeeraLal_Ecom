@@ -7,6 +7,9 @@ import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 
+import getCatBySlug from '@/app/actions/getCatById';
+import getCatById from '@/app/actions/getCatById';
+
 
 
 
@@ -22,7 +25,7 @@ function validateNoSpaces(value) {
 }
 
 
-const UpdateCategoryForm = ({ categories }) => {
+const UpdateCategoryForm = ({ categories,reqId }) => {
     const rtr = useRouter()
     const {
         register,
@@ -30,27 +33,84 @@ const UpdateCategoryForm = ({ categories }) => {
         control,
         setValue,
         getValues,
+        watch,
         
         formState: { errors },
     } = useForm({ mode: "onChange" })
+    const identifireState = watch("identifireSlug");
+    useEffect(() => {
+        if (reqId && reqId !== '') {
+
+            setValue("identifireSlug", reqId);
+        }
+    },[])
+    
+    useEffect(() => {
+        const setCurrentStates = async () => {
+
+            try {
+                if (identifireState) {
+                    const { category, success, message } = await getCatById(identifireState)
+                    if (!success) {
+                        throw {
+                            success,
+                            message
+
+                        }
+
+                    }
+                    setValue("categoryName", category.categoryName);
+            
+
+                 
+                    setValue("slug", category.slug);
+                    setValue("parentId", -1);
+                    setValue("showOnHome", category.showOnHome===true);
+                    
+                    
+                    
+
+
+                }
+
+
+
+
+
+            } catch (error) {
+                console.log(error)
+                toast.warning(error.message)
+
+            }
+
+
+
+        }
+        setCurrentStates()
+    }, [identifireState])
 
     const [isMounted, setisMounted] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [imagePreview, setImagePreview] = useState([]);
-    const [identifireSlugState,setidentifireSlug] = useState('')
+    // const [identifireSlugState,setidentifireSlug] = useState('')
     const [hierarchialSuperiorCategory,sethierarchialSuperiorCategory] = useState([])
     
     useEffect(() => {
         setisMounted(true)
     }, [])
     useEffect(()=>{
-        const getCategoryById = async()=>{
-            const res =  await axios.post('/api/v1/hierarchialSuperiorCategory',{id:identifireSlugState})
-            sethierarchialSuperiorCategory(res.data.categories)
-          
+        if (identifireState && identifireState!=='') {
+            const getCategoryById = async()=>{
+                const res =  await axios.post('/api/v1/hierarchialSuperiorCategory',{id:identifireState})
+                sethierarchialSuperiorCategory(res.data.categories)
+              
+            }
+            getCategoryById()
+
+            
         }
-        getCategoryById()
-    },[identifireSlugState])
+      
+    },[identifireState])
     if (!isMounted) {
         return
 
@@ -61,14 +121,14 @@ const UpdateCategoryForm = ({ categories }) => {
     const onSubmit = async (data) => {
       
      
-
+   console.log(data)
         const formData = new FormData();
 
         const narray = Array.from(data.samplePhotos);
         narray.forEach(file => {
             formData.append('samplePhotos', file);
         });
-        formData.set('identifireSlug',identifireSlugState)
+        formData.set('identifireSlug',identifireState)
         formData.set('slug', data.slug)
         formData.set('categoryName', data.categoryName)
         formData.set('parentId', data.parentId)
@@ -133,7 +193,8 @@ const UpdateCategoryForm = ({ categories }) => {
         }
     };
     const handleIdentifireSlugSelection=(event)=>{
-        setidentifireSlug(event.target.value)
+       
+        setValue("identifireSlug", event.target.value);
       
 
 
@@ -193,7 +254,7 @@ const UpdateCategoryForm = ({ categories }) => {
                     <p className="card-description">  </p>
                     <form onSubmit={handleSubmit(onSubmit)} className="forms-sample">
                        <div className="form-group">
-                            <label htmlFor="identifireSlug">Identifire Slug</label>
+                            <label htmlFor="identifireSlug">Category to edit</label>
                             <Controller
 
                                 name="identifireSlug"
@@ -203,7 +264,7 @@ const UpdateCategoryForm = ({ categories }) => {
                                 // rules={{ required: 'identifireSlug is required' }}
                                 render={({ field :{ onChange, onBlur, value, ref } }) => (
                                    
-                                    <select defaultValue={0} onChange={handleIdentifireSlugSelection} onBlur={onBlur} value={value} ref={ref} className="form-select" id="identifireSlug">
+                                    <select disabled={reqId || reqId !== ''} defaultValue={0} onChange={handleIdentifireSlugSelection} onBlur={onBlur} value={value} ref={ref} className="form-select" id="identifireSlug">
                                    <option disabled  value={0}>select a valid identifire</option>
                                         
                                         {
@@ -216,7 +277,7 @@ const UpdateCategoryForm = ({ categories }) => {
                                 )}
                             />
                         </div>
-                        {identifireSlugState?<div >
+                        {identifireState?<div >
                         <div className="form-group" >
                             <label htmlFor="categoryName">Category Name</label>
                             <input {...register("categoryName")} type="text" className="form-control" id="categoryName" placeholder="Category Name" />
@@ -245,7 +306,7 @@ const UpdateCategoryForm = ({ categories }) => {
                                 
                                 rules={{ required: 'parent is required' }}
                                 render={({ field }) => (
-                                    <select defaultValue={-2} className="form-select" {...field} id="parentId">
+                                    <select  className="form-select" {...field} id="parentId">
                                         <option disabled value={-2}>select a valid state</option>
 
                                         <option value={"-1"}>Unchanged</option>
@@ -267,7 +328,7 @@ const UpdateCategoryForm = ({ categories }) => {
 
                                 name="showOnHome"
                                 control={control}
-                                rules={{ required: 'Category is required' }}
+                                
 
                                 render={({ field }) => (
                                     <select defaultValue={0} className="form-select" {...field} id="showOnHome">

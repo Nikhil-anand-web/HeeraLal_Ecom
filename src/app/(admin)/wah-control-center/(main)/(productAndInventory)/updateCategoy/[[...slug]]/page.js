@@ -7,7 +7,8 @@ import React from 'react'
 
 const page = async ({params}) => {
     const user = await getServerSession(authOptions);
-    const slug = params.slug
+    const slug = params.slug[0]
+    
     var categories =[]
   if(user && user.permissions?.length&&user.permissions[0].productAndInventory){ 
       categories = await db.category.findMany({
@@ -29,7 +30,7 @@ const page = async ({params}) => {
   return (
    <>
      <h3 className="page-title"> Update a Category </h3>
-     {user && user.permissions?.length &&user.permissions[0].productAndInventory? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><UpdateCategoryForm  categories={categories}/></div>:<div>access denied</div>}
+     {user && user.permissions?.length &&user.permissions[0].productAndInventory? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><UpdateCategoryForm reqId= {slug}  categories={categories}/></div>:<div>access denied</div>}
     
    </>
   )

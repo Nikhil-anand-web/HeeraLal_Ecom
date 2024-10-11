@@ -52,7 +52,7 @@ const UpdateProductForm = ({ categories, productSlugs, reqTOEdit }) => {
 
             setValue("identifireSlug", reqTOEdit);
         }
-    })
+    },[])
     useEffect(() => {
         const setCurrentStates = async () => {
 
