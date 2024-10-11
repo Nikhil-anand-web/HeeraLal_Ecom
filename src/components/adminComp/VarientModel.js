@@ -135,7 +135,8 @@ const VarientModel = ({ varient, setvarient }) => {
                     <div className="card-body py-2 px-3">
                         <h6 className="card-title mb-1">Slug:- {varient.slug}</h6>
                         <p className="card-text mb-1"><small className="text-muted">Weight :- {varient.weight} gm</small></p>
-                        <p className="card-text mb-1"><small className="text-muted">Size :- {varient.size}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">length :- {varient.size}</small></p>
+                        
                         <p className="card-text mb-1"><small className="text-muted">Category Slug :- {varient.qty}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Max Quantity For Few Available :- {varient.maxQuantityForFewAvailable}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">MRP :- {varient.mrp}</small></p>

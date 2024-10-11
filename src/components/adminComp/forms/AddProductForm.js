@@ -229,7 +229,7 @@ const AddProductForm = ({ categories }) => {
                             })}
                         </div>
                         <div className="form-group" >
-                            <label htmlFor="highLights">HighLights</label>
+                            <label htmlFor="highLights">Highlights</label>
                             <input {...register("highLights", { required: true })} type="text" className="form-control" id="highLights" placeholder="HighLights" />
                             {errors.highLights && <span>This field is required</span>}
                         </div>
@@ -323,7 +323,7 @@ const AddProductForm = ({ categories }) => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="isVegiterian">Is Vegiterian</label>
+                            <label htmlFor="isVegiterian">Is Vegetarian</label>
                             <Controller
 
                                 name="isVegiterian"
@@ -427,7 +427,7 @@ const AddProductForm = ({ categories }) => {
                                 {errors.size && <span>This field is required</span>}
                             </div>
                             <div className="form-group" >
-                                <label htmlFor="bredth">Bredth</label>
+                                <label htmlFor="bredth">Breadth</label>
                                 <input {...register("bredth", { required: true })} type="text" className="form-control" id="bredth" placeholder="bredth" />
                                 {errors.size && <span>This field is required</span>}
                             </div>

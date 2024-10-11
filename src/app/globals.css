@@ -126,3 +126,8 @@
   width: 0;
   overflow: hidden;
 }
+.product-name { font-size: 13px;
+  font-weight: bold;
+  color: #333;
+  text-wrap: wrap;
+  text-align: left; }

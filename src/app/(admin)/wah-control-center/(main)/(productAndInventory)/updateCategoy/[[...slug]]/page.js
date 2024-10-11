@@ -5,8 +5,9 @@ import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import React from 'react'
 
-const page = async () => {
+const page = async ({params}) => {
     const user = await getServerSession(authOptions);
+    const slug = params.slug
     var categories =[]
   if(user && user.permissions?.length&&user.permissions[0].productAndInventory){ 
       categories = await db.category.findMany({
@@ -28,7 +29,7 @@ const page = async () => {
   return (
    <>
      <h3 className="page-title"> Update a Category </h3>
-     {user && user.permissions?.length &&user.permissions[0].productAndInventory? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><UpdateCategoryForm categories={categories}/></div>:<div>access denied</div>}
+     {user && user.permissions?.length &&user.permissions[0].productAndInventory? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><UpdateCategoryForm  categories={categories}/></div>:<div>access denied</div>}
     
    </>
   )

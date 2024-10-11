@@ -5,23 +5,42 @@ import createBlog from '@/app/actions/createBlog';
 import { toast } from 'react-toastify';
 import RichTextEditor from '../RichTextEditor';
 
+function validateNoSpaces(value) {
+    if(value==='') return false
+    if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
+        return 'Use lowercase words separated by hyphens, without spaces';
+    }
+    return true;
+}
+
 const AddBlogForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [editorValue, setEditorValue] = useState('');
+    const [slugError, setSlugError] = useState(''); // State to track slug validation error
 
     const onSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
 
         setIsLoading(true); // Set loading state
-        if (editorValue === '') {
-            toast.warning("content required")
-            return
 
+        // Slug validation
+        const slug = e.target.slug.value;
+        const slugValidation = validateNoSpaces(slug);
+        if (slugValidation !== true) {
+            setSlugError(slugValidation); // Display validation error
+            setIsLoading(false);
+            return;
+        }
+        setSlugError(''); // Clear error if validation passes
+
+        if (editorValue === '') {
+            toast.warning("Content is required");
+            setIsLoading(false);
+            return;
         }
 
         const formData = new FormData(e.target); // Collect form data
-        formData.set("content", editorValue)
-
+        formData.set("content", editorValue);
 
         try {
             const resObj = await createBlog(formData); // Pass formData to createBlog
@@ -37,17 +56,15 @@ const AddBlogForm = () => {
             setIsLoading(false); // Reset loading state
         }
     };
+
     const handleEditorChange = (content) => {
         setEditorValue(content);
-
     };
-
 
     return (
         <div className="col-12 grid-margin stretch-card">
             <div className="card">
                 <div className="card-body">
-
                     <form onSubmit={onSubmit} className="forms-sample">
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
@@ -59,14 +76,19 @@ const AddBlogForm = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="slug">Slug</label>
-                            <input name='slug' required className="form-control" id="slug" placeholder="Slug" />
+                            <input
+                                name='slug'
+                                required
+                                className="form-control"
+                                id="slug"
+                                placeholder="Slug"
+                            />
+                            {slugError && <small className="text-danger">{slugError}</small>} {/* Display slug error */}
                         </div>
                         <div className="form-group">
                             <label htmlFor="content">Content</label>
                             <div className="form-group">
-
                                 <RichTextEditor value={editorValue} onChange={handleEditorChange} />
-
                             </div>
                         </div>
                         <ImageUploader name="thumbnail" label="Thumbnail" />
