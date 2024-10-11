@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const BlogContent = ({paragraph , imageS , by , dateString ,heading,goTo="/blogDetails"}) => {
+const BlogContent = ({paragraph , imageS , by , dateString ,heading,goTo="/blog-details"}) => {
   const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 const formattedDate = dateString.toLocaleDateString('en-US', options);
   return (
