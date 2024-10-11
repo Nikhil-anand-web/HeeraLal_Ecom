@@ -37,7 +37,7 @@ async function updateSlider(formData) {
                         // Synchronous file writing
                         for (let index = 0; index < files.length; index++) {
                             const file = files[index];
-                            const timestamp = Date.now(); // Get the current timestamp
+                            const timestamp = new Date(); // Get the current timestamp
                             const filePath = path.join(uploadDirectory, `${timestamp}.jpeg`); // Filename with timestamp
                             console.log(filePath)
 
