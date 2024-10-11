@@ -76,6 +76,7 @@ async function updateBlog(formData, id) {
                             relatedImages: jsonToDbForOther.length > 0 ? jsonToDbForOther : existingBlog.relatedImages,
                             author: { connect: { id: user.id } },
                             status: 1,
+                            
                         },
                     });
 

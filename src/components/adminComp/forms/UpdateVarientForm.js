@@ -7,37 +7,111 @@ import objectToFormData from '@/lib/objectToFormData';
 import getVarientOfProduct from '@/app/actions/getVarientOfProduct';
 import CheckBox from './formComponent/CheckBox';
 import updateVarient from '@/app/actions/updateVarient';
+import getVarientById from '@/app/actions/getVarientById';
 
 function validateNoSpaces(value) {
-    if (value=="") {
+    if (value == "") {
         return true
-        
+
     }
     if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
         return 'Use lowercase words separated by hyphens, without spaces';
     }
     return true;
 }
-const UpdateVarientForm = ({ productSlugs }) => {
+const UpdateVarientForm = ({ productSlugs, reqVar }) => {
     const [isMounted, setisMounted] = useState(false)
     const [varients, setVarients] = useState([{}])
-    const [selectedProduct, setSelectedProduct] = useState('')
+    // const [selectedProduct, setSelectedProduct] = useState('')
+    const [isLoading, setIsLoading] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        control,
+        watch,
+        setValue,
+
+
+        formState: { errors },
+    } = useForm({ mode: "onChange" })
+    const identifireState = watch("parentProductSlug");
+    useEffect(() => {
+        if (reqVar?.id) {
+
+            setValue("parentProductSlug", reqVar?.id);
+        }
+    }, [])
+    useEffect(() => {
+        const setCurrentStates = async () => {
+
+            try {
+                if (identifireState && reqVar?.id) {
+                    const { varient, success, message } = await getVarientById(identifireState)
+                    if (!success) {
+                        throw {
+                            success,
+                            message
+
+                        }
+
+                    }
+                    setValue("parentProductSlug", varient.productId);
+                    setValue("varient", varient.id);
+                    setValue("weight", varient.weight);
+
+
+                    setValue("mrp", varient.mrp);
+                    setValue("qty", varient.qty);
+                    setValue("discount", varient.discount);
+                    setValue("wholeSalePrice", varient.wholeSalePrice);
+                    setValue("slug", varient.slug);
+                    setValue("minQtyForBulkOrder", varient.minQtyForBulkOrder);
+                    setValue("isBulk", varient.isBulk);
+                    setValue("maxQuantityForFewAvailable", varient.maxQuantityForFewAvailable);
+                    const sz = JSON.parse(varient.size)
+                    setValue("length", sz.length);
+                    setValue("bredth", sz.bredth);
+                    setValue("height", sz.height);
+                    
+
+
+                }
+
+
+
+
+
+            } catch (error) {
+                console.log(error)
+                
+
+            }
+
+
+
+        }
+        setCurrentStates()
+    }, [identifireState])
     useEffect(() => {
         setisMounted(true)
     }, [])
 
 
     useEffect(() => {
-        const fetch = async () => {
-            const varientSlugs = await getVarientOfProduct(selectedProduct)
-
-            setVarients(varientSlugs.varient)
-
+        if (identifireState) {
+            const fetch = async () => {
+                const varientSlugs = await getVarientOfProduct(identifireState)
+    
+                setVarients(varientSlugs.varient)
+    
+            }
+            fetch()
+            
         }
-        fetch()
+       
 
 
-    }, [selectedProduct, setVarients])
+    }, [identifireState])
 
     const rtr = useRouter()
 
@@ -46,15 +120,7 @@ const UpdateVarientForm = ({ productSlugs }) => {
 
 
 
-    const [isLoading, setIsLoading] = useState(false);
-    const {
-        register,
-        handleSubmit,
-        control,
-
-
-        formState: { errors },
-    } = useForm({ mode: "onChange" })
+  
 
     if (!isMounted) {
         return
@@ -62,8 +128,8 @@ const UpdateVarientForm = ({ productSlugs }) => {
     }
 
     const onSubmit = async (e) => {
-        e.parentProductSlug = selectedProduct
-       
+        e.parentProductSlug = identifireState
+
         const sizeobj = {
             length: e.length,
             bredth: e.bredth,
@@ -74,7 +140,7 @@ const UpdateVarientForm = ({ productSlugs }) => {
         delete e.length
         delete e.height
         delete e.bredth
-        const formData = objectToFormData(e); 
+        const formData = objectToFormData(e);
 
         try {
             setIsLoading(true)
@@ -93,8 +159,9 @@ const UpdateVarientForm = ({ productSlugs }) => {
         }
     };
     const handleIndntifierProductChange = (e) => {
+        setValue("parentProductSlug", e.target.value);
 
-        setSelectedProduct(e.target.value)
+       
 
     }
 
@@ -121,7 +188,7 @@ const UpdateVarientForm = ({ productSlugs }) => {
 
 
                                     render={({ field: { onChange, onBlur, value, ref, name } }) => (
-                                        <select defaultValue={0} onChange={handleIndntifierProductChange} onBlur={onBlur} value={value} ref={ref} name={name} className="form-select"  >
+                                        <select disabled={reqVar?.id?true:false} defaultValue={0} onChange={handleIndntifierProductChange} onBlur={onBlur} value={value} ref={ref} name={name} className="form-select"  >
 
                                             <option disabled value={0}>select a valid identifire</option>
                                             {
@@ -137,7 +204,7 @@ const UpdateVarientForm = ({ productSlugs }) => {
                                 />
                             </div>
 
-                            {selectedProduct ? <>
+                            {identifireState ? <>
                                 <div className="form-group">
                                     <label htmlFor="varient"> Varient</label>
                                     <Controller
@@ -147,7 +214,7 @@ const UpdateVarientForm = ({ productSlugs }) => {
 
                                         rules={{ required: 'Category is required' }}
                                         render={({ field }) => (
-                                            <select defaultValue={0} {...field} className="form-select"  >
+                                            <select disabled={reqVar?.id?true:false} defaultValue={0} {...field} className="form-select"  >
 
                                                 <option disabled value={0}>select a valid slug</option>
                                                 {
