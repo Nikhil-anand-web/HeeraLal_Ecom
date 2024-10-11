@@ -53,6 +53,7 @@ async function updateSlider(formData) {
                                 url: `/asset/slider/${formData.get('identifireSlug')}/${timestamp}.jpeg`, // URL with timestamp
                                 alt: 'slider image',
                                 link: formData.get(`lnk_${index}`).trim(),
+                               
                             });
                         }
                     }

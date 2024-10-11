@@ -2,115 +2,79 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../../../auth/[...nextauth]/options";
 
 import db from "@/lib/db";
-
 import fs from 'fs';
 import path from 'path';
-
-
-import { writeFile } from 'fs/promises'
 import { NextResponse } from "next/server";
 
-
-
 export async function POST(req) {
+  const user = await getServerSession(authOptions);
+  const formData = await req.formData();
 
+  if (user) {
+    if (user.role === 1 || user.role === 2) {
+      try {
+        if (user.permissions[0].productAndInventory) {
+          const slug = formData.get('slug');
+          const uploadDirectory = path.join(process.cwd(), 'asset', 'categories', `${slug}`);
 
+          // Clean the folder if it exists
+          if (fs.existsSync(uploadDirectory)) {
+            fs.rmSync(uploadDirectory, { recursive: true, force: true });
+          }
 
-    const user = await getServerSession(authOptions)
-   
+          // Create the directory after cleaning
+          fs.mkdirSync(uploadDirectory, { recursive: true });
 
-    const formData = await req.formData();
+          // Access uploaded files
+          const files = formData.getAll('samplePhotos');
+          const jsonToDb = [];
 
+          // Use a for...of loop to handle async/await for file processing
+          for (const [index, file] of files.entries()) {
+            const timestamp = Date.now(); // Get the current timestamp
+            const fileName = `${index}-${timestamp}.jpeg`; // Add timestamp to file name
+            const filePath = path.join(uploadDirectory, fileName);
 
+            const bytes = await file.arrayBuffer(); // Await the arrayBuffer() call
+            const buffer = Buffer.from(bytes); // Convert ArrayBuffer to Buffer
+            fs.writeFileSync(filePath, buffer); // Synchronously writing file to disk
 
+            jsonToDb.push({
+              url: `/asset/categories/${slug}/${fileName}`, // File URL with timestamped file name
+              alt: "categoryImage",
+            });
+          }
 
-    if (user) {
-        if (user.role == 1 || user.role == 2) {
+          // Create new category in the database
+          const newCategory = await db.category.create({
+            data: {
+              categoryName: formData.get('categoryName'),
+              slug: slug,
+              image: JSON.stringify(jsonToDb), // Convert the image metadata array to JSON
+              showOnHome: formData.get('showOnHome') === 'true', // Convert to boolean
+              parent: formData.get('parentId') !== "0" ? { connect: { id: formData.get('parentId') } } : undefined,
+              createdBy: { connect: { id: user.id } },
+            },
+          });
 
-            try {
-
-                if (user.permissions[0].productAndInventory) {
-                    
-                    const uploadDirectory = path.join(process.cwd(),  'asset', "categories", `${formData.get('slug')}`);
-
-                    // Access uploaded files
-                    const files = formData.getAll('samplePhotos');
-                    if (!fs.existsSync(uploadDirectory)) {
-                        fs.mkdirSync(uploadDirectory, { recursive: true });
-                    }
-                    const jsonToDb = [];
-
-                    files.forEach(async (file, index) => {
-                        const filePath = path.join(uploadDirectory, `${index}.jpeg`);
-
-                        const bytes = await file.arrayBuffer()
-                        const buffer = Buffer.from(bytes)
-                        await writeFile(filePath, buffer)
-                       
-
-
-
-                    });
-                    for (let i = 0; i < files.length; i++) {
-                        jsonToDb.push({url:`/asset/categories/${formData.get('slug')}/${i}.jpeg`,alt:"categoryImage"})
-                        
-                        
-                    }
-                 
-
-
-                    const newCategory = await db.category.create({
-                        data: {
-                            categoryName: formData.get('categoryName'),
-                            slug: formData.get('slug'),
-                           
-                           
-                            image: JSON.stringify(jsonToDb),  // Ensure jsonToDb is in the correct format
-                            showOnHome: formData.get('showOnHome') === 'true',  // Convert to Boolean
-
-                            parent: formData.get('parentId') !== "0" ? { connect: { id: formData.get('parentId') } } : undefined, // Connect parent if provided
-                            createdBy: { connect: { id: user.id } }  // Ensure relationship is correctly connected
-                        },
-                    });
-                    
-                       
-                 
-
-
-                    return NextResponse.json({ success: true, message: 'Category created successfully', category: newCategory });
-
-
-
-
-
-
-
-
-                }
-
-            } catch (error) {
-                console.log(error)
-
-
-                return Response.json({
-                    success: false,
-                    message: error.code === 'P2002' ? "Slug  is already used" : error.meta?.cause || "internal server error",
-
-                }, { status: 500 })
-
-
-
-
-
-
-            }
-
+          return NextResponse.json({
+            success: true,
+            message: 'Category created successfully',
+            category: newCategory,
+          });
         }
-
-
-        return Response.json({
-            success: false,
-            message: "Bad Request"
-        }, { status: 400 })
+      } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+          success: false,
+          message: error.code === 'P2002' ? "Slug is already used" : error.meta?.cause || "Internal server error",
+        }, { status: 500 });
+      }
     }
+
+    return NextResponse.json({
+      success: false,
+      message: "Bad Request",
+    }, { status: 400 });
+  }
 }
