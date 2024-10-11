@@ -34,7 +34,7 @@ const page =  async({params}) => {
                                 <div className="blog-admin">
                                     <a href="#"> <span><i className="fa-solid fa-user"></i> By admin</span></a>
                                     <a href="#">  <span><i className="fa-solid fa-calendar-days"></i> {formattedDate}</span>  </a>
-                                    <a href="#">  <span><i className="fa-solid fa-comments"></i> Comments</span></a>
+                                   
                                 </div>
                                 <div className="blog-content mt-5">
                                     <DangerDiv htmlEl={blogDetail.content}/>
