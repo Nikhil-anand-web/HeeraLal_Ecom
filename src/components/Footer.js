@@ -118,10 +118,10 @@ const Footer = async () => {
                 <a href="/about-us" className="primary-color">Read more</a>
                 <div className="social-media mt-2">
                   <ul className="d-flex">
-                    <li><Link href={facebook}><i className="fa-brands fa-facebook-f"></i></Link></li>
-                    <li><Link href={twitter}><i className="fa-brands fa-twitter"></i></Link></li>
-                    <li><Link href={insta}><i className="fa-brands fa-square-instagram"></i></Link></li>
-                    <li><Link href={youtubeLink}><i className="fa-brands fa-youtube"></i></Link></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href={facebook}><i className="fa-brands fa-facebook-f"></i></a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href={twitter}><i className="fa-brands fa-x-twitter"></i></a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href={insta}><i className="fa-brands fa-square-instagram"></i></a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href={youtubeLink}><i className="fa-brands fa-youtube"></i></a></li>
                   </ul>
 
                 </div>
