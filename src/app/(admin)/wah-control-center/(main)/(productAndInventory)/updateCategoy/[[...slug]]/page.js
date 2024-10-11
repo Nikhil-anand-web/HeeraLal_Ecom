@@ -7,7 +7,7 @@ import React from 'react'
 
 const page = async ({params}) => {
     const user = await getServerSession(authOptions);
-    const slug = params.slug[0]
+    const slug = params.slug?.at(0) ||''
     
     var categories =[]
   if(user && user.permissions?.length&&user.permissions[0].productAndInventory){ 
