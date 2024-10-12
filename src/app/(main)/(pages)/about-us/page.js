@@ -50,13 +50,13 @@ const page = async() => {
         <div className="row aboutbox">
             <div className="col-md-6">
                 <h5>OUR MISSION</h5>
-                <DangerDiv htmlEl={ourMission} />
+                <DangerDiv className={'mb-5'} htmlEl={ourMission} />
 
             </div>
 
             <div className="col-md-6">
                 <h5>OUR STORIES</h5>
-                <DangerDiv htmlEl={ourStories} />
+                <DangerDiv  className={'mb-5'} htmlEl={ourStories} />
                 
             </div>
 
@@ -80,7 +80,8 @@ const page = async() => {
             </div>
             <div className="col-md-6">
                 <h3>Small Facts About Masala</h3>
-                <p>{smallFactAboutMasala}</p>
+               
+                <DangerDiv htmlEl={smallFactAboutMasala} />
             </div>
         </div>
      

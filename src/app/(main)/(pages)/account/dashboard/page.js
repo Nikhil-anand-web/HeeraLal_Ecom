@@ -1,4 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
+import CoinThumbnail from '@/components/CoinThumbnail'
 import ShareTheSiteButton from '@/components/ShareTheSiteButton'
 import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
@@ -19,6 +20,18 @@ const page = async () => {
 
         }
     })
+    var referal = null
+    if (user) {
+        referal = await db.referal.findUnique({
+            where: {
+                userId: user?.id
+
+            }, select: {
+                coins: true
+            }
+        })
+
+    }
 
     const orderCount = await db.orders.count({
         where: {
@@ -31,7 +44,7 @@ const page = async () => {
     const orderCountTobeDel = await db.orders.count({
         where: {
 
-            AND: [{ paymentStatus: 1 }, { customerId: user.id },{OR:[{ orderStatus: 0 }, { orderStatus: 1 }]} ]
+            AND: [{ paymentStatus: 1 }, { customerId: user.id }, { OR: [{ orderStatus: 0 }, { orderStatus: 1 }] }]
 
 
 
@@ -58,7 +71,7 @@ const page = async () => {
                 <div className="col-md-4">
                     <div className="dashboard-status d-flex">
                         <div className="dashboard-img">
-                            <i className="fa-solid fa-money-bills"></i>
+                            <i className=" fa-solid fa-box "></i>
                         </div>
                         <div className="dashboard-txt">
                             <h4>Total Orders</h4>
@@ -72,10 +85,10 @@ const page = async () => {
                 <div className="col-md-4">
                     <div className="dashboard-status d-flex">
                         <div className="dashboard-img">
-                            <i className="fa-solid fa-object-ungroup"></i>
+                            <i className="fa-solid  fa-truck "></i>
                         </div>
                         <div className="dashboard-txt">
-                            <h4>To Be Delivered Orders</h4>
+                            <h4>Pending Orders</h4>
                             <div className="dashboard-total">
                                 {orderCountTobeDel}
                             </div>
@@ -111,6 +124,9 @@ const page = async () => {
                 </div>
 
                 <div className="col-md-6">
+                    {referal && <li className="nav-item">
+                        <CoinThumbnail coins={referal.coins} />
+                    </li>}
 
                 </div>
             </div>

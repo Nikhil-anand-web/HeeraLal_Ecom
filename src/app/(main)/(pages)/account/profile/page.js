@@ -101,22 +101,22 @@ const Page = () => {
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="form-group">
                                 <label htmlFor="firstName">First Name</label>
-                                <input {...register("firstName")} type="text" className="form-control" id="firstName" placeholder={firstName?firstName:"please enter firstName"} />
+                                <input {...register("firstName")} type="text" className="form-control" id="firstName" defaultValue={firstName?firstName:"please enter a value"}  />
                                 {errors.firstName && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName">Last Name</label>
-                                <input {...register("lastName")} type="text" className="form-control" id="lastName" placeholder={lastName?lastName:"please enter lastname"} />
+                                <input {...register("lastName")} type="text" className="form-control" id="lastName"  defaultValue={lastName?lastName:"please enter lastname"} />
                                 {errors.lastName && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="mobile">Mobile Number</label>
-                                <input {...register("mobile")} type="text" className="form-control" id="mobile" placeholder={mobile?mobile:"please enter mobile number"} />
+                                <input {...register("mobile")} type="text" className="form-control" id="mobile" defaultValue={mobile?mobile:"please enter mobile number"} />
                                 {errors.mobile && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="pinCode">Pincode</label>
-                                <input {...register("pinCode")} type="text" className="form-control" id="pinCode" placeholder={prepin?prepin:"please enter pincode"} />
+                                <input {...register("pinCode")} type="text" className="form-control" id="pinCode" defaultValue={prepin?prepin:""} />
                                 {errors.pinCode && <span>This field is required</span>}
                             </div>
                             <div className="form-group">

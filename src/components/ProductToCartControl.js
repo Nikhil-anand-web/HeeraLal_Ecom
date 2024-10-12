@@ -81,8 +81,8 @@ const ProductToCartControl = ({ varientId, style }) => {
     if (isOutOfStockState) {
         return (
             <div>
-                <p>Variant Out Of Stock</p>
-                <p style={{color:"green"}} >Click To View Other</p>
+                <p>Out Of Stock</p>
+                
             </div>
         )
     }

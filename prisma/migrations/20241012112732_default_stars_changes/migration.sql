@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `product` MODIFY `stars` INTEGER UNSIGNED NOT NULL DEFAULT 5;

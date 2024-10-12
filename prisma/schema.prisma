@@ -136,7 +136,7 @@ model category {
 model product {
   id           String    @id @default(uuid())
   tags         Json?
-  stars        Int       @default(1) @db.UnsignedInt
+  stars        Int       @default(5) @db.UnsignedInt
   category     category  @relation(fields: [categoryId], references: [id], onDelete: Cascade) //
   categoryId   String
   name         String

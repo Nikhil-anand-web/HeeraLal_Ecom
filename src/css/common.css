@@ -23,7 +23,8 @@ a{
   color: #333;
 }
 p{
-  color: #A4A1A1;
+  /* color: #A4A1A1; */
+  color: #333;
   font-size: 14px;
 }
 

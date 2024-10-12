@@ -99,9 +99,7 @@ const Header = async (props) => {
               {/* <li className="nav-item">
                 <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
               </li> */}
-              {referal && <li className="nav-item">
-                <CoinThumbnail coins={referal.coins} />
-              </li>}
+              
 
 
 

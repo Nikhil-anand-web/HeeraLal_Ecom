@@ -2,7 +2,7 @@
 import DOMPurify from 'dompurify'
 import React, { useEffect, useState } from 'react'
 
-const DangerDiv = ({ htmlEl }) => {
+const DangerDiv = ({ htmlEl , className , style }) => {
     const [isMounted,setisMounted] = useState(false)
     useEffect(()=>{
         setisMounted(true)
@@ -17,7 +17,7 @@ const DangerDiv = ({ htmlEl }) => {
     return (
 
 
-        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlEl) }} />
+        <div className={className} style={style} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlEl) }} />
 
     )
 }
