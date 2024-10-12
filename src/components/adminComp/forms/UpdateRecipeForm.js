@@ -7,11 +7,68 @@ import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import RichTextEditor from '../RichTextEditor';
+import updateRecipe from '@/app/actions/updateRecipe';
 
-const AddComboForm = ({ productSlug }) => {
+const UpdateRecipeForm = ({ productSlug, recipe }) => {
     const [maxLimitProduct, setMaxLimitProduct] = useState(0)
     const [editorValue, setEditorValue] = useState('');
     const [editorValue2, setEditorValue2] = useState('');
+    const [noOfProductInvolve, setNoOfProductInvolvr] = useState(recipe.products.length);
+    const {
+
+
+        register,
+        handleSubmit,
+        control,
+        setValue,
+        watch,
+
+        formState: { errors },
+    } = useForm({ mode: "onChange" })
+    const identifireId = watch("identifireId");
+    useEffect(() => {
+        if (recipe.id) {
+
+            setValue("identifireId", recipe.id);
+        }
+    }, [])
+    useEffect(() => {
+        const setCurrentStates = async () => {
+
+            try {
+                if (identifireId && recipe.id) {
+
+                    setValue("noOfProduct", recipe.products.length);
+                    // setNoOfProductInvolvr(recipe.products.length)
+                    setValue("name", recipe.name);
+                    setValue("ingredients", recipe.ingredients);
+
+                    setEditorValue2(recipe.brief)
+                    setEditorValue(recipe.instructions)
+                    setValue("videoLink", recipe.videoLink);
+                    recipe.products.forEach((obj, index) => {
+
+                        setValue(`productsId${index}`, obj.id);
+
+                    })
+
+                }
+
+
+
+
+
+            } catch (error) {
+                console.log(error)
+                toast.warning(error.message)
+
+            }
+
+
+
+        }
+        setCurrentStates()
+    }, [identifireId,noOfProductInvolve])
     useEffect(() => {
         const fetch = async () => {
             try {
@@ -31,29 +88,20 @@ const AddComboForm = ({ productSlug }) => {
         }
         fetch()
     }, [])
-    const {
 
-
-        register,
-        handleSubmit,
-        control,
-        setValue,
-
-
-
-        formState: { errors },
-    } = useForm({ mode: "onChange" })
     const [isLoading, setIsLoading] = useState(false)
-    const [noOfProductInvolve, setNoOfProductInvolvr] = useState(0);
+
     // const opts = Array(noOfProductInvolve).fill(null).map((_, index) =>);
 
     const onSubmit = async (e) => {
         const formData = objectToFormData(e)
         formData.set('noOfProduct', noOfProductInvolve)
+        formData.set('id',recipe.id)
+        console.log(formData)
 
         try {
             setIsLoading(true)
-            const res = await createRecipe(formData)
+            const res = await updateRecipe(formData)
             if (!res.success) {
                 throw res
 
@@ -156,4 +204,4 @@ const AddComboForm = ({ productSlug }) => {
     )
 }
 
-export default AddComboForm
+export default UpdateRecipeForm

@@ -144,6 +144,7 @@ model product {
   description  String   @db.LongText
   slug         String    @unique
   thumbNail    Json
+  
   images       Json
   status       Boolean   @default(true)
   showOnHome   Boolean   @default(false)
@@ -252,6 +253,7 @@ model recipe {
   name         String
   ingredients  Json
   videoLink    String
+  brief String? @db.LongText
   instructions String    @db.LongText
   status       Boolean   @default(true)
   products     product[]

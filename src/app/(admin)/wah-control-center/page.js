@@ -103,6 +103,7 @@ const Page = async () => {
 
   return (
     <AdminLayout>
+       <SendEmail/>
 
       <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}>
         <div className="row">
@@ -171,6 +172,7 @@ const Page = async () => {
               </div>
             </div>
           </div>
+         
           <div className="col-md-4 stretch-card grid-margin">
             <div className="card bg-gradient-success card-img-holder text-white">
               <div className="card-body">

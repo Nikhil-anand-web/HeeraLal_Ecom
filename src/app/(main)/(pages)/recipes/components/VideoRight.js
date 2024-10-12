@@ -35,6 +35,14 @@ const VideoRight = ({ recipe }) => {
 
                     </div>
                 </div>
+                <div style={{ marginTop: "20px" }}>
+                    <h4 className="social-list" style={{ textDecoration: "underline" }}>Brief:-</h4>
+                    <div style={{ display: "flex" }} className="social-list">
+                        <DangerDiv htmlEl={recipe.brief}/>
+
+
+                    </div>
+                </div>
 
 
             </div>

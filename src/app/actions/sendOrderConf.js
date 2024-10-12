@@ -7,8 +7,9 @@ import calculateFinalPriceOfComboAndThumbnailArray from "@/lib/calculateFinalPri
 import percentOf from "@/lib/percentOf";
 
 
-export default async function sendEmail({order}) {
+export default async function sendOrderConf(order,email) {
     console.log("Sending email...");
+    console.log(order)
 
     
     const getCouponDiscount = () => {
@@ -42,7 +43,7 @@ export default async function sendEmail({order}) {
     <div style="flex: 0 0 50%; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); padding: 20px;">
         <div style="display: flex; margin-bottom: 20px; justify-content: space-between; align-items: center;">
             <div style="flex: 0 0 auto;">
-                <img src="http://206.189.138.185:3000/api/v1/asset/banners/root/0.jpeg" width="170" height="70" alt="logo" style="border-radius: 50%;" />
+                <img src="${process.env.SERVER_ADD}/api/v1/asset/banners/root/0.jpeg" width="170" height="70" alt="logo" style="border-radius: 50%;" />
             </div>
             
         </div>
@@ -177,9 +178,9 @@ export default async function sendEmail({order}) {
         // Define email options
         const mailOptions = {
             from: '"Heeral wahindia spices" <donotreply@heeralwahindiaspices.com>', // sender address (must be verified in SparkPost)
-            to: "anandnikhil799@gmail.com", // recipient email
+            to: email, // recipient email
 
-            subject: "You have something left in your cart", // Subject line
+            subject: "Order confirmed", // Subject line
             html, // Use the HTML string created above
         };
 

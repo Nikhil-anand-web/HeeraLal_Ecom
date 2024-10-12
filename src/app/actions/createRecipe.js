@@ -32,6 +32,7 @@ async function createRecipe(formData) {
                             instructions:formData.get("instructions"),
                             ingredients: (!formData.get('ingredients') || formData.get('ingredients')==='')?"noExtra":formData.get('ingredients').split(',').map(str=>str.trim()),
                             videoLink:formData.get("videoLink"),
+                            brief:formData.get("brief"),
                            
                             products:{
                                 connect:[

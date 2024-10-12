@@ -1,3 +1,4 @@
+import sendOrderConf from "@/app/actions/sendOrderConf";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import checkStockFes from "@/lib/checkStockFes";
 import db from "@/lib/db";
@@ -129,6 +130,19 @@ export async function POST(req) {
                 });
 
                 updateStockAfterOrder(updatedOrder.orderId);
+                const forder =  await db.orders.findUnique({
+                    where:{
+                        orderId:reqObj.ORDERID
+    
+                    }
+                })
+                const userAc  =  await db.user.findUnique({
+                    where:{
+                        id:forder.customerId
+
+                    }
+                })
+                await sendOrderConf(forder,userAc.email)
                 return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/invoice/${updatedOrder.orderId}`, 303);
             } else {
                 const updatedOrder = await db.orders.update({
@@ -138,6 +152,8 @@ export async function POST(req) {
                 console.log("Order Failed:", updatedOrder);
                 return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/payment/failure`, 303);
             }
+            
+            
         } else {
             console.log("Invalid checksum");
             return NextResponse.json({ success: false, message: "Payment is not valid" }, { status: 400 });
@@ -147,3 +163,4 @@ export async function POST(req) {
         return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/`, 303);
     }
 }
+// sendOrderConf

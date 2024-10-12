@@ -36,7 +36,8 @@ const page = async ({params}) => {
 
                 }
 
-            }
+            },
+            brief:true
 
         },
         skip: (pageNo - 1) * itemsPerPage, // Skip the items for pagination
