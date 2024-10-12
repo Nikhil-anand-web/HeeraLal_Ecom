@@ -1,3 +1,4 @@
+
 import db from "@/lib/db";
 import inputcleaner from "@/lib/inputcleaner";
 import bcrypt from "bcryptjs";
@@ -247,7 +248,6 @@ export const authOptions = {
                 token.mobileVerified=user.mobileVerified
                 token.emailVerified=user.emailVerified
                
-
 
 
 
