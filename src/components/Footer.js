@@ -77,7 +77,7 @@ const Footer = async () => {
 
                 <Image alt='logo' layout='responsive' src={highQualityImg} />
               </div>
-              <div className="quality-txt">High Quality Products</div>
+              <div style={{position:"relative",left:"9%"}} className="quality-txt">High Quality Products</div>
 
             </div>
 
@@ -86,7 +86,7 @@ const Footer = async () => {
           <div className="col-md-3">
             <div className="quality d-flex align-items-center">
               <div className="quality-img me-3">   <Image alt='logo' layout='responsive' src={dilivaryImg} /></div>
-              <div className="quality-txt">{ freeShiping.value===1? `Free Delivery for Order Over ₹${freeShiping.dependency}`:"Free shiping soon"}</div>
+              <div style={{position:"relative",left:"7%"}} className="quality-txt">{ freeShiping.value===1? `Free Delivery for Order Over ₹${freeShiping.dependency}`:"Free shiping soon"}</div>
 
             </div>
 
@@ -95,7 +95,7 @@ const Footer = async () => {
           <div className="col-md-3">
             <div className="quality d-flex align-items-center">
               <div className="quality-img me-3">   <Image alt='logo' layout='responsive' src={discountImg} /></div>
-              <div className="quality-txt"> Mega Discounts & Referal Bonus</div>
+              <div style={{position:"relative",left:"9%"}} className="quality-txt"> Mega Discounts & Referal Bonus</div>
 
             </div>
 
@@ -104,7 +104,7 @@ const Footer = async () => {
           <div className="col-md-3">
             <div className="quality d-flex align-items-center">
               <div className="quality-img me-3">   <Image alt='logo' layout='responsive' src={showRoomImg} /></div>
-              <div className="quality-txt">Harmful Chemical Free</div>
+              <div style={{position:"relative",left:"11%"}} className="quality-txt">Harmful Chemical Free</div>
             </div>
           </div>
         </div>
