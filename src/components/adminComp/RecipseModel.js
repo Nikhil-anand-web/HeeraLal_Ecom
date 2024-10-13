@@ -13,6 +13,8 @@ const RecipeModel = ({ recipe, setRefetchComp }) => {
   const rtr = useRouter()
 
   const onDelete = async () => {
+    const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
     try {
       const res = await deleteRecipe(recipe.id);
       if (!res.success) {

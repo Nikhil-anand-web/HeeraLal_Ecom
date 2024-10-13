@@ -49,6 +49,8 @@ const CouponModel = ({ coupon }) => {
     }
     const onSubmit= async(e)=>{
         e.preventDefault()
+        const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         const formData = new FormData(e.target)
         formData.set('id',coupon.id)
         try {

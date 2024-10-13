@@ -4,9 +4,11 @@ import cancilAwb from '@/app/actions/cancilAwb'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const CancilShipmentButton = ({ orderId ,children}) => {
-    const [isloading,setIsloading] = useState()
+const CancilShipmentButton = ({ orderId, children }) => {
+    const [isloading, setIsloading] = useState()
     const onclk = async () => {
+        const isConfirmed = window.confirm("Are you sure you want to cancil? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         try {
             setIsloading(true)
             const res = await cancilAwb(orderId)
@@ -29,9 +31,9 @@ const CancilShipmentButton = ({ orderId ,children}) => {
 
     return (
         <div>
-            {(!isloading ) ? <button className="mt-3 pay-now-button btn" onClick={onclk}>
+            {(!isloading) ? <button className="mt-3 pay-now-button btn" onClick={onclk}>
                 {children}
-            </button> :"Submiting Request"}
+            </button> : "Submiting Request"}
         </div>
     )
 }

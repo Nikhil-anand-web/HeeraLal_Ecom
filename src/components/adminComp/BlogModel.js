@@ -10,6 +10,8 @@ import { toast } from 'react-toastify';
 const BlogModel = ({ blog, setRefetchComp }) => {
   const rtr = useRouter()
   const onDelete = async () => {
+    const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+    if (!isConfirmed) return;  // Exit if the user cancels the action
     const bindedFunction = deleteABlog.bind(null, blog.id);
     const res = await bindedFunction();
     if (res.success) {

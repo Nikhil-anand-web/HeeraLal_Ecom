@@ -7,6 +7,8 @@ const MarkAsCompleated = ({ orderId, className, style }) => {
     const [isloading,setIsloading] = useState(false)
 
     const onClk = async () => {
+        const isConfirmed = window.confirm("Are you sure you want to mark as compleated? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         try {
             setIsloading(true)
             const res = await markAsCompleted(orderId)

@@ -10,6 +10,8 @@ const SettingModal = ({ setting }) => {
     const [error, setError] = useState('');
 
     const onSubmit = async (e) => {
+        const isConfirmed = window.confirm("Are you sure you want to change the parameters");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         e.preventDefault();
         const formData = new FormData(e.target);
         if (!(formData.get('value') || formData.get('dependency'))) {

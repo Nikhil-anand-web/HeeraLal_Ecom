@@ -5,6 +5,8 @@ import { toast } from 'react-toastify'
 
 const ReadyToShipButton = ({ orderId, pickupTime, pickupdate, children, setIsloading, isloading, dimentions }) => {
     const onclk = async () => {
+        const isConfirmed = window.confirm("Are you sure you want to schedule the shipment");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         try {
             setIsloading(true)
 

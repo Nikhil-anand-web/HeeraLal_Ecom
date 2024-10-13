@@ -10,6 +10,8 @@ import { toast } from 'react-toastify'
 const FaqsModel = ({ faq }) => {
 
   const onDelete = async () => {
+    const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+    if (!isConfirmed) return;  // Exit if the user cancels the action
     try {
       const bindedFunction = deleteFAQ.bind(null, faq.id)
       const res = await bindedFunction();
@@ -44,9 +46,9 @@ const FaqsModel = ({ faq }) => {
         throw res
 
       }
-    
-        toast.success(res.message)
-      
+
+      toast.success(res.message)
+
 
     } catch (error) {
       toast.warning(res?.message || "something went wrong")

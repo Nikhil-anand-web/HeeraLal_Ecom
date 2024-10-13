@@ -9,6 +9,8 @@ const RefundButton = ({ orderId ,children}) => {
 
 
     const onclk = async () => {
+        const isConfirmed = window.confirm("Are you sure you want to initiate refund? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         try {
             setIsloading(true)
             const res = await refund(orderId)

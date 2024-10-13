@@ -20,6 +20,10 @@ const ProductModel = ({ product, setRefetchComp }) => {
     const router = useRouter();
 
     const onDelete = async () => {
+        const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
+
+        setIsLoading(true);  // Set loading state to show the spinner while the request is processing
         try {
             const resObj = await deleteAProduct(product.id);
             if (!resObj.success) throw resObj;

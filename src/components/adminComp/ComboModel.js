@@ -6,20 +6,22 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
-const ComboModel = ({ combo ,setRefetchComp }) => {
+const ComboModel = ({ combo, setRefetchComp }) => {
     const rtr = useRouter()
     console.log(combo)
-    const [isLoading,setIsLoading]=useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const onDelete = async () => {
+        const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         try {
-            
+
             const res = await deleteCombo(combo.id)
             if (!res.success) {
                 throw res
 
 
             }
-            setRefetchComp((e)=>!e);
+            setRefetchComp((e) => !e);
             toast.success(res.message)
         } catch (error) {
             console.log(error)
@@ -36,7 +38,7 @@ const ComboModel = ({ combo ,setRefetchComp }) => {
 
             }
             toast.success(res.message)
-            setRefetchComp((e)=>!e)
+            setRefetchComp((e) => !e)
 
         } catch (error) {
             console.log(error)
@@ -46,10 +48,10 @@ const ComboModel = ({ combo ,setRefetchComp }) => {
         }
 
     }
-    const onSubmit= async(e)=>{
+    const onSubmit = async (e) => {
         e.preventDefault()
         const formData = new FormData(e.target)
-        formData.set('id',combo.id)
+        formData.set('id', combo.id)
         try {
             setIsLoading(true)
             const res = await updateCombo(formData)
@@ -57,7 +59,7 @@ const ComboModel = ({ combo ,setRefetchComp }) => {
                 throw res
 
             }
-            setRefetchComp((e)=>!e)
+            setRefetchComp((e) => !e)
             toast.success(res.message)
 
         } catch (error) {
@@ -65,7 +67,7 @@ const ComboModel = ({ combo ,setRefetchComp }) => {
 
             toast.warning(error.message)
 
-        }finally{
+        } finally {
             setIsLoading(false)
         }
 

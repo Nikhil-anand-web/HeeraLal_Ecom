@@ -15,6 +15,8 @@ const VarientModel = ({ varient, setvarient }) => {
     const rtr = useRouter();
 
     const onDelete = async () => {
+        const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
         setIsLoading(true);
         try {
             const resObj = await deleteVarient(varient.id);
@@ -37,7 +39,7 @@ const VarientModel = ({ varient, setvarient }) => {
                 throw res;
             }
             setvarient((prev) => {
-                const updatedVarients = prev.map((obj) => 
+                const updatedVarients = prev.map((obj) =>
                     obj.id === varient.id ? { ...varient, status: !varient.status } : obj
                 );
                 return updatedVarients;
@@ -56,9 +58,9 @@ const VarientModel = ({ varient, setvarient }) => {
                 throw res;
             }
             setvarient((prev) => {
-                const updatedVarients = prev.map((obj) => 
-                    obj.id === varient.id ? { ...varient, isDefault: true, status: true } : 
-                    { ...obj, isDefault: false }
+                const updatedVarients = prev.map((obj) =>
+                    obj.id === varient.id ? { ...varient, isDefault: true, status: true } :
+                        { ...obj, isDefault: false }
                 );
                 return updatedVarients;
             });

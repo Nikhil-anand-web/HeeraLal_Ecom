@@ -11,6 +11,8 @@ const CategoryModel = ({ categoriesList: categoryDetail, setstateRefresherDummyV
   const router = useRouter();
 
   const onDelete = async () => {
+    const isConfirmed = window.confirm("Are you sure you want to delete? This action cannot be undone.");
+    if (!isConfirmed) return;  // Exit if the user cancels the action
     try {
       const res = await axios.delete(`/api/v1/deleteCategory`, {
         data: [{ id: categoryDetail.id }]

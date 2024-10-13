@@ -9,6 +9,8 @@ const MarkAsCancelled = ({ orderId, className, style }) => {
 
     const onClk = async () => {
         try {
+            const isConfirmed = window.confirm("Are you sure you want to mark as canceled? This action cannot be undone.");
+        if (!isConfirmed) return;  // Exit if the user cancels the action
             setIsloading(true)
             const res = await markAsCancelled(orderId)
             if (!res.success) {
