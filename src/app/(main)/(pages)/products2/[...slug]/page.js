@@ -1,11 +1,10 @@
 import db from '@/lib/db'
 import React from 'react'
+import ProductRetail from './_components/ProductRetail'
 import Pagination from '@/components/Pagination'
 import getPaginationLimit from '@/lib/getPaginationLimit'
-import ProductCategories from '@/components/ProductCategories'
-import ProductRetail from './_components/ProductRetail'
 
-
+// import ProductRetail from '../_components/ProductRetail'
 const page = async ({ params }) => {
     const categorySlug = params.slug[0].trim()
     var pageNo = params.slug[params.slug.length - 1]
@@ -15,24 +14,17 @@ const page = async ({ params }) => {
         pageNo = 1;
 
     }
-    var categories = await db.category.findMany({
+    const count = await db.product.count({
         where: {
-            AND: [{ status: 1 }]
-        },
-        select: {
-            categoryName: true,
-            slug: true,
-            image: true,
-            id: true
-        },
-        orderBy: {
-            displayOrder: 'asc', // Order by 'displayOrder' in ascending order
-        }
-    })
-    categories.forEach(cat => {
-        cat.image = JSON.parse(cat.image)
+            AND: [{
+                category: {
+                    slug: categorySlug === 'all' ? undefined : categorySlug
+                }
+            }, { status: true }]
 
-    });
+        },
+
+    })
     const products = await db.product.findMany({
         where: {
             AND: [{
@@ -73,19 +65,7 @@ const page = async ({ params }) => {
         take: itemsPerPage
 
     })
-    const count = await db.product.count({
-        where: {
-            AND: [{
-                category: {
-                    slug: categorySlug === 'all' ? undefined : categorySlug
-                }
-            }, { status: true }]
-
-        },
-
-    })
-
-
+    
 
     return (
         <section className="product-page">
@@ -96,35 +76,15 @@ const page = async ({ params }) => {
                     <div className="col-md-12">
                         <div className="row justify-content-center">
                             <div className="col-md-4 text-center">
-                                <h1 className="mb-5">Our Categories</h1>
-
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-6"></div>
-                            <div className="col-md-6"></div>
-                        </div>
-
-                        {/* <div className="row m-0">
-
-                            {products.map((pro, index) => <ProductRetail goto={`/product-details/${pro.slug}`} varienId={pro.varient[0].id} discount={pro.varient[0].discount} key={index} imageS={pro.thumbNail[0].url} ProductName={pro.name} Price={pro.varient[0].mrp} />)}
-
-
-
-
-                        </div> */}
-                        <div className="row">
-                            {categories.map(cat => <ProductCategories imageS={cat.image[0].url} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} />)}
-
-
-
-                        </div>
-                        <div className="row justify-content-center">
-                            <div className="col-md-4 text-center">
                                 <h1 className="mb-5">{categorySlug === 'all' ? "All Products" : products[0].category.categoryName}</h1>
 
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-md-6"></div>
+                            <div className="col-md-6"></div>
+                        </div>
+
                         <div className="row m-0">
 
                             {products.map((pro, index) => <ProductRetail goto={`/product-details/${pro.slug}`} varienId={pro.varient[0].id} discount={pro.varient[0].discount} key={index} imageS={pro.thumbNail[0].url} ProductName={pro.name} Price={pro.varient[0].mrp} />)}

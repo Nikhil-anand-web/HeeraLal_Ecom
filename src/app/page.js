@@ -20,7 +20,10 @@ export default async function Home() {
       slug: true,
       image: true,
       id: true
-    }
+    },
+    orderBy: {
+      displayOrder: 'asc', // Order by 'displayOrder' in ascending order
+    },
   })
   categories.forEach(cat => {
     cat.image = JSON.parse(cat.image)

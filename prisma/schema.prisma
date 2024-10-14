@@ -131,6 +131,7 @@ model category {
   createdBy    admin      @relation(fields: [creatorId], references: [id])
   creatorId    String
   product      product[]
+  displayOrder   Int?       @unique
 }
 
 model product {

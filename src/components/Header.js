@@ -43,15 +43,23 @@ const Header = async (props) => {
 
     }
   })
-  console.log(logo)
+  const productWithMaxPriroty = (await db.category.findFirst({
+
+    orderBy: {
+      displayOrder: 'asc', // Order by 'displayOrder' in ascending order
+    },select:{
+      slug:true
+    }
+
+  })).slug
 
   return (
     <header className="sticky-top shadow">
 
       <nav className="navbar navbar-expand-lg navbar-light bg-light ">
         <div className="container navigation">
-          <button  className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span  className="navbar-toggler-icon"></span>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
           </button>
 
           <Link className="navbar-brand" href="/">
@@ -61,7 +69,7 @@ const Header = async (props) => {
           <div className="icons-group d-block d-lg-none">
             <ul className="d-flex">
               <li>
-                <CustomSearchButton />
+                <CustomSearchButton  />
 
               </li>
               <li>
@@ -76,13 +84,13 @@ const Header = async (props) => {
 
 
           </div>
-         
+
 
 
 
           <div className="collapse navbar-collapse " id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <ClientMenu />
+              <ClientMenu productWithMaxPriroty={productWithMaxPriroty} />
 
 
               <CustomSearchBar />
@@ -99,7 +107,7 @@ const Header = async (props) => {
               {/* <li className="nav-item">
                 <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
               </li> */}
-              
+
 
 
 

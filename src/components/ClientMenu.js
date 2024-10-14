@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
-const ClientMenu = () => {
+const ClientMenu = ({productWithMaxPriroty}) => {
     const url = usePathname()
     const arr = url.split('/')
     const active = arr.at(1)
@@ -17,7 +17,7 @@ const ClientMenu = () => {
                 <Link className={`nav-link  ${active==='about-us' && 'active'}`} href="/about-us">Company</Link>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link  ${(active==='products' || active==="categories") && 'active'}`} href="/categories/all">Products</Link>
+                <Link className={`nav-link  ${(active==='products' || active==="categories") && 'active'}`} href={`/products/${productWithMaxPriroty}`}>Products</Link>
               </li>
               <li className="nav-item">
                 <Link className={`nav-link   ${active==='bulk-order' && 'active'}`}  href="/bulk-order">Bulk Orders</Link>
