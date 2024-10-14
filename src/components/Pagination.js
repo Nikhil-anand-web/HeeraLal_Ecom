@@ -62,7 +62,10 @@ const Pagination = ({
     }
   };
  
-
+ if (totalItems<= itemsPerPage) {
+  return null
+  
+ }
   return (
     <div className="pagination">
       <button
