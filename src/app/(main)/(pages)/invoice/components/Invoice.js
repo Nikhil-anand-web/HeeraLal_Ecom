@@ -180,12 +180,12 @@ const Invoice = ({ order,companyAddress }) => {
                                 </ul>
                                 
                                 <ul>
-                                    <li>Grand Toatal</li>
-                                    <li className="theme-color">{Math.round(order.finalPrice)}</li>
+                                    <li>Grand Total</li>
+                                    <li className="theme-color">₹{Math.round(order.finalPrice)}</li>
                                 </ul>
                             </div>
                         </div>
-                        <div className="invoice-footer">
+                        {/* <div className="invoice-footer">
                             <div className="signature-box">
 
                                 <Image src={"/images/sign.png"} width={60} height={60} layout='responsive' className="img-fluid" alt="logo" />
@@ -195,7 +195,7 @@ const Invoice = ({ order,companyAddress }) => {
                             <div className="button-group">
 
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -203,16 +203,16 @@ const Invoice = ({ order,companyAddress }) => {
 
                 <li>
                     <button className="btn text-white print-button rounded ms-2" onClick={handlePrint}>Print</button>
-                    {((order.paymentStatus==1 && order.orderStatus<3)&& order.cancellationRequestStatus==0)&&<button className="btn text-white print-button rounded ms-2" onClick={()=>rtr.push(`/refundRequest/${order.orderId}`)}>Raise Cancilation Request</button>}
+                    {((order.paymentStatus==1 && order.orderStatus<3)&& order.cancellationRequestStatus==0)&&<button className="btn text-white print-button rounded ms-2" onClick={()=>rtr.push(`/refundRequest/${order.orderId}`)}>Raise Cancellation Request</button>}
                     
 
                 </li>
             </ul>
-            <div>
-               cancilation request satus - {order.cancellationRequestStatus==1 && "cancellation request raised"}
+            {/* <div>
+            Cancellation request satus - {order.cancellationRequestStatus==1 && "cancellation request raised"}
                     {order.cancellationRequestStatus==2 && "cancellation request accepted"}
                     {order.cancellationRequestStatus==2 && "cancellation request rejected"}
-            </div>
+            </div> */}
            
         </div>
     )
