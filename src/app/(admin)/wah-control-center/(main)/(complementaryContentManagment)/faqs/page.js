@@ -9,7 +9,7 @@ import React from 'react'
 const page = async () => {
   const user = await getServerSession(authOptions)
   var faqs = []
-  if (user.permissions.at(0)?.complementaryContentManagment) {
+  if (user.permissions.at(0)?.complementaryContentManagement) {
     const faqList = await db.faqs.findMany({
       select: {
         id: true,

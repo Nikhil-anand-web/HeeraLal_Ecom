@@ -95,7 +95,7 @@ const AddVarientForm = ({ categories, productSlugs }) => {
                                     render={({ field }) => (
                                         <select defaultValue={0} className="form-select" {...field}>
 
-                                            <option disabled value={0}>select a valid identifire</option>
+                                            <option disabled value={0}>select a valid identifier</option>
                                             {
                                                 productSlugs.map((obj, index) => <option key={index} value={obj.id}>{obj.slug}</option>)
                                             }

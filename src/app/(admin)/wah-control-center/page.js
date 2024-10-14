@@ -135,7 +135,7 @@ const Page = async () => {
             <div className="card bg-gradient-success card-img-holder text-white">
               <div className="card-body">
                 <img src="images/dashboard/circle.svg" className="card-img-absolute" alt="circle-image" />
-                <h4 className="font-weight-normal mb-3"><Link style={{color:"white"}} href={"/wah-control-center/compleatedOrders"}>Compleated Orders
+                <h4 className="font-weight-normal mb-3"><Link style={{color:"white"}} href={"/wah-control-center/compleatedOrders"}>Completed Orders
                </Link> </h4>
                 <h2 className="mb-5">{compleatedOrders}</h2>
 

@@ -181,7 +181,7 @@ const Sidebar = () => {
                   </span>
                 </Accordion.Body>
               </Accordion.Item> : ''}
-              {user?.permissions[0].complementaryContentManagment ? <Accordion.Item eventKey="2">
+              {user?.permissions[0].complementaryContentManagement ? <Accordion.Item eventKey="2">
                 <Accordion.Header>Complementary Content Management</Accordion.Header>
                 <Accordion.Body>
 

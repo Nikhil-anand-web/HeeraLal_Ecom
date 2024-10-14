@@ -109,7 +109,7 @@ model permissions {
   userUpdate                    Boolean @default(false)
   offersAndDiscounts            Boolean @default(false)
   productAndInventory           Boolean @default(false)
-  complementaryContentManagment Boolean @default(false)
+  complementaryContentManagement Boolean @default(false) @map("complementaryContentManagment")
   globalSetting                 Boolean @default(false)
   siteManagement                Boolean @default(false)
   consumerAndOrderManagement    Boolean @default(false)

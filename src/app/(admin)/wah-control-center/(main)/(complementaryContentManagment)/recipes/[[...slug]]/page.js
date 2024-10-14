@@ -11,7 +11,7 @@ const page = async({params}) => {
 
   var count =0
   var itemsPerPage =await getPaginationLimit()
- if (user && user.permissions?.length>0&&user.permissions.at(0)?.complementaryContentManagment) {
+ if (user && user.permissions?.length>0&&user.permissions.at(0)?.complementaryContentManagement) {
     var pageNo = params.slug?.at(params?.slug?.length - 1)
         if (!pageNo || isNaN(pageNo)) {
           pageNo = 1;
@@ -28,7 +28,7 @@ const page = async({params}) => {
     
  }
   return (
-    ( user && user.permissions[0].productAndInventory? <>
+    ( user && user.permissions[0].complementaryContentManagement? <>
      
         <MainModule pageNo={pageNo} itemsPerPage={itemsPerPage}  />
         <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />

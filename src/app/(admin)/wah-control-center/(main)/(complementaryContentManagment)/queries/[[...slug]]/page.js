@@ -36,7 +36,7 @@ const page = async ({ params }) => {
 
 
   return (
-    (user && user.permissions[0].consumerAndOrderManagement ? <>
+    (user && user.permissions[0].complementaryContentManagement ? <>
       <div style={{ display: "flex", justifyContent: "center" }}> <h2>Queries</h2></div>
       <h3> Total { count }</h3>
       <MainModule itemsPerPage={itemsPerPage} pageNo={pageNo} />

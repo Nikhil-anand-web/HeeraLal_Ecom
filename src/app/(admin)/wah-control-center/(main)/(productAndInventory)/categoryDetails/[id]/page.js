@@ -7,17 +7,17 @@ import { getServerSession } from 'next-auth'
 
 const page = async (prop) => {
     const user = await getServerSession(authOptions)
-    if (user && user.permissions?.length>0&&!user.permissions[0].userUpdate) return <div>Access Denied</div>
+    if (user && user.permissions?.length>0&&!user.permissions[0].productAndInventory) return <div>Access Denied</div>
     console.log(prop)
     if (!user || (user.role !== 1 && user.role !== 2) || user.status == 0) {
         return <div>Access Denied</div>
     }
     const userPermission = await db.permissions.findUnique({
         where: { adminId: user.id },
-        select: { userUpdate: true }
+        select: { productAndInventory: true }
     });
 
-    if (!userPermission.userUpdate) {
+    if (!userPermission.productAndInventory) {
         return <div>Access Denied</div>
 
     };

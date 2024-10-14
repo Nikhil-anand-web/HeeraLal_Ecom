@@ -33,7 +33,7 @@ async function updateProduct(formData) {
         description: formData.get('description'),
         stars: +formData.get('stars') <= 0 ? null : +formData.get('stars'),
         slug: finalSlugProduct,
-        tags: formData.get('tags').length > 0 ? formData.get('tags').split(',').map(str => str.trim()) : null,
+        tags: formData.get('tags').length > 0 ? formData.get('tags').split(',').map(str => str.trim()) : ["general"],
         category: (formData.get('category') && formData.get('category') !== 'undefined') ? {
             connect: { id: formData.get('category') },
         } : null,

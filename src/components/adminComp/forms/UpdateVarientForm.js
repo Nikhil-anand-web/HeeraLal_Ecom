@@ -190,7 +190,7 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
                                     render={({ field: { onChange, onBlur, value, ref, name } }) => (
                                         <select disabled={reqVar?.id?true:false} defaultValue={0} onChange={handleIndntifierProductChange} onBlur={onBlur} value={value} ref={ref} name={name} className="form-select"  >
 
-                                            <option disabled value={0}>select a valid identifire</option>
+                                            <option disabled value={0}>select a valid identifier</option>
                                             {
                                                 productSlugs.map((obj, index) => <option key={index} value={obj.id}>{obj.slug}</option>)
                                             }
@@ -245,7 +245,7 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
                                         render={({ field }) => (
                                             <select defaultValue={0} onChange={handleIndntifierProductChange} {...field} className="form-select"  >
 
-                                                <option disabled value={0}>select a valid identifire</option>
+                                                <option disabled value={0}>select a valid identifier</option>
                                                 <option value={true}>true</option>
                                                 <option value={false}>false</option>
 

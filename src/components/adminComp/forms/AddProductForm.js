@@ -367,12 +367,12 @@ const AddProductForm = ({ categories }) => {
                             />
                         </div>
 
-                        <ImageUploader register={register} name="thumbnailProduct" label="Thumbnail" />
+                        <ImageUploader required={true} register={register} name="thumbnailProduct" label="Thumbnail" />
 
                         <div className="form-group">
                             <p>Upload samplePhotos</p>
                             <label style={{ fontSize: "2rem", cursor: "pointer" }} className="fa  fa-folder-open" htmlFor="samplePhotos"></label>
-                            <input style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple="true" accept="image/*" />
+                            <input required ={true} style={{ display: 'none' }} onChange={handleFileChange} {...register("samplePhotos", { onChange: handleFileChange })} type="file" name="samplePhotos" className="form-control" id="samplePhotos" placeholder="samplePhotos" multiple="true" accept="image/*" />
 
 
 

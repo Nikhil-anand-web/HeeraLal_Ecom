@@ -6,11 +6,11 @@ const VideoLeft = ({ recipe }) => {
     console.log(recipe)
 
     return (
-        <div className={"d-flex"}>
+        <div className={"row"}>
             <div className="col-md-5 col-12 order-1 order-md-1"> {/* Video Div */}
                 <iframe width="100%" height="315" src={recipe.videoLink} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
             </div>
-            <div style={{ marginLeft: "30px" }} className="col-md-7 col-12 order-2 order-md-2"> {/* Content Div */}
+            <div  className="col-md-7 col-12 order-2 order-md-2"> {/* Content Div */}
                 <Link href={`/recipe-details/${recipe.id}`}><h2>{recipe.name}</h2></Link>
                 <hr />
                 {/*                 

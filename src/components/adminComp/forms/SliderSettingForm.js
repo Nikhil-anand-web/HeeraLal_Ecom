@@ -221,7 +221,7 @@ const SliderSettingForm = ({ pages }) => {
 
                                     <select defaultValue={0} onChange={handleIdentifireSlugSelection} onBlur={onBlur} value={value} ref={ref} className="form-select" id="identifireSlug">
 
-                                        <option disabled value={0}>select a valid identifire</option>
+                                        <option disabled value={0}>select a valid identifier</option>
 
 
                                         {
@@ -320,7 +320,7 @@ const SliderSettingForm = ({ pages }) => {
 
 
                             {selectedDisplayOrder !== -1 && (isLoading ? "Submitting" : <button type="submit" className={` btn me-2 btn-gradient-primary`}> Submit</button>)}
-                        </div> : <p>please select the identifire</p>
+                        </div> : <p>please select the identifier</p>
                         }
                     </form>
 

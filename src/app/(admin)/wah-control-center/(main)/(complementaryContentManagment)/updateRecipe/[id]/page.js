@@ -15,7 +15,7 @@ const page = async ({params}) => {
     const recId = params.id
     var productSlug = []
     
-    if (user && user.permissions?.length > 0 && user.permissions[0].complementaryContentManagment) {
+    if (user && user.permissions?.length > 0 && user.permissions[0].complementaryContentManagement) {
         productSlug = await db.product.findMany({
             select: {
                 slug: true,
@@ -39,7 +39,7 @@ const page = async ({params}) => {
     return (
         <>
             <h3 className="page-title"> Add a Recipe</h3>
-            {user && user.permissions?.length > 0 && user.permissions[0].complementaryContentManagment ? <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}><UpdateRecipeForm recipe={recipe} productSlug={productSlug} /></div> : <div>access denied</div>}
+            {user && user.permissions?.length > 0 && user.permissions[0].complementaryContentManagement ? <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}><UpdateRecipeForm recipe={recipe} productSlug={productSlug} /></div> : <div>access denied</div>}
 
         </>
     )

@@ -11,7 +11,7 @@ const page = async ({ params }) => {
     const slug = params.id
 
     var blog = []
-    if (user && user.permissions?.length && user.permissions[0].complementaryContentManagment) {
+    if (user && user.permissions?.length && user.permissions[0].complementaryContentManagement) {
         blog = await db.blog.findUnique({
             where:{
                 id:slug
@@ -24,7 +24,7 @@ const page = async ({ params }) => {
     return (
         <>
             <h3 className="page-title"> Update a Category </h3>
-            {user && user.permissions?.length && user.permissions[0].complementaryContentManagment ? <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}><UpdateBlogForm blog={blog} /></div> : <div>access denied</div>}
+            {user && user.permissions?.length && user.permissions[0].complementaryContentManagement ? <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}><UpdateBlogForm blog={blog} /></div> : <div>access denied</div>}
 
         </>
     )

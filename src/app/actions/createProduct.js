@@ -61,7 +61,7 @@ async function createProduct(formData) {
                     const newProduct = await db.product.create({
                         data: {
                             name: formData.get('productName'),
-                            tags: (!formData.get('tags') || formData.get('tags') === '') ? "general" : formData.get('tags').split(',').map(str => str.trim()),
+                            tags: (!formData.get('tags') || formData.get('tags') === '') ? ["general"] : formData.get('tags').split(',').map(str => str.trim()),
                             category: {
                                 connect: { id: formData.get('category') },
                             },

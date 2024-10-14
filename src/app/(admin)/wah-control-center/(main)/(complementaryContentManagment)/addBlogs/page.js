@@ -16,7 +16,7 @@ const page = async () => {
   return (
    <>
      <h3 className="page-title"> Add a Blog </h3>
-     {user && user.permissions.length>0 &&  user.permissions[0]?.complementaryContentManagment? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><AddBlogForm/></div>:<div>access denied</div>}
+     {user && user.permissions.length>0 &&  user.permissions[0]?.complementaryContentManagement? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><AddBlogForm/></div>:<div>access denied</div>}
     
    </>
   )
