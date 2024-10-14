@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 const VideoRight = ({ recipe }) => {
+    
    
     return (
         <div className="row  my-5">
@@ -15,7 +16,7 @@ const VideoRight = ({ recipe }) => {
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Ingridents:-</h4>
 
                     <div style={{ display: "flex" }} className="social-list">
-                        {recipe.ingredients.map((name, i) => `${name} ${(i < recipe.ingredients.length - 1) ? "," : ""}`)}
+                        {recipe.ingredients}
 
 
                     </div>

@@ -24,7 +24,7 @@ export default async function updateRecipe(formData) {
 
             }
             if (formData.get('instructions')) {
-                updateObj.instructions = formData.get('instructions')
+                updateObj.instructions =  (!formData.get('ingredients') || formData.get('ingredients')==='')?"noExtra":formData.get('ingredients').split(',').map(str=>str.trim())
 
             }
             if (formData.get('ingredients')) {
