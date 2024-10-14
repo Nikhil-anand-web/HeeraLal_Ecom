@@ -12,7 +12,7 @@ const VideoRight = ({ recipe }) => {
                 <hr />
 
                
-                <div style={{ marginTop: "20px" }}>
+                {/* <div style={{ marginTop: "20px" }}>
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Ingridents:-</h4>
 
                     <div style={{ display: "flex" }} className="social-list">
@@ -21,9 +21,9 @@ const VideoRight = ({ recipe }) => {
 
                     </div>
 
-                </div>
+                </div> */}
 
-                <div style={{ marginTop: "20px" }}>
+                {/* <div style={{ marginTop: "20px" }}>
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Our Product:-</h4>
                     <div style={{ display: "flex" }} className="social-list">
                         {recipe.products.map((obj, i) => <Link href={`/product-details/${obj.slug}`}>
@@ -35,9 +35,9 @@ const VideoRight = ({ recipe }) => {
 
 
                     </div>
-                </div>
+                </div> */}
                 <div style={{ marginTop: "20px" }}>
-                    <h4 className="social-list" style={{ textDecoration: "underline" }}>Brief:-</h4>
+                
                     <div style={{ display: "flex" }} className="social-list">
                         <DangerDiv htmlEl={recipe.brief}/>
 

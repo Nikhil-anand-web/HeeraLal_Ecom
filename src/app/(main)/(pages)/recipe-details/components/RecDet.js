@@ -25,6 +25,36 @@ const RecDet = ({ recipe }) => {
                     ></iframe>
                 </div>
             )}
+            <div style={{ marginTop: "20px" }}>
+
+                <div style={{ display: "flex" }} className="social-list">
+                    <DangerDiv htmlEl={recipe.brief} />
+
+
+                </div>
+            </div>
+            {/* Ingredients Section */}
+            <div className="ingredients-section" style={{ marginBottom: '30px', textAlign: 'left' }}>
+                <h3 style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '10px' }}>Ingredients:</h3>
+                <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+                    {recipe.ingredients.map((ingredient, index) => (
+                        <li key={index} style={{ fontSize: '18px', marginBottom: '5px' }}>{ingredient + " "}{index !== recipe.ingredients.length - 1 && ","} </li>
+                    ))}
+                </ul>
+            </div>
+            {/* Products Section */}
+            {recipe.products && recipe.products.length > 0 && (
+                <div className="products-section" style={{ marginBottom: '30px', textAlign: 'left' }}>
+                    <h3 style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '10px' }}>Our Products:</h3>
+                    <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+                        {recipe.products.map((product, index) => (
+                            <Link href={`/product-details/${product.slug}`}>
+                                <li key={index} style={{ fontSize: '18px', marginBottom: '5px', textDecoration: "underline" }}>{product.name + " "}{index !== recipe.products.length - 1 && ","}</li>
+                            </Link>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
             {/* Instructions Section */}
             <div className="instructions-section" style={{ marginBottom: '30px', textAlign: 'left' }}>
@@ -32,29 +62,9 @@ const RecDet = ({ recipe }) => {
                 <DangerDiv htmlEl={recipe.instructions} />
             </div>
 
-            {/* Ingredients Section */}
-            <div className="ingredients-section" style={{ marginBottom: '30px', textAlign: 'left' }}>
-                <h3 style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '10px' }}>Ingredients:</h3>
-                <ul style={{ listStyleType: 'disc', paddingLeft: '20px', display: "flex" }}>
-                    {recipe.ingredients.map((ingredient, index) => (
-                        <li key={index} style={{ fontSize: '18px', marginBottom: '5px' }}>{ingredient + " "}{index !== recipe.ingredients.length - 1 && ","} </li>
-                    ))}
-                </ul>
-            </div>
 
-            {/* Products Section */}
-            {recipe.products && recipe.products.length > 0 && (
-                <div className="products-section" style={{ marginBottom: '30px', textAlign: 'left' }}>
-                    <h3 style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '10px' }}>Associated Products:</h3>
-                    <ul style={{ listStyleType: 'disc', paddingLeft: '20px', display: "flex" }}>
-                        {recipe.products.map((product, index) => (
-                            <Link href={`/product-details/${product.slug}`}>
-                                <li key={index} style={{ fontSize: '18px', marginBottom: '5px' }}>{product.name + " "}{index !== recipe.products.length - 1 && ","}</li>
-                            </Link>
-                        ))}
-                    </ul>
-                </div>
-            )}
+
+
 
         </div>
     );

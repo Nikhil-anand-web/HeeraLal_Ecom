@@ -13,7 +13,7 @@ const VideoLeft = ({ recipe }) => {
             <div style={{marginLeft:"30px"}} className="col-md-7 col-12 order-2 order-md-2"> {/* Content Div */}
                 <h2>{recipe.name}</h2>
                 <hr />
-                
+{/*                 
                 <div style={{ marginTop: "20px" }}>
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Ingredients:</h4>
                     <div style={{ display: "flex" }} className="social-list">
@@ -28,6 +28,14 @@ const VideoLeft = ({ recipe }) => {
                                 {obj.name} {(i < recipe.products.length - 1) ? "," : ""}
                             </Link>
                         ))}
+                    </div>
+                </div> */}
+                <div style={{ marginTop: "20px" }}>
+                    
+                    <div style={{ display: "flex" }} className="social-list">
+                        <DangerDiv htmlEl={recipe.brief}/>
+
+
                     </div>
                 </div>
             </div>
