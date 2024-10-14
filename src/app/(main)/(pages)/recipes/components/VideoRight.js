@@ -3,15 +3,15 @@ import Link from 'next/link'
 import React from 'react'
 
 const VideoRight = ({ recipe }) => {
-    
-   
+
+
     return (
         <div className="row  my-5">
             <div className="col-md-7 col-12 order-2 order-md-1">
                 <Link href={`/recipe-details/${recipe.id}`}><h2>{recipe.name}</h2></Link>
                 <hr />
 
-               
+
                 {/* <div style={{ marginTop: "20px" }}>
                     <h4 className="social-list" style={{ textDecoration: "underline" }}>Ingridents:-</h4>
 
@@ -37,9 +37,9 @@ const VideoRight = ({ recipe }) => {
                     </div>
                 </div> */}
                 <div style={{ marginTop: "20px" }}>
-                
+
                     <div style={{ display: "flex" }} className="social-list">
-                        <DangerDiv htmlEl={recipe.brief}/>
+                        <DangerDiv htmlEl={recipe.brief} />
 
 
                     </div>
