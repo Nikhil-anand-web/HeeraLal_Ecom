@@ -4,7 +4,6 @@
 
 import PieChart from '@/components/adminComp/PieChart'
 import SalesChart from '@/components/adminComp/SalesChart'
-import SendEmail from '@/components/adminComp/SendEmail'
 import AdminLayout from '@/layouts/AdminLayout'
 import db from '@/lib/db'
 import Link from 'next/link'
@@ -103,7 +102,7 @@ const Page = async () => {
 
   return (
     <AdminLayout>
-       <SendEmail/>
+    
 
       <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}>
         <div className="row">

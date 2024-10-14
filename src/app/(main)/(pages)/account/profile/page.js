@@ -35,31 +35,31 @@ const Page = () => {
 
     const pinCode = watch('pinCode');
     
-    const fetchResults = useCallback(
-        debounce(async (pinCode) => {
-            if (pinCode) {
-                try {
-                    const response = await axios.get(`https://api.postalpincode.in/pincode/${pinCode}`);
+    // const fetchResults = useCallback(
+    //     debounce(async (pinCode) => {
+    //         if (pinCode) {
+    //             try {
+    //                 const response = await axios.get(`https://api.postalpincode.in/pincode/${pinCode}`);
 
-                    if (response.data[0].PostOffice) {
-                        setValue("state", response.data[0].PostOffice[0].State);
-                        const cityList = response.data[0].PostOffice.map((po) => po.Block);
-                        const uniqueCities = [...new Set(cityList)];
-                        setCity([...uniqueCities]);
-                    }
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                }
-            } else {
-                setCity([]); // Clear the city list if the pinCode is empty
-            }
-        }, 500),
-        []
-    );
+    //                 if (response.data[0].PostOffice) {
+    //                     setValue("state", response.data[0].PostOffice[0].State);
+    //                     const cityList = response.data[0].PostOffice.map((po) => po.Block);
+    //                     const uniqueCities = [...new Set(cityList)];
+    //                     setCity([...uniqueCities]);
+    //                 }
+    //             } catch (error) {
+    //                 console.error('Error fetching data:', error);
+    //             }
+    //         } else {
+    //             setCity([]); // Clear the city list if the pinCode is empty
+    //         }
+    //     }, 500),
+    //     []
+    // );
 
-    useEffect(() => {
-        fetchResults(pinCode);
-    }, [pinCode, fetchResults]);
+    // useEffect(() => {
+    //     fetchResults(pinCode);
+    // }, [pinCode, fetchResults]);
 
     const onSubmit = async (data) => {
         const formData = objectToFormData(data);
@@ -121,12 +121,12 @@ const Page = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="address">Address</label>
-                                <input {...register("address", { required: pinCode ? true : false })} type="text" className="form-control" id="address" placeholder={prepin?prepin:"please enter address"}/>
+                                <input {...register("address", { required: pinCode ? true : false })} type="text" className="form-control" id="address" defaultValue={address} placeholder={address?address:"please enter address"}/>
                                 {errors.address && <span>This field is required</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="identifireSlug">City</label>
-                                <Controller
+                                {/* <Controller
                                     name="city"
                                     control={control}
                                     rules={{ required: pinCode ? 'City is required' : false }}
@@ -138,12 +138,14 @@ const Page = () => {
                                             ))}
                                         </select>
                                     )}
-                                />
+                                /> */}
+                                 <input  {...register("city", { required: preCity ? 'City is required' : false })} defaultValue={preCity} type="text" className="form-control" id="address" placeholder={preCity?preCity:"please enter address"}/>
+                                
                                 {errors.city && <span>{errors.city.message}</span>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="state">State</label>
-                                <input disabled {...register("state")} type="text" className="form-control" id="state" placeholder={state?state:"please enter pincode"} />
+                                <input  {...register("state")} type="text" className="form-control" id="state" defaultValue={state} placeholder={state?state:"please enter pincode"} />
                             </div>
 
                             <button type="submit" className="btn me-2 btn-gradient-primary" disabled={isLoading}>

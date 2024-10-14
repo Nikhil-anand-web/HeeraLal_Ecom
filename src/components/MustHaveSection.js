@@ -33,7 +33,7 @@ const MustHaveSection = ({mustHaveSectionBanners}) => {
     const fetch = async () => {
       try {
         const res = await getProductByCategoryIdAndTag(activeCategoryId,["mustHave"])
-        console.log(res,"negihrnurgvrugvbtr")
+        
         setproductsUnderActiveCategory(res.serialProducts)
 
       } catch (error) {
@@ -66,12 +66,12 @@ const MustHaveSection = ({mustHaveSectionBanners}) => {
             <ProductGalary product={productsUnderActiveCategory} />
             <section className="spices-add pt-0">
               <div className="container">
-                <div className="row">
-                  <div className="col-md-3">
+                <div className="row mb-4">
+                  <div className="col-md-4">
 
                     <Image src={mustHaveSectionBanners[0].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
                   </div>
-                  <div className="col-md-9">
+                  <div className="col-md-8">
 
                   <Image src={mustHaveSectionBanners[1].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
 
