@@ -49,6 +49,7 @@ export async function POST(req) {
           const newCategory = await db.category.create({
             data: {
               categoryName: formData.get('categoryName'),
+              displayOrder: parseInt(formData.get('displayOrder')),
               slug: slug,
               image: JSON.stringify(jsonToDb), // Convert the image metadata array to JSON
               showOnHome: formData.get('showOnHome') === 'true', // Convert to boolean

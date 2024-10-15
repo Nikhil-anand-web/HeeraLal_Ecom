@@ -60,6 +60,7 @@ const UpdateCategoryForm = ({ categories,reqId }) => {
 
                     }
                     setValue("categoryName", category.categoryName);
+                    setValue("displayOrder", category.displayOrder);
             
 
                  
@@ -134,6 +135,7 @@ const UpdateCategoryForm = ({ categories,reqId }) => {
         formData.set('parentId', data.parentId)
         formData.set('categoryName', data.categoryName)
         formData.set('showOnHome', data.showOnHome)
+        formData.set('displayOrder', data.displayOrder)
        
         try {
             setIsLoading(true);
@@ -282,6 +284,11 @@ const UpdateCategoryForm = ({ categories,reqId }) => {
                             <label htmlFor="categoryName">Category Name</label>
                             <input {...register("categoryName")} type="text" className="form-control" id="categoryName" placeholder="Category Name" />
                             {errors.categoryName && <span>This field is required</span>}
+                        </div>
+                        <div className="form-group" >
+                            <label htmlFor="displayOrder">Display Order</label>
+                            <input {...register("displayOrder")} type="number" className="form-control" id="displayOrder" placeholder="Display Order" />
+                            {errors.displayOrder && <span>This field is required</span>}
                         </div>
 
                         <div className="form-group">

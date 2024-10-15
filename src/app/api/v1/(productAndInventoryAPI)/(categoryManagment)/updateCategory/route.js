@@ -63,6 +63,9 @@ export async function POST(req) {
                     if (formData.get('categoryName')) {
                         updateData.categoryName = formData.get('categoryName');
                     }
+                    if (formData.get('displayOrder')) {
+                        updateData.displayOrder = parseInt(formData.get('displayOrder'));
+                    }
 
                     updateData.slug = finalSlug;
 

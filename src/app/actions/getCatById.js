@@ -35,8 +35,8 @@ async function getCatById(ids) {
                             },
                             slug: true,
                             categoryName: true,
-                            parentId:true,
-
+                            parentId: true,
+                            displayOrder: true,
 
                             status: true,
                             showOnHome: true,
@@ -53,7 +53,7 @@ async function getCatById(ids) {
 
 
 
-    console.log(category,"whfgbure")
+
 
                     return {
                         success: true,
