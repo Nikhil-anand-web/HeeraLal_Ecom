@@ -30,9 +30,7 @@ export async function GET(request, { params }) {
             status: 200,
             headers: {
                 'Content-Type': contentType,
-                'Cache-Control': 'no-cache, no-store, must-revalidate', // Disable aggressive caching
-                'Pragma': 'no-cache',
-                'Expires': '0',
+                
             },
         });
     } else {
