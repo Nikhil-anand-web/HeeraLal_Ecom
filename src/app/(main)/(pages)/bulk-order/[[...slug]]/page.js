@@ -44,7 +44,12 @@ const page = async ({params}) => {
                 discount:true,
                 weight:true,
                 slug:true,
-                isBulk:true
+                isBulk:true,
+                product:{
+                    select:{
+                        slug:true
+                    }
+                }
                }
                 
             }

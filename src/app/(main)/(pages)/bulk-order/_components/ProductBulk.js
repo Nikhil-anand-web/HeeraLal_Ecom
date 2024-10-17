@@ -10,7 +10,7 @@ const ProductBulk = ({ imageS, procuctName, varients }) => {
                 <div class="row d-flex">
                     <div class="col-8">
                         <div class="pro-img text-center position-relative">
-                            <Link href="/product-details">  <Image layout='responsive' src={imageS} alt='logo' width={100} height={100} /></Link>
+                            <Link href={`/product-details/${varients[0].product.slug}`}>  <Image layout='responsive' src={imageS} alt='logo' width={100} height={100} /></Link>
                             <div class="hover-view">
                                 <a href="#"><i class="fa-solid fa-eye"></i></a>
                                 <a href="#"><i class="fa-solid fa-code-compare"></i></a>
