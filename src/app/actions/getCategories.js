@@ -15,8 +15,13 @@ export default async function getCategories() {
             select:{
                 id:true,
                 categoryName:true,
+                displayOrder:true
 
+            },
+            orderBy:{
+                displayOrder:"asc"
             }
+
         })
         return {
             success: true,

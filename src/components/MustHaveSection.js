@@ -2,21 +2,30 @@
 import React, { useEffect, useState } from 'react'
 import ProductGalary from './HomeProductGalary/ProductGalary'
 import Image from 'next/image'
-import logo2 from "../images/logo1.png"
-import banner3 from "../images/banner3.jpg"
-import spices from "../images/spices.png"
 import getCategories from '@/app/actions/getCategories'
-
 import getProductByCategoryIdAndTag from '@/app/actions/getProductByCategoryIdAndTag'
+
 const MustHaveSection = ({mustHaveSectionBanners}) => {
   const [categories, setcategories] = useState([])
   const [activeCategoryId, setActiveCategoryId] = useState('')
   const [productsUnderActiveCategory, setproductsUnderActiveCategory] = useState([])
+  
   useEffect(() => {
     const fetch = async () => {
       try {
         const res = await getCategories()
         setcategories(res.categories)
+        const highPri = res.categories.reduce((accumulator, currentValue) => {
+        if (accumulator===0) {
+          return currentValue
+          
+        }else{
+          return accumulator.displayOrder<currentValue.displayOrder?accumulator.id:currentValue.id
+        }
+        
+        }, 0);
+        setActiveCategoryId(highPri.id)
+
 
       } catch (error) {
         console.log(error)
@@ -60,8 +69,8 @@ const MustHaveSection = ({mustHaveSectionBanners}) => {
         <div className="container">
           <div className="row">
             <div className="d-flex justify-content-center my-3 flex-wrap">
-              <button className="btn btn-default filter-button" onClick={()=>setActiveCategoryId('')}  data-filter="all">All Products</button>
-              {categories.map((cat,index)=><button key={index} onClick={()=>setActiveCategoryId(cat.id)} className="btn btn-default filter-button" id={cat.id} data-filter="spices">{cat.categoryName}</button>)}
+              <button  className={`btn btn-default filter-button active-cat`} onClick={()=>setActiveCategoryId('')}  data-filter="all">All Products</button>
+              {categories.map((cat,index)=><button key={index} style={{backgroundColor:"#313131!important" , borderRadius:"32px"}} onClick={()=>setActiveCategoryId(cat.id)} className={`btn btn-default filter-button`} id={cat.id} data-filter="all">{cat.categoryName}</button>)}
             </div>
             <ProductGalary product={productsUnderActiveCategory} />
             <section className="spices-add pt-0">

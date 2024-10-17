@@ -34,44 +34,44 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
     const pinCode = watch('pinCode');
 
 
-    // const fetchResults = useCallback(
-    //     debounce(async (pinCode,wantToUseDefault,userHaveAddress,userPinCode) => {
-    //         if (pinCode ||(wantToUseDefault  && userHaveAddress) ) {
-    //             try {
-    //                 const response = await axios.get(`https://api.postalpincode.in/pincode/${pinCode}`);
-    //                 var shiping =null
-    //                 if (wantToUseDefault  && userHaveAddress) {
-    //                     shiping = await getShipingCharges(userPinCode,order.id)
-    //                     console.log(shiping)
+    const fetchResults = useCallback(
+        debounce(async (pinCode,wantToUseDefault,userHaveAddress,userPinCode) => {
+            if (pinCode ||(wantToUseDefault  && userHaveAddress) ) {
+                try {
+                    // const response = await axios.get(`https://api.postalpincode.in/pincode/${pinCode}`);
+                    var shiping =null
+                    if (wantToUseDefault  && userHaveAddress) {
+                        shiping = await getShipingCharges(userPinCode,order.id)
+                        console.log(shiping)
 
                         
-    //                 }else{
-    //                     shiping =await getShipingCharges(pinCode,order.id)
+                    }else{
+                        shiping =await getShipingCharges(pinCode,order.id)
 
-    //                 }
+                    }
                    
-    //                 setShipingCharges(shiping.charges)
+                    setShipingCharges(shiping.charges)
 
-    //                 if (response.data[0].PostOffice) {
-    //                     setValue("state", response.data[0].PostOffice[0].State);
-    //                     const cityList = response.data[0].PostOffice.map((po) => po.Block);
-    //                     const uniqueCities = [...new Set(cityList)];
-    //                     setCity([...uniqueCities]);
-    //                 }
-    //             } catch (error) {
-    //                 console.error('Error fetching data:', error);
-    //             }
-    //         } else {
-    //             setShipingCharges(null)
-    //             setCity([]); // Clear the city list if the pinCode is empty
-    //         }
-    //     }, 500),
-    //     []
-    // );
+                    // if (response.data[0].PostOffice) {
+                    //     setValue("state", response.data[0].PostOffice[0].State);
+                    //     const cityList = response.data[0].PostOffice.map((po) => po.Block);
+                    //     const uniqueCities = [...new Set(cityList)];
+                    //     setCity([...uniqueCities]);
+                    // }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            } else {
+                setShipingCharges(null)
+                setCity([]); // Clear the city list if the pinCode is empty
+            }
+        }, 500),
+        []
+    );
 
-    // useEffect(() => {
-    //     fetchResults(pinCode,wantToUseDefault,userHaveAddress,userPinCode);
-    // }, [pinCode, fetchResults,userPinCode,wantToUseDefault]);
+    useEffect(() => {
+        fetchResults(pinCode,wantToUseDefault,userHaveAddress,userPinCode);
+    }, [pinCode, fetchResults,userPinCode,wantToUseDefault]);
 
     const onSubmit = async (e) => {
 

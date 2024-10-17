@@ -154,3 +154,7 @@ body {
   text-wrap: wrap;
   text-align: left;
 }
+.active-cat{
+  background-color: #313131!important;
+
+}

@@ -1,8 +1,9 @@
 import AdminHeader from "@/components/adminComp/AdminHeader";
 import AdminNavbar from "@/components/adminComp/AdminNavbar";
+import Spinner from "@/components/global/Spinner";
 import TestNavBar from "@/components/TestNavBar";
 import { Suspense } from "react";
-import { Spinner } from "react-bootstrap";
+
 
 
 
@@ -26,15 +27,18 @@ export default function AdminLayout({ children }) {
                     {/* partial */}
                     <div className="main-panel">
                         <div style={{
-                          
-                            height: "80vh",
-                            overflow:"hidden"
-                        }} className="content-wrapper">
-                            {/* <Suspense fallback={<Spinner/>}> */}
-                            {children}
 
-                           
-                            
+                            height: "80vh",
+                            overflow: "hidden"
+                        }} className="content-wrapper">
+                            <Suspense fallback={<Spinner/>}>
+                                {children}
+
+                            </Suspense>
+
+
+
+
                         </div>
                     </div>
 

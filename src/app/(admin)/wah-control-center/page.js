@@ -2,8 +2,10 @@
 
 
 
+
 import PieChart from '@/components/adminComp/PieChart'
 import SalesChart from '@/components/adminComp/SalesChart'
+import SendEmail from '@/components/adminComp/SendEmail'
 import AdminLayout from '@/layouts/AdminLayout'
 import db from '@/lib/db'
 import Link from 'next/link'
