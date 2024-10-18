@@ -38,7 +38,7 @@ async function updateSlider(formData) {
                         for (let index = 0; index < files.length; index++) {
                             const file = files[index];
                             const timestamp = new Date(); // Get the current timestamp
-                            const filePath = path.join(uploadDirectory, `${timestamp}.jpeg`); // Filename with timestamp
+                            const filePath = path.join(uploadDirectory, `${timestamp}_${index}.jpeg`); // Filename with timestamp
                             console.log(filePath)
 
                             // Await the arrayBuffer and then write synchronously
@@ -50,7 +50,7 @@ async function updateSlider(formData) {
 
                             // Push the corresponding URL to the array
                             jsonToDb.push({
-                                url: `/asset/slider/${formData.get('identifireSlug')}/${timestamp}.jpeg`, // URL with timestamp
+                                url: `/asset/slider/${formData.get('identifireSlug')}/${timestamp}_${index}.jpeg`, // URL with timestamp
                                 alt: 'slider image',
                                 link: formData.get(`lnk_${index}`).trim(),
                                
