@@ -85,9 +85,9 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
             <div className="d-flex justify-content-center my-3 flex-wrap">
              
               {categories.map((cat, index) => <button key={index}  onClick={() => {
-                setIsLoading(true)
+              
                 setActiveCategoryId(cat.id)
-                setIsLoading(false)
+               
 
               }
 
