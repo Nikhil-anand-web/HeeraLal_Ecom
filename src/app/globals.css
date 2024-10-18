@@ -154,7 +154,17 @@ body {
   text-wrap: wrap;
   text-align: left;
 }
-.active-cat{
+.active-cat:hover{
+  background-color: #313131!important;
+  
+
+}
+.active-cat-current{
   background-color: #313131!important;
 
+}
+.cat-active{
+  background: #e3d5d0;
+  color: #fff;
+  border-radius: 26px;
 }

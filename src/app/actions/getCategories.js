@@ -15,7 +15,8 @@ export default async function getCategories() {
             select:{
                 id:true,
                 categoryName:true,
-                displayOrder:true
+                displayOrder:true,
+                
 
             },
             orderBy:{
@@ -23,6 +24,7 @@ export default async function getCategories() {
             }
 
         })
+        console.log(categories)
         return {
             success: true,
             message: "fetched successfully",

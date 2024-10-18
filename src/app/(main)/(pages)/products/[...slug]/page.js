@@ -9,6 +9,7 @@ import ProductRetail from './_components/ProductRetail'
 const page = async ({ params }) => {
     const categorySlug = params.slug[0].trim()
     var pageNo = params.slug[params.slug.length - 1]
+    
 
     const itemsPerPage = await getPaginationLimit()
     if (!pageNo || isNaN(pageNo)) {
@@ -114,7 +115,7 @@ const page = async ({ params }) => {
 
                         </div> */}
                         <div className="row">
-                            {categories.map(cat => <ProductCategories imageS={cat.image[0].url} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} />)}
+                            {categories.map(cat => <ProductCategories activeCat={categorySlug} imageS={cat.image[0].url} catSlug ={cat.slug} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} />)}
 
 
 

@@ -4,32 +4,38 @@ import ProductGalary from './HomeProductGalary/ProductGalary'
 import Image from 'next/image'
 import getCategories from '@/app/actions/getCategories'
 import getProductByCategoryIdAndTag from '@/app/actions/getProductByCategoryIdAndTag'
+import Spinner from './global/Spinner'
 
-const MustHaveSection = ({mustHaveSectionBanners}) => {
+const MustHaveSection = ({ mustHaveSectionBanners }) => {
   const [categories, setcategories] = useState([])
   const [activeCategoryId, setActiveCategoryId] = useState('')
   const [productsUnderActiveCategory, setproductsUnderActiveCategory] = useState([])
-  
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
     const fetch = async () => {
       try {
+        setIsLoading(true)
         const res = await getCategories()
         setcategories(res.categories)
         const highPri = res.categories.reduce((accumulator, currentValue) => {
-        if (accumulator===0) {
-          return currentValue
-          
-        }else{
-          return accumulator.displayOrder<currentValue.displayOrder?accumulator.id:currentValue.id
-        }
-        
+          // If accumulator is 0 (initial case), set the currentValue as the accumulator
+          if (accumulator === 0) {
+            return currentValue;
+          }
+          // Compare the displayOrder and return the one with the higher value
+          return accumulator.displayOrder < currentValue.displayOrder ? accumulator : currentValue;
         }, 0);
+
+
         setActiveCategoryId(highPri.id)
 
 
       } catch (error) {
         console.log(error)
 
+      } finally {
+        setIsLoading(false)
       }
 
 
@@ -40,14 +46,22 @@ const MustHaveSection = ({mustHaveSectionBanners}) => {
   }, [])
   useEffect(() => {
     const fetch = async () => {
+      <ProductGalary product={productsUnderActiveCategory} />
       try {
-        const res = await getProductByCategoryIdAndTag(activeCategoryId,["mustHave"])
-        
-        setproductsUnderActiveCategory(res.serialProducts)
+        if (activeCategoryId !== '') {
+          setIsLoading(true)
+          const res = await getProductByCategoryIdAndTag(activeCategoryId, ["mustHave"])
+
+          setproductsUnderActiveCategory(res.serialProducts)
+
+        }
+
 
       } catch (error) {
         console.log(error)
 
+      } finally {
+        setIsLoading(false)
       }
 
 
@@ -69,10 +83,20 @@ const MustHaveSection = ({mustHaveSectionBanners}) => {
         <div className="container">
           <div className="row">
             <div className="d-flex justify-content-center my-3 flex-wrap">
-              <button  className={`btn btn-default filter-button active-cat`} onClick={()=>setActiveCategoryId('')}  data-filter="all">All Products</button>
-              {categories.map((cat,index)=><button key={index} style={{backgroundColor:"#313131!important" , borderRadius:"32px"}} onClick={()=>setActiveCategoryId(cat.id)} className={`btn btn-default filter-button`} id={cat.id} data-filter="all">{cat.categoryName}</button>)}
+             
+              {categories.map((cat, index) => <button key={index}  onClick={() => {
+                setIsLoading(true)
+                setActiveCategoryId(cat.id)
+                setIsLoading(false)
+
+              }
+
+              } style={{backgroundColor:"transparent" ,border:"none",padding:"10px"}} className={` ${activeCategoryId===cat.id?"active-cat-current":""} active-cat   filter-button`} id={cat.id} data-filter="all">{cat.categoryName}</button>)}
             </div>
-            <ProductGalary product={productsUnderActiveCategory} />
+            {isLoading === true ? <div style={{marginBottom:"231px",position:"relative",bottom:"-167px"}}>
+             <Spinner/>
+
+            </div> : <ProductGalary product={productsUnderActiveCategory} />}
             <section className="spices-add pt-0">
               <div className="container">
                 <div className="row mb-4">
@@ -82,13 +106,13 @@ const MustHaveSection = ({mustHaveSectionBanners}) => {
                   </div>
                   <div className="col-md-8">
 
-                  <Image src={mustHaveSectionBanners[1].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
+                    <Image src={mustHaveSectionBanners[1].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
 
                   </div>
                 </div>
               </div>
               <div className="ban-img">
-              <Image src={mustHaveSectionBanners[2].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
+                <Image src={mustHaveSectionBanners[2].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
               </div>
             </section>
 
