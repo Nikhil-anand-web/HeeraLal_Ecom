@@ -148,6 +148,13 @@ const Sidebar = () => {
 
 
                         </span>
+                        <span className="nav-item">
+                          <Link className="nav-link" href="/wah-control-center/allVarients">
+                            All varients
+                          </Link>
+
+
+                        </span>
                       </Accordion.Body>
                     </Accordion.Item>
 

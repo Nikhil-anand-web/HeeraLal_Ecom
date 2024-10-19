@@ -9,7 +9,7 @@ import toggleVarientStatus from '@/app/actions/toggleVarientStatus';
 import makeAVarientDefault from '@/app/actions/makeAVarientDefault';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa'; // Importing icons
 
-const VarientModel = ({ varient, setvarient }) => {
+const VarientModel = ({ varient, setvarient ,setRefetchComp }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false); // Collapsible state
     const rtr = useRouter();
@@ -23,7 +23,13 @@ const VarientModel = ({ varient, setvarient }) => {
             if (!resObj.success) {
                 throw resObj;
             }
-            setvarient((prev) => prev.filter((obj) => obj.id !== varient.id));
+            if (setvarient) {
+                
+                setvarient((prev) => prev.filter((obj) => obj.id !== varient.id));
+            }else{
+                setRefetchComp((e)=>!e)
+
+            }
         } catch (error) {
             console.error(error);
             toast.warning(error.message);
@@ -38,12 +44,17 @@ const VarientModel = ({ varient, setvarient }) => {
             if (!res.success) {
                 throw res;
             }
-            setvarient((prev) => {
-                const updatedVarients = prev.map((obj) =>
-                    obj.id === varient.id ? { ...varient, status: !varient.status } : obj
-                );
-                return updatedVarients;
-            });
+            if (setvarient) {
+                
+                setvarient((prev) => {
+                    const updatedVarients = prev.map((obj) =>
+                        obj.id === varient.id ? { ...varient, status: !varient.status } : obj
+                    );
+                    return updatedVarients;
+                });
+            }else{
+                setRefetchComp((e)=>!e)
+            }
             toast.success(res.message);
         } catch (error) {
             console.log(error);
@@ -57,13 +68,18 @@ const VarientModel = ({ varient, setvarient }) => {
             if (!res.success) {
                 throw res;
             }
-            setvarient((prev) => {
-                const updatedVarients = prev.map((obj) =>
-                    obj.id === varient.id ? { ...varient, isDefault: true, status: true } :
-                        { ...obj, isDefault: false }
-                );
-                return updatedVarients;
-            });
+            if (setvarient) {
+                
+                setvarient((prev) => {
+                    const updatedVarients = prev.map((obj) =>
+                        obj.id === varient.id ? { ...varient, isDefault: true, status: true } :
+                            { ...obj, isDefault: false }
+                    );
+                    return updatedVarients;
+                });
+            }else{
+                setRefetchComp((e)=>!e)
+            }
             toast.success(res.message);
         } catch (error) {
             console.log(error);
