@@ -34,18 +34,20 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
 
         formState: { errors },
     } = useForm({ mode: "onChange" })
-    const identifireState = watch("parentProductSlug");
+    const identifireState = watch("varient");
+    const productId = watch("parentProductSlug");
     useEffect(() => {
         if (reqVar?.id) {
 
-            setValue("parentProductSlug", reqVar?.id);
+            setValue("varient", reqVar?.id);
         }
     }, [])
     useEffect(() => {
         const setCurrentStates = async () => {
 
             try {
-                if (identifireState && reqVar?.id) {
+               
+               if (identifireState&&  identifireState !==0) {
                     const { varient, success, message } = await getVarientById(identifireState)
                     if (!success) {
                         throw {
@@ -56,7 +58,7 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
 
                     }
                     setValue("parentProductSlug", varient.productId);
-                    setValue("varient", varient.id);
+                    // setValue("varient", varient.id);
                     setValue("weight", varient.weight);
 
 
@@ -92,17 +94,23 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
         }
         setCurrentStates()
     }, [identifireState])
+
+
     useEffect(() => {
         setisMounted(true)
     }, [])
 
 
     useEffect(() => {
-        if (identifireState) {
+        if (productId) {
             const fetch = async () => {
-                const varientSlugs = await getVarientOfProduct(identifireState)
+
+                const varientSlugs = await getVarientOfProduct(productId)
+                
     
                 setVarients(varientSlugs.varient)
+                
+
     
             }
             fetch()
@@ -111,7 +119,7 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
        
 
 
-    }, [identifireState])
+    }, [productId])
 
     const rtr = useRouter()
 
@@ -160,6 +168,21 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
     };
     const handleIndntifierProductChange = (e) => {
         setValue("parentProductSlug", e.target.value);
+        setValue("varient",0)
+        setValue("weight", "");
+
+        setValue("mrp", "");
+        setValue("qty", "");
+        setValue("discount", "");
+        setValue("wholeSalePrice", "");
+        setValue("slug", "");
+        setValue("minQtyForBulkOrder", "");
+        setValue("isBulk", 0);
+        setValue("maxQuantityForFewAvailable", "");
+        
+        setValue("length", "");
+        setValue("bredth", "");
+        setValue("height", "");
 
        
 
@@ -204,7 +227,7 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
                                 />
                             </div>
 
-                            {identifireState ? <>
+                            {productId ? <>
                                 <div className="form-group">
                                     <label htmlFor="varient"> Varient</label>
                                     <Controller

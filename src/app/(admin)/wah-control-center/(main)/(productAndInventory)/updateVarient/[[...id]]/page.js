@@ -11,7 +11,7 @@ const page = async ({ params }) => {
   const user = await getServerSession(authOptions);
   var categories = []
   var productSlugs = []
-  var reqId = params.id[0]
+  var reqId = params.id?.at(0)||''
 
   if (user && user.permissions?.length && user.permissions[0].productAndInventory) {
     categories = await db.category.findMany({
