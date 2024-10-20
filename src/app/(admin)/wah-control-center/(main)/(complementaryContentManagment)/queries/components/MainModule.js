@@ -73,7 +73,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
             {(!isLoading ? <div style={{display:"flex",justifyContent:"center"}}>
 
-                <div className={"hide-scrollbar"} style={{ height: "60vh", overflow: "scroll", width: "50%" }}>
+                <div className={"hide-scrollbar"} >
 
 
                     {filteredPublicQuery.map((obj,index) => (

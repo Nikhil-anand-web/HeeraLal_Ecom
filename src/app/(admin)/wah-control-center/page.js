@@ -13,6 +13,7 @@ import Link from 'next/link'
 
 
 const Page = async () => {
+  await new Promise((resolve)=> setTimeout(resolve,7000))
 
   const totalOrders = await db.orders.count({
     where: {
@@ -80,22 +81,7 @@ const Page = async () => {
 
 
   })
-  // const paymentFaild = await db.orders.count({
-  //   where:{
-  //     AND:[{orderStatus:0},{paymentStatus:0},{paymentToken:{not:null}}]
-
-  //   }
-
-
-  // })
-  // const referalOrders = await db.orders.count({
-  //   where:{
-  //     AND:[{refralDiscountAbsolute:{not:0}},{paymentStatus:1}]
-
-  //   }
-
-
-  // })
+ 
   const pieDataArr = [paidAndPending, ProcessingAndAwb, canButNREf, short]
   const pieLabel = ["Paid and pending", "Processing and awb gen.", "Canceled but not refunded", "short Order"]
 

@@ -28,7 +28,7 @@ const page = async () => {
   return (
     <>
       <h3 className="page-title"> FAQs</h3>
-      <div className={"hide-scrollbar"} style={{ height: "85vh", overflow: "scroll", width: "100%" }}>
+      <div className={"hide-scrollbar"} >
       {faqs.map((faq, index) => {
         return <FaqsModel key={index} faq={faq} />
 

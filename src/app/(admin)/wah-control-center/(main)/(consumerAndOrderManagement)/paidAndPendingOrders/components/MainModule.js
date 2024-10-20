@@ -72,7 +72,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
             {(!isLoading ? <>
 
-                <div className={"hide-scrollbar"} style={{ height: "60vh", overflow: "scroll", width: "100%" }}>
+                <div className={"hide-scrollbar"} >
 
 
                     {filteredOrder.map((order,index) => (

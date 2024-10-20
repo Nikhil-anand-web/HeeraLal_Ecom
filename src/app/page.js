@@ -11,6 +11,7 @@ import MustHaveSection from "@/components/MustHaveSection";
 import db from "@/lib/db";
 
 export default async function Home() {
+ 
   var categories = await db.category.findMany({
     where:{
       AND:[{showOnHome:true},{status:1}]

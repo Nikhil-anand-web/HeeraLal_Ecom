@@ -70,7 +70,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
             {(!isLoading ? <>
 
-                <div className={"hide-scrollbar"} style={{ height: "72vh", overflow: "scroll", width: "100%" }}>
+                <div className={"hide-scrollbar"} >
 
 
                     {filteredCustomers.map((customer) => (

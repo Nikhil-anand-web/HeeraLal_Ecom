@@ -69,7 +69,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
 
 
-        <div className={"hide-scrollbar"} style={{ height: "63vh", overflow: "scroll", width: "100%" }}>
+        <div className={"hide-scrollbar"} >
           {filteredBlogs.map((blog, index) => <BlogModel key={index} blog = {blog} setRefetchComp={setRefetchComp}/>)}
 
 

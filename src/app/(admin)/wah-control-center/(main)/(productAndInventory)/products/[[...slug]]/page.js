@@ -4,6 +4,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options"
 import Pagination from "@/components/Pagination"
 import db from "@/lib/db"
 import getPaginationLimit from "@/lib/getPaginationLimit"
+import { Suspense } from "react"
+import Spinner from "@/components/global/Spinner"
 
 
 
@@ -68,8 +70,12 @@ const page = async ({ params }) => {
   return (
     ( user && user.permissions[0].productAndInventory? <>
     <h3>Total -{count}</h3>
+   
+    <MainModule pageNo={pageNo} catFilterSlug={catFilterSlug} itemsPerPage={itemsPerPage}  />
+
+
      
-      <MainModule pageNo={pageNo} catFilterSlug={catFilterSlug} itemsPerPage={itemsPerPage}  />
+     
       <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
 
 

@@ -10,8 +10,6 @@ import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useState } from 'react'
 
 const MainModule = ({ pageNo, itemsPerPage,catFilterSlug }) => {
-
-
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProduct, setFilteredProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
