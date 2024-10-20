@@ -80,7 +80,7 @@ const Page = async (prop) => {
                                     {order.paymentToken?.TXNID && <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="paymentDetail-tab" data-bs-toggle="tab" data-bs-target="#paymentDetail-pane" type="button" role="tab" aria-controls="paymentDetail-pane">Payment Details</button>
                                     </li>}
-                                    {!order.awb && <li className="nav-item" role="presentation">
+                                    {(!order.awb && order.orderStatus === 0) && <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="ship-tab" data-bs-toggle="tab" data-bs-target="#ship-pane" type="button" role="tab" aria-controls="ship-pane">Ship</button>
                                     </li>}
 
@@ -96,7 +96,7 @@ const Page = async (prop) => {
                                     {(order.paymentStatus == 1 && order.orderStatus == 1 && order.awb != null) ? <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="pickup-tab" data-bs-toggle="tab" data-bs-target="#pickup-pane" type="button" role="tab" aria-controls="pickup-pane">Pickup Details </button>
                                     </li> : ""}
-                                    {(true ) ? <li className="nav-item" role="presentation">
+                                    {(true) ? <li className="nav-item" role="presentation">
                                         <button className="nav-link" id="action-tab" data-bs-toggle="tab" data-bs-target="#action-pane" type="button" role="tab" aria-controls="action-pane">Action </button>
                                     </li> : ""}
 
@@ -311,7 +311,7 @@ const Page = async (prop) => {
 
                                         </div>
                                     </div>}
-                                    {!order.awb && <div className="tab-pane fade" id="ship-pane" role="tabpanel" aria-labelledby="ship-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
+                                    {(!order.awb && order.orderStatus === 0) && <div className="tab-pane fade" id="ship-pane" role="tabpanel" aria-labelledby="ship-tab" style={{ maxHeight: "62vh", overflowY: "scroll", overflowX: "hidden" }}>
                                         <DatePickerAndAwb orderId={order.orderId} />
 
                                     </div>}
@@ -442,12 +442,12 @@ const Page = async (prop) => {
                                             <MarkAsCompleated className="mt-3 pay-now-button btn" orderId={order.orderId} />
                                         </li>}
                                         {(order.paymentStatus == 1 && order.orderStatus == 2 && order.awb != null) && <li className="nav-item" role="presentation">
-                                            <MarkAsCancelled className="mt-3 pay-now-button btn"orderId={order.orderId} />
+                                            <MarkAsCancelled className="mt-3 pay-now-button btn" orderId={order.orderId} />
                                         </li>}
-                                        {(order.awb ) && <li className="nav-item" role="presentation">
-                                          <PrintLabel className="mt-3 pay-now-button btn" orderId={order.awb} />
+                                        {(order.awb) && <li className="nav-item" role="presentation">
+                                            <PrintLabel className="mt-3 pay-now-button btn" orderId={order.awb} />
                                         </li>}
-                                        
+
 
                                     </div> : ""}
 
