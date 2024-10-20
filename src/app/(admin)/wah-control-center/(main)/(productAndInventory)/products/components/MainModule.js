@@ -67,7 +67,7 @@ const MainModule = ({ pageNo, itemsPerPage,catFilterSlug }) => {
 
 
 
-        <div className={"hide-scrollbar"} style={{ height: "63vh", overflow: "scroll", width: "100%" }}>
+        <div className={"hide-scrollbar"} >
           {filteredProduct.map((product, index) => <ProductModel setRefetchComp={setRefetchComp} key={index} product={product} />)}
 
 

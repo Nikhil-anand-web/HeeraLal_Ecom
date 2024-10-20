@@ -26,11 +26,7 @@ export default function AdminLayout({ children }) {
                     {/* <TestNavBar/> */}
                     {/* partial */}
                     <div className="main-panel">
-                        <div style={{
-
-                            height: "80vh",
-                            overflow: "hidden"
-                        }} className="content-wrapper">
+                        
                             <Suspense fallback={<Spinner/>}>
                                 {children}
 
@@ -39,7 +35,6 @@ export default function AdminLayout({ children }) {
 
 
 
-                        </div>
                     </div>
 
                     {/* <div className="main-panel"> */}

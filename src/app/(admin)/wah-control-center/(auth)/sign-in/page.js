@@ -17,8 +17,9 @@ const Page = () => {
   } = useForm()
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const onSubmit = async (data) => {
-    console.log(data.identifire)
+  const onSubmit = async (data,event) => {
+    event.preventDefault()
+   
     try {
       setIsLoading(true)
       const res = await signIn("credentials", {
