@@ -19,6 +19,12 @@ const page = async ({ params }) => {
       if (user.permissions[0].productAndInventory) {
 
         var pageNo = params.slug?.at(params?.slug?.length - 1)
+        // var catFilterSlug = (params?.slug?.length && params?.slug?.length>0) ? params.slug[params?.slug?.length - 2]:undefined
+        var catFilterSlug = !isNaN( params.slug?.at(0))?undefined :params.slug?.at(0)
+        console.log(catFilterSlug)
+        
+        
+       
         if (!pageNo || isNaN(pageNo)) {
           pageNo = 1;
 
@@ -26,6 +32,11 @@ const page = async ({ params }) => {
         
 
          count =  await db.product.count({
+          where:{
+            category:{
+              slug:catFilterSlug
+            }
+          }
 
         })
 
@@ -58,7 +69,7 @@ const page = async ({ params }) => {
     ( user && user.permissions[0].productAndInventory? <>
     <h3>Total -{count}</h3>
      
-      <MainModule pageNo={pageNo} itemsPerPage={itemsPerPage}  />
+      <MainModule pageNo={pageNo} catFilterSlug={catFilterSlug} itemsPerPage={itemsPerPage}  />
       <Pagination totalItems={count} itemsPerPage={itemsPerPage} currentPage={pageNo} />
 
 

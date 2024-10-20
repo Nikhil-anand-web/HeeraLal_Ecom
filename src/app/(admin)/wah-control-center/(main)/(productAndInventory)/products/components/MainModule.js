@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 
 import React, { useCallback, useEffect, useState } from 'react'
 
-const MainModule = ({ pageNo, itemsPerPage }) => {
+const MainModule = ({ pageNo, itemsPerPage,catFilterSlug }) => {
 
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,7 +22,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
       try {
         setIsLoading(true)
-        const response = await getSearchedProduct(searchQuery, pageNo, itemsPerPage)
+        const response = await getSearchedProduct(searchQuery, pageNo, itemsPerPage,catFilterSlug)
 
         // setArrayOfProduct(response.products)
 

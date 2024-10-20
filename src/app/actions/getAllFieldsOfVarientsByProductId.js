@@ -18,36 +18,42 @@ async function getAllFieldsOfVarientsByProductId(ids) {
             try {
                 if (user.permissions[0].productAndInventory) {
 
-                
 
-                    const varient =  await db.varient.findMany({
-                        where:{
-                            productId:ids
+
+                    const varient = await db.varient.findMany({
+                        where: {
+                            productId: ids
                         },
-                        select:{
-                            id:true,
-                            slug:true,
-                            product:{
-                                select:{
-                                     slug:true,
-                                     thumbNail:true
+                        select: {
+                            id: true,
+                            slug: true,
+                            product: {
+                                select: {
+                                    slug: true,
+                                    thumbNail: true,
+                                    category: {
+                                        select: {
+                                            slug: true
+                                        }
+
+                                    }
                                 }
                             },
-                            weight:true,
-                            size:true,
-                            qty:true,
-                            status:true,
-                            maxQuantityForFewAvailable:true,
-                            mrp:true,
-                            wholeSalePrice:true,
-                            minQtyForBulkOrder:true,
-                            isDefault:true,
-                            qty:true,
-                            isBulk:true,
-                            discount:true,
-                            _count:{
-                                select:{
-                                    combo:true
+                            weight: true,
+                            size: true,
+                            qty: true,
+                            status: true,
+                            maxQuantityForFewAvailable: true,
+                            mrp: true,
+                            wholeSalePrice: true,
+                            minQtyForBulkOrder: true,
+                            isDefault: true,
+                            qty: true,
+                            isBulk: true,
+                            discount: true,
+                            _count: {
+                                select: {
+                                    combo: true
                                 }
 
                             },
@@ -55,20 +61,20 @@ async function getAllFieldsOfVarientsByProductId(ids) {
                             //     select: {
                             //       name: true, // Assuming 'name' is a field in the 'combo' model
                             //     }},
-                            createdBy:{
-                                select:{
-                                    userName:true
+                            createdBy: {
+                                select: {
+                                    userName: true
                                 }
                             }
 
 
                         }
-                       
+
                     })
 
-               
-                   console.log(varient)
-                  
+
+                    console.log(varient)
+
 
                     return {
                         success: true,

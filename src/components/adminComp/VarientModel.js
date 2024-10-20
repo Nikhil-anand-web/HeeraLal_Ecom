@@ -110,7 +110,7 @@ const VarientModel = ({ varient, setvarient ,setRefetchComp }) => {
                     <div className="card-body">
                         <p className="card-text mb-1"><small className="text-muted">Weight: {varient.weight} gm</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Length: {varient.size}</small></p>
-                        <p className="card-text mb-1"><small className="text-muted">Category Slug: {varient.qty}</small></p>
+                        <p className="card-text mb-1"><small className="text-muted">Category Slug: {varient.product.category.slug}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Max Quantity For Few Available: {varient.maxQuantityForFewAvailable}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">MRP: {varient.mrp}</small></p>
                         <p className="card-text mb-1"><small className="text-muted">Discount: {varient.discount}%</small></p>

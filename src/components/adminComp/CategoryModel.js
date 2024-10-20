@@ -43,6 +43,9 @@ const CategoryModel = ({ categoriesList: categoryDetail, setstateRefresherDummyV
   const onClickEdit = () => {
     router.push(`/wah-control-center/updateCategoy/${categoryDetail.id}`);
   }
+  const OnClickViewPro = () => {
+    router.push(`/wah-control-center/products/${categoryDetail.slug}`);
+  }
 
   if (!categoryDetail) {
     return <div>The category is empty</div>;
@@ -53,12 +56,12 @@ const CategoryModel = ({ categoriesList: categoryDetail, setstateRefresherDummyV
   }
 
   return (
-    <div id={categoryDetail.id} className="card mb-3 category-card shadow-sm" style={styles.card}>
+    <div  id={categoryDetail.id} className="card mb-3 category-card shadow-sm" style={styles.card}>
       <div className="row g-0 align-items-center">
-        <div className="col-3">
+        <div onClick={onClickModel} className="col-3">
           <Image alt="Category Image" width={100} height={100} style={styles.image} src={categoryDetail.image[0]?.url || tempImg} />
         </div>
-        <div onClick={onClickModel} className="col-7">
+        <div onClick={onClickModel}  className="col-7">
           <div className="card-body py-2 px-3">
             <h6 className="card-title mb-1" style={styles.title}>Category: {categoryDetail.categoryName}</h6>
             <p className="card-text mb-1" style={styles.text}><small>Slug: {categoryDetail.slug}</small></p>
@@ -69,6 +72,9 @@ const CategoryModel = ({ categoriesList: categoryDetail, setstateRefresherDummyV
           <button onClick={onClickEdit} className="btn btn-sm mb-2" style={styles.editButton}>
             Edit
           </button>
+          <button onClick={onDelete} className="btn btn-sm mb-2" style={styles.deleteButton}>
+            Delete
+          </button>
           {!categoryDetail.status ? (
             <button onClick={onStatusFlip} className="btn btn-sm mb-2" style={styles.activateButton}>
               Activate
@@ -78,9 +84,11 @@ const CategoryModel = ({ categoriesList: categoryDetail, setstateRefresherDummyV
               Deactivate
             </button>
           )}
-          <button onClick={onDelete} className="btn btn-sm" style={styles.deleteButton}>
-            Delete
+          <button onClick={OnClickViewPro} className="btn btn-sm mb-2" style={styles.editButton}>
+            View Products
           </button>
+         
+          
         </div>
       </div>
     </div>
