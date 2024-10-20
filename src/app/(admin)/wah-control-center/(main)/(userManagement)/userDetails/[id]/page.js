@@ -38,7 +38,7 @@ const page = async (prop) => {
             }
         }
     })
-    console.log(requestedUser)
+    console.log(requestedUser.permissions[0])
 
 
     return (

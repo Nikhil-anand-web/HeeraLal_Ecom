@@ -99,9 +99,9 @@ const AddUserForm = ({ permissions }) => {
                         </div>
 
                         {permissions.map((permis, index) => {
-                           return <CheckBox errors={errors} key={index} control={control} id={permis.COLUMN_NAME}>
+                           return <CheckBox errors={errors} key={index} control={control} id={permis.COLUMN_NAME ==="complementaryContentManagment"?"complementaryContentManagement":permis.COLUMN_NAME}>
                             
-                                {camelCaseToNormal(permis.COLUMN_NAME)}
+                                {camelCaseToNormal(permis.COLUMN_NAME ==="complementaryContentManagment"?"complementaryContentManagement":permis.COLUMN_NAME)}
                             </CheckBox>
 
                         })}
