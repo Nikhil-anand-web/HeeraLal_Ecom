@@ -36,7 +36,7 @@ export const authOptions = {
                         });
 
                         if (!user) {
-                        
+
                             throw new Error("No registered User Found")
 
                         }
@@ -113,7 +113,7 @@ export const authOptions = {
 
                             console.log("User authorized successfully", user);
 
-                            user.sourceUrl ='/sign-in'
+                            user.sourceUrl = '/sign-in'
                             return user;
 
                         } else {
@@ -139,9 +139,10 @@ export const authOptions = {
 
         ),
         GoogleProvider({
-            clientId: process.env.NEXT_PUBLIC_GOOGLE_ID ,
-            clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET 
-          })
+            clientId: process.env.NEXT_PUBLIC_GOOGLE_ID,
+            clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET,
+            
+        }),
     ],
     callbacks: {
         async signIn(props) {
@@ -150,7 +151,7 @@ export const authOptions = {
                     let user = await db.user.findUnique({
                         where: { email: props.profile.email }
                     });
-                    
+
                     if (!user) {
                         user = await db.user.create({
                             data: {
@@ -160,23 +161,23 @@ export const authOptions = {
                                 googleId: props.profile.sub,
                                 googleProfilePic: props.profile.picture,
                                 status: true,
-                                emailVerified:true
+                                emailVerified: true
                             }
                         });
 
                         if (user) {
-                            
+
                             const cart = await db.cart.create({
-                                data:{
-                                    user:{connect:{id:user.id}}
+                                data: {
+                                    user: { connect: { id: user.id } }
                                 }
                             })
                             const refral = await db.referal.create({
-                                data:{
-                                    user:{connect:{id:user.id}}
+                                data: {
+                                    user: { connect: { id: user.id } }
                                 }
                             })
-                            
+
                         }
                     }
                     return true;
@@ -188,50 +189,50 @@ export const authOptions = {
             }
         },
         async jwt(props) {
-         
-            var { token, user } =props
-          
-            
-            if (props.account?.provider==='google') {
-                const us=await db.user.findUnique({
-                    where:{
-                        email:props.profile.email
+
+            var { token, user } = props
+
+
+            if (props.account?.provider === 'google') {
+                const us = await db.user.findUnique({
+                    where: {
+                        email: props.profile.email
                     }
                 })
 
-                
-                user = {...us,sourceUrl:'/sign-in'}
 
-                
-            }else if(!user && token){
-                if (token.sourceUrl==='/sign-in') {
+                user = { ...us, sourceUrl: '/sign-in' }
+
+
+            } else if (!user && token) {
+                if (token.sourceUrl === '/sign-in') {
                     user = await db.user.findUnique({
-                        where:{
-                            id : token.id
-    
+                        where: {
+                            id: token.id
+
                         }
                     })
-                    user = {...user,sourceUrl:'/sign-in'}
-                    
-                }else{
+                    user = { ...user, sourceUrl: '/sign-in' }
+
+                } else {
                     user = await db.admin.findUnique({
-                        where:{
-                            id : token.id
-    
-                        },include: {
+                        where: {
+                            id: token.id
+
+                        }, include: {
                             permissions: true  // This will include the related permissions data
                         }
                     })
-                    user = {...user,sourceUrl:'/wah-control-center/sign-in'}
-                    
+                    user = { ...user, sourceUrl: '/wah-control-center/sign-in' }
+
 
                 }
-               
-              
+
+
             }
-            
-            if (user && (user.sourceUrl === '/sign-in' || user.role ===3)) {
-                
+
+            if (user && (user.sourceUrl === '/sign-in' || user.role === 3)) {
+
                 token.id = user.id
                 token.firstName = user.firstName
                 token.lastName = user.lastName
@@ -245,14 +246,14 @@ export const authOptions = {
                 token.googleProfilePic = user.googleProfilePic
                 token.mobile = user.mobile
                 token.sourceUrl = user.sourceUrl
-                token.mobileVerified=user.mobileVerified
-                token.emailVerified=user.emailVerified
-               
+                token.mobileVerified = user.mobileVerified
+                token.emailVerified = user.emailVerified
 
 
 
-            } else if (user && (user.sourceUrl === '/wah-control-center/sign-in' || user.role ===1 || user.role===2)) {
-               
+
+            } else if (user && (user.sourceUrl === '/wah-control-center/sign-in' || user.role === 1 || user.role === 2)) {
+
 
                 token.id = user.id
                 token.role = user.role
@@ -270,18 +271,18 @@ export const authOptions = {
 
 
             }
-            
-            
-         
+
+
+
 
             return token
         },
         async session({ session, token }) {
-            
-         
 
-            if (token && (token.sourceUrl === '/sign-in'   || token.role ===3)) {
-               
+
+
+            if (token && (token.sourceUrl === '/sign-in' || token.role === 3)) {
+
                 session.id = token.id
                 session.firstName = token.firstName
                 session.lastName = token.lastName
@@ -295,13 +296,13 @@ export const authOptions = {
                 session.googleProfilePic = token.googleProfilePic
                 session.mobile = token.mobile
                 session.sourceUrl = token.sourceUrl
-                session.mobileVerified=token.mobileVerified
-                token.emailVerified=token.emailVerified
+                session.mobileVerified = token.mobileVerified
+                token.emailVerified = token.emailVerified
 
 
 
-            } else if (token && (token.sourceUrl === '/wah-control-center/sign-in' || user.role ===1 || user.role===2)) {
-                
+            } else if (token && (token.sourceUrl === '/wah-control-center/sign-in' || user.role === 1 || user.role === 2)) {
+
                 session.id = token.id
                 session.role = token.role
                 session.email = token.email
@@ -316,8 +317,8 @@ export const authOptions = {
                 session.updatedAt = token.updatedAt
 
             }
-        
-     
+
+
             return session
 
         }

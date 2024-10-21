@@ -13,7 +13,7 @@ import Link from 'next/link'
 
 
 const Page = async () => {
-  await new Promise((resolve)=> setTimeout(resolve,7000))
+  
 
   const totalOrders = await db.orders.count({
     where: {
