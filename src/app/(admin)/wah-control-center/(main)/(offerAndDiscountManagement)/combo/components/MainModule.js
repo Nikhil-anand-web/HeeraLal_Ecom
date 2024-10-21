@@ -26,6 +26,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
         setIsLoading(true)
         const response = await getSearchedCombo(searchQuery, pageNo, itemsPerPage)
 
+
         // setArrayOfProduct(response.products)
 
         setFilteredCombos(response.combos);
@@ -56,7 +57,7 @@ const MainModule = ({ pageNo, itemsPerPage }) => {
 
   return (
     <>
-      <h3>Recipe</h3>
+      <h3>Combo</h3>
       <div style={{ marginBottom: "5rem" }} className="input-group">
 
         <span className="input-group-text" id="">Search</span>

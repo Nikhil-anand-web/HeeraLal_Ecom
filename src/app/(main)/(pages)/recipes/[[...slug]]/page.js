@@ -43,7 +43,7 @@ const page = async ({params}) => {
         skip: (pageNo - 1) * itemsPerPage, // Skip the items for pagination
         take: itemsPerPage
     })
-    console.log(recipes)
+  
     return (
         <section className="login-page">
             <div className="container">

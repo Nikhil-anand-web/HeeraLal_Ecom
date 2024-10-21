@@ -12,26 +12,26 @@ import debounce from '@/lib/debounce'
 
 
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Suspense, useCallback, useEffect, useState } from 'react'
 
-const MainModule = ({ itemsPerPage ,pageNo}) => {
+const MainModule = ({ itemsPerPage, pageNo }) => {
 
     //   const [users, setUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredFaq, setFilteredFaq] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
-    
+
     const fetchResults = useCallback(
         debounce(async (searchQuery) => {
 
             try {
                 setIsLoading(true)
-                const response = await getSearchedFAQ(searchQuery,itemsPerPage,pageNo)
-             
-               console.log(response)
-               
-               setFilteredFaq(response.faqs)
-                
+                const response = await getSearchedFAQ(searchQuery, itemsPerPage, pageNo)
+
+                console.log(response)
+
+                setFilteredFaq(response.faqs)
+
 
 
             } catch (error) {
@@ -52,7 +52,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
             fetchResults(lowercasedQuery)
         }
         helper()
-       
+
     }, [searchQuery]);
 
 
@@ -60,8 +60,8 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
     return (
         <>
-        
-         
+
+
             {/* <div style={{ marginBottom: "5rem" }} className="input-group">
 
                 <span className="input-group-text" id="">Search</span>
@@ -70,15 +70,17 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
 
             </div> */}
 
-            {(true ? <div style={{display:"flex",justifyContent:"center"}}>
+            {(true ? <div style={{ display: "flex", justifyContent: "center" }}>
+                
 
-                <div className={"hide-scrollbar"} style={{ height: "60vh", overflow: "scroll", width: "50%" }}>
+                    <div className={"hide-scrollbar"} style={{ height: "60vh", overflow: "scroll", width: "50%" }}>
 
 
-                    {filteredFaq.map((obj,index) => (
+                        {filteredFaq.map((obj, index) => (
 
-                        <FAQItem key={index} question={obj.question} answer={obj.answer}/>
-                    ))}</div>
+                            <FAQItem key={index} question={obj.question} answer={obj.answer} />
+                        ))}</div>
+                
 
             </div> : <Spinner />)
             }
