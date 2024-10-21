@@ -3,17 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from 'react-toastify';
 
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 import Image from 'next/image';
 
 import getDistinctDisplayOrderSlider from '@/app/actions/getDistinctDisplayOrderSlider';
 import getAllSliderImages from '@/app/actions/getAllSliderImages';
 import updateSlider from '@/app/actions/updateSlider';
-function validateNoSpaces(value) {
-    if (!/^[a-z]+(-[a-z]+)*$/.test(value.trim()) || /\s/.test(value)) {
-        return 'Use lowercase words separated by hyphens, without spaces';
-    }
-    return true;
-}
+import dataURLtoFile from '@/lib/dataURLtoFile';
+import imageUrlToDataURL from '@/lib/imageUrlToDataURL';
+
 
 
 
@@ -25,6 +24,7 @@ const SliderSettingForm = ({ pages }) => {
         setValue,
         getValues,
         unregister,
+      
 
         formState: { errors },
     } = useForm({ mode: "onChange" })
@@ -32,10 +32,11 @@ const SliderSettingForm = ({ pages }) => {
     const [isMounted, setisMounted] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [imagePreview, setImagePreview] = useState([]);
+
     const [identifireSlugState, setidentifireSlug] = useState('')
     const [displayOrders, setdisplayOrders] = useState([])
     const [selectedDisplayOrder, setSelectedDisplayOrder] = useState(-1)
-    const [currentBanner, setCurrentBanner] = useState({})
+  
 
     useEffect(() => {
         setisMounted(true)
@@ -54,8 +55,24 @@ const SliderSettingForm = ({ pages }) => {
     useEffect(() => {
         const fetch = async () => {
             const res = await getAllSliderImages(identifireSlugState, selectedDisplayOrder)
+            if (res.images) {
+                console.log(res.images, "wdfwdfwef")
+                const arr = await Promise.all(
+                    res.images.images.map(async (obj) => {
+                        const objs = {
+                            uri: await imageUrlToDataURL(obj.url),
+                            lnk: obj.link
+                        }
+                        return objs
+                    })
+                );
+                
+                setImagePreview((e) => [...arr, ...e])
 
-            setCurrentBanner(res.images)
+            }
+
+
+
 
         }
         fetch()
@@ -72,11 +89,19 @@ const SliderSettingForm = ({ pages }) => {
 
     const onSubmit = async (data) => {
 
-        console.log(data)
+
 
         const formData = new FormData();
 
-        const narray = Array.from(data.samplePhotos);
+        // const narray = Array.from(data.samplePhotos);
+        const narray = imagePreview.map((obj) => {
+
+            return dataURLtoFile(obj.uri)
+
+        })
+   
+
+
         narray.forEach((file, index) => {
             formData.append('samplePhotos', file);
             formData.append(`lnk_${index}`, data[`lnk_${index}`]);
@@ -104,10 +129,23 @@ const SliderSettingForm = ({ pages }) => {
     };
 
 
+    const handleOnDragEnd = (result) => {
+        if (!result.destination) return;
 
+        const items = Array.from(imagePreview);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
+        const sourcelnkValue = getValues(`lnk_${result.source.index}`)
+        const destinationlnkValue = getValues(`lnk_${result.destination.index}`)
+
+        setValue(`lnk_${result.source.index}`, destinationlnkValue)
+        setValue(`lnk_${result.destination.index}`, sourcelnkValue)
+
+        setImagePreview(items);
+    };
 
     const handleFileChange = (event) => {
-        setImagePreview([])
+        // setImagePreview([])
         const files = Array.from(event.target.files);
         const validFiles = files.filter(file => (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg' || file.type === 'image/webp'));
 
@@ -127,7 +165,7 @@ const SliderSettingForm = ({ pages }) => {
                 reader.readAsDataURL(file);
                 reader.onloadend = () => {
                     setImagePreview((e) => {
-                        return [...e, reader.result]
+                        return [...e, {uri:reader.result,lnk:""}]
 
                     });
                 };
@@ -201,14 +239,14 @@ const SliderSettingForm = ({ pages }) => {
     }
 
 
-    console.log(currentBanner)
+ 
 
     return (
         <div className="col-12 grid-margin stretch-card">
 
             <div className="card">
                 <div className="card-body">
-                    {currentBanner && currentBanner.images && <Image style={{ width: "100%" }} width={1000} height={400} src={currentBanner?.images.at(0).url} alt='previous' />}
+
 
                     <form onSubmit={handleSubmit(onSubmit)} className="forms-sample">
                         <div className="form-group">
@@ -269,45 +307,82 @@ const SliderSettingForm = ({ pages }) => {
 
 
                             <div className={"w-4/5 flex flex-wrap"}>
-                                {imagePreview.map((sample, index) => {
-                                    return <div key={index} style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
-                                        <Image
-                                            style={{ width: "100%" }} width={1000} height={400}
-                                            key={index}
-                                            src={sample}
-                                            alt="..."
 
-                                            className="img-thumbnail"
-                                        />
-                                        <div
-                                            style={{
-                                                position: 'absolute',
-                                                top: '10px',
-                                                right: '10px',
-                                                cursor: 'pointer',
-                                                backgroundColor: 'white',
-                                                borderRadius: '50%',
-                                                padding: '5px',
-                                            }}
-                                            onClick={() => onCross(index)}
-                                        >
+                                <DragDropContext onDragEnd={handleOnDragEnd}>
+                                    <Droppable droppableId="dataUriList" direction="horizontal">
+                                        {(provided) => (
+                                            <div
+                                                className="flex flex-wrap"
+                                                {...provided.droppableProps}
+                                                ref={provided.innerRef}
+                                                style={{
+                                                    display: "flex",
+                                                    gap: "10px",
+                                                    flexWrap: "wrap",
+                                                }}
+                                            >
+                                                {imagePreview.map((sample, index) => (
+                                                    <Draggable key={index} draggableId={`draggable-${index}`} index={index}>
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                style={{
+                                                                    ...provided.draggableProps.style,
+                                                                    width: "500px", // Adjust width to fit better
+                                                                    height: "auto", // Let height adjust automatically
+                                                                    margin: "10px",
+                                                                    position: snapshot.isDragging ? "fixed" : "relative", // Change position based on dragging state
+                                                                    zIndex: snapshot.isDragging ? 1000 : 'auto', // Bring to front when dragging
+                                                                }}
+                                                            >
+                                                                <Image
+                                                                    src={sample.uri}
+                                                                    alt="..."
+                                                                    width={150}
+                                                                    height={100}
+                                                                    layout='responsive'
+                                                                    className="img-thumbnail"
+                                                                />
+                                                                <div
+                                                                    style={{
+                                                                        position: "absolute",
+                                                                        top: "10px",
+                                                                        right: "10px",
+                                                                        cursor: "pointer",
+                                                                        backgroundColor: "white",
+                                                                        borderRadius: "50%",
+                                                                        padding: "5px",
+                                                                    }}
+                                                                    onClick={() => onCross(index)}
+                                                                >
+                                                                    <i className="fa fa-times"></i>
+                                                                </div>
+                                                                <div className="form-group">
+                                                                    <input
+                                                                        defaultValue={sample.lnk}
+                                                                        {...register(`lnk_${index}`)}
+                                                                        type="text"
+                                                                        className="form-control"
+                                                                        id={`lnk_${index}`}
+                                                                        placeholder="Link for this image"
+                                                                    />
+                                                                    {errors[`lnk_${index}`] && <p>{errors[`lnk_${index}`].message}</p>}
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                ))}
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                    </Droppable>
+                                </DragDropContext>
 
-                                            <i className="fa fa-times"></i>
-                                        </div>
-                                        <div className="form-group">
-                                            <input
-                                                {...register(`lnk_${index}`)}
-                                                type="text"
-                                                className="form-control"
-                                                id={`lnk_${index}`}
-                                                placeholder="Link for this image"
-                                            />
 
-                                            {errors[`lnk_${index}`] && <p>{errors[`lnk_${index}`].message}</p>}
-                                        </div>
-                                    </div>
 
-                                })}
+
 
 
 

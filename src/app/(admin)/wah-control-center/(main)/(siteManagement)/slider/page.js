@@ -24,7 +24,7 @@ const page = async () => {
   return (
    <>
      <h3 className="page-title"> Edit a slider </h3>
-     {user.permissions[0]?.siteManagement? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><SliderSettingForm pages={uniquePageSlugs}/></div>:<div>access denied</div>}
+     {user.permissions[0]?.siteManagement? <div className={"hide-scrollbar"} ><SliderSettingForm pages={uniquePageSlugs}/></div>:<div>access denied</div>}
     
    </>
   )
