@@ -46,7 +46,7 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
   }, [])
   useEffect(() => {
     const fetch = async () => {
-      <ProductGalary product={productsUnderActiveCategory} />
+      // <ProductGalary product={productsUnderActiveCategory} />
       try {
         if (activeCategoryId !== '') {
           setIsLoading(true)
@@ -93,10 +93,7 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
 
               } style={{backgroundColor:"transparent" ,border:"none",padding:"10px"}} className={` ${activeCategoryId===cat.id?"active-cat-current":""} active-cat   filter-button`} id={cat.id} data-filter="all">{cat.categoryName}</button>)}
             </div>
-            {isLoading === true ? <div style={{marginBottom:"231px",position:"relative",bottom:"-167px"}}>
-             <Spinner/>
-
-            </div> : <ProductGalary product={productsUnderActiveCategory} />}
+            <ProductGalary product={productsUnderActiveCategory} />
             <section className="spices-add pt-0">
               <div className="container">
                 <div className="row mb-4">
