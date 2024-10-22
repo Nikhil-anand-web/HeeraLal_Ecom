@@ -37,6 +37,7 @@ const SliderSettingForm = ({ pages }) => {
     const [identifireSlugState, setidentifireSlug] = useState('')
     const [displayOrders, setdisplayOrders] = useState([])
     const [selectedDisplayOrder, setSelectedDisplayOrder] = useState(-1)
+    const [isSubmitting,setIsSubmitting] = useState(false)
   
 
     useEffect(() => {
@@ -118,7 +119,7 @@ const SliderSettingForm = ({ pages }) => {
         formData.set('selectedDisplayOrder', selectedDisplayOrder)
 
         try {
-            setIsLoading(true);
+            setIsSubmitting(true);
 
             const res = await updateSlider(formData);
             if (!res.success) {
@@ -133,7 +134,7 @@ const SliderSettingForm = ({ pages }) => {
 
             toast.warning(error.message);
         } finally {
-            setIsLoading(false);
+            setIsSubmitting(false);
           
 
         }
@@ -406,7 +407,7 @@ const SliderSettingForm = ({ pages }) => {
 
 
 
-                            {selectedDisplayOrder !== -1 && (isLoading ? "Submitting" : <button type="submit" className={` btn me-2 btn-gradient-primary`}> Submit</button>)}
+                            {selectedDisplayOrder !== -1 && (isSubmitting ? "Submitting" : <button type="submit" className={` btn me-2 btn-gradient-primary`}> Submit</button>)}
                         </div> : <p>please select the identifier</p>
                         }
                         {isLoading && <Spinner/>}
