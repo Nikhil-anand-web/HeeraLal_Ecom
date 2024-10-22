@@ -65,7 +65,7 @@ const PieChart = ({ pieDataArr, pieLabel }) => {
 
   return (
     <div style={{ width: "50%", margin: "0 auto" }}>
-      <SendAbandWhap/>
+      {/* <SendAbandWhap/> */}
       {chartData ? (
         <Pie data={chartData} options={options} />
       ) : (
