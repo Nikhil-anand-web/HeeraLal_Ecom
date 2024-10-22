@@ -1,9 +1,7 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'
-import AddBlogForm from '@/components/adminComp/forms/AddBlogForm'
-import AddCategoriesForm from '@/components/adminComp/forms/AddCategoriesForm'
-import BannerSettingForm from '@/components/adminComp/forms/BannerSettingForm'
+
 import SliderSettingForm from '@/components/adminComp/forms/SliderSettingForm'
-import AdminLayout from '@/layouts/AdminLayout'
+
 import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import React from 'react'
@@ -18,7 +16,7 @@ const page = async () => {
           pageSlug: true,
         },
       });
-  console.log(uniquePageSlugs)
+
 
      
   return (

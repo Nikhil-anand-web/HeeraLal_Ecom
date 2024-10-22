@@ -12,6 +12,7 @@ import getAllSliderImages from '@/app/actions/getAllSliderImages';
 import updateSlider from '@/app/actions/updateSlider';
 import dataURLtoFile from '@/lib/dataURLtoFile';
 import imageUrlToDataURL from '@/lib/imageUrlToDataURL';
+import Spinner from '@/components/global/Spinner';
 
 
 
@@ -43,12 +44,17 @@ const SliderSettingForm = ({ pages }) => {
     }, [])
     useEffect(() => {
         const fetch = async () => {
+            setIsLoading(true)
+
             const res = await getDistinctDisplayOrderSlider(identifireSlugState)
 
             setdisplayOrders(res.displayOrders)
+            setIsLoading(false)
 
         }
         fetch()
+        
+       
 
 
     }, [identifireSlugState])
@@ -56,7 +62,8 @@ const SliderSettingForm = ({ pages }) => {
         const fetch = async () => {
             const res = await getAllSliderImages(identifireSlugState, selectedDisplayOrder)
             if (res.images) {
-                console.log(res.images, "wdfwdfwef")
+                setIsLoading(true)
+            
                 const arr = await Promise.all(
                     res.images.images.map(async (obj) => {
                         const objs = {
@@ -68,6 +75,7 @@ const SliderSettingForm = ({ pages }) => {
                 );
                 
                 setImagePreview((e) => [...arr, ...e])
+                setIsLoading(false)
 
             }
 
@@ -117,14 +125,17 @@ const SliderSettingForm = ({ pages }) => {
                 throw res
 
             }
-            setidentifireSlug('')
+          
             toast.success(res.message);
+            
 
         } catch (error) {
 
             toast.warning(error.message);
         } finally {
             setIsLoading(false);
+          
+
         }
     };
 
@@ -225,7 +236,7 @@ const SliderSettingForm = ({ pages }) => {
         setImagePreview(restImage)
 
         for (let i = index; i < imagePreview.length - 1; i++) {
-            console.log(i)
+           
 
             setValue(`lnk_${i}`, getValues(`lnk_${i + 1}`));
 
@@ -307,6 +318,7 @@ const SliderSettingForm = ({ pages }) => {
 
 
                             <div className={"w-4/5 flex flex-wrap"}>
+                            
 
                                 <DragDropContext onDragEnd={handleOnDragEnd}>
                                     <Droppable droppableId="dataUriList" direction="horizontal">
@@ -397,6 +409,7 @@ const SliderSettingForm = ({ pages }) => {
                             {selectedDisplayOrder !== -1 && (isLoading ? "Submitting" : <button type="submit" className={` btn me-2 btn-gradient-primary`}> Submit</button>)}
                         </div> : <p>please select the identifier</p>
                         }
+                        {isLoading && <Spinner/>}
                     </form>
 
                 </div>
