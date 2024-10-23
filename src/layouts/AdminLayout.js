@@ -1,6 +1,6 @@
 import AdminHeader from "@/components/adminComp/AdminHeader";
 import AdminNavbar from "@/components/adminComp/AdminNavbar";
-i
+
 import Image from "next/image";
 import { Suspense } from "react";
 
