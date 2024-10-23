@@ -13,10 +13,6 @@ export default function AdminLayout({ children }) {
         <>
             <AdminHeader />
 
-
-
-
-
             <>
 
                 <div className="container-fluid page-body-wrapper">

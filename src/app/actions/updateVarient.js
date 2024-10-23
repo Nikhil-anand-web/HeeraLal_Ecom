@@ -14,6 +14,7 @@ function formatString(str) {
 
 async function updateVarient(formData) {
     console.log(formData)
+    
     const requestData = {}
     await formData.forEach((value, key) => {
         if (key !== 'parentProductSlug' && key !== 'varient' && key !== 'append') {
@@ -23,7 +24,7 @@ async function updateVarient(formData) {
 
             } else
 
-                if (key === 'qty' && formData.get('append') === 'true' && value !== '') {
+                if (key === 'qty' && (formData.get('append') === 'true' ||formData.get('append') === 'on') && value !== '') {
                     requestData[key] = {
                         increment: isInt(value) ? +value : value,
                     }
