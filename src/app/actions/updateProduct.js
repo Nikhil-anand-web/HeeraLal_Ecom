@@ -9,6 +9,9 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 function formatString(str) {
     return str.toLowerCase().replace(/\s+/g, '');
 }
+function isValidFile(file) {
+    return file && typeof file.arrayBuffer === 'function';
+}
 
 async function updateProduct(formData) {
     console.log(formData);
@@ -67,7 +70,7 @@ async function updateProduct(formData) {
                     // Save thumbnail images
                     for (let index = 0; index < thumbNail.length; index++) {
                         const file = thumbNail[index];
-                        if (file instanceof File) {
+                        if ( isValidFile (file) ) {
                             const timeStamp = Date.now();
                             const filePath = path.join(uploadDirectory, `${timeStamp}+"t".jpeg`);
                             const bytes = await file.arrayBuffer();
@@ -81,7 +84,7 @@ async function updateProduct(formData) {
                     // Save other images
                     for (let index = 0; index < otherImages.length; index++) {
                         const file = otherImages[index];
-                        if (file instanceof File) {
+                        if (isValidFile(file)) {
                             const timeStamp = Date.now();
                             const filePath = path.join(uploadDirectory, `${timeStamp}.jpeg`);
                             const bytes = await file.arrayBuffer();
