@@ -1,3 +1,4 @@
+"use client"
 import abandCartMessenger from '@/lib/abandCartMessenger'
 import React from 'react'
 
@@ -9,7 +10,7 @@ const SendAbandWhap = () => {
     return (
         <div>
             <button onClick={ondub}>
-                sendwh
+                i am 
             </button>
         </div>
     )

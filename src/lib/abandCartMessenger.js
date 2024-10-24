@@ -19,7 +19,7 @@ export default async function abandCartMessenger() {
         carouselCards: [],
         location: {},
         paramsFallbackValue: {
-            FirstName: "Nikhil"
+            FirstName: "user"
         }
     };
     axios.post('https://backend.aisensy.com/campaign/t1/api/v2', data, {

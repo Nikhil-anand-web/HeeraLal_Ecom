@@ -5,6 +5,7 @@
 
 import PieChart from '@/components/adminComp/PieChart'
 import SalesChart from '@/components/adminComp/SalesChart'
+import SendAbandWhap from '@/components/adminComp/SendAbandWhap'
 
 import AdminLayout from '@/layouts/AdminLayout'
 
@@ -94,6 +95,7 @@ const Page = async () => {
 
 
       <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}>
+        <SendAbandWhap/>
         <div className="row">
           <div className="col-md-4 stretch-card grid-margin">
             <div className="card bg-gradient-danger card-img-holder text-white">

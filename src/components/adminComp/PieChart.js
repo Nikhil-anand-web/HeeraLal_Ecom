@@ -16,7 +16,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const PieChart = ({ pieDataArr, pieLabel }) => {
   const [chartData, setChartData] = useState(null);
 
-
+<SendAbandWhap/>
   useEffect(() => {
     // Simulating fetching data with dummy data
     const dummyData = {
