@@ -17,7 +17,7 @@ const WhatsAppChannelLink = () => {
         cursor: 'pointer',
         border:"none"
       }}>
-        <i className="fab fa-whatsapp"></i> Chat with us
+        <i className="fab fa-whatsapp"></i> Follow us
       </button>
     </a>
   );
