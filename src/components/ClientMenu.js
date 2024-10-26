@@ -19,9 +19,9 @@ const ClientMenu = ({productWithMaxPriroty}) => {
               <li className="nav-item">
                 <Link className={`nav-link  ${(active==='products' || active==="categories") && 'active'}`} href={`/products/${productWithMaxPriroty}`}>Products</Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className={`nav-link   ${active==='bulk-order' && 'active'}`}  href="/bulk-order">Bulk Orders</Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link className={`nav-link  ${active==='recipes' && 'active'}`} href="/recipes">Recipes</Link>
               </li>

@@ -13,6 +13,7 @@ import CoinThumbnail from './CoinThumbnail';
 import { headers } from 'next/headers';
 import ClientMenu from './ClientMenu';
 import db from '@/lib/db';
+import WhatsAppChannelLink from './WhatsAppChanLink';
 
 
 
@@ -90,6 +91,7 @@ const Header = async (props) => {
 
           <div className="collapse navbar-collapse " id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              
               <ClientMenu productWithMaxPriroty={productWithMaxPriroty} />
 
 
@@ -107,7 +109,9 @@ const Header = async (props) => {
               {/* <li className="nav-item">
                 <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
               </li> */}
-
+<li style={{marginLeft:"30px"}}>
+                <WhatsAppChannelLink/>
+              </li>
 
 
 

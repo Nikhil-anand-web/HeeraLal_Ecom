@@ -288,7 +288,7 @@ const sliderRooot0 = await db.slider.findMany({
 
 
             </div>
-            <BottomBanner imageS={bottomBanner.images[0].url} />
+            {/* <BottomBanner imageS={bottomBanner.images[0].url} /> */}
           </div>
 
 
