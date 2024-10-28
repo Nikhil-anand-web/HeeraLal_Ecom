@@ -1,16 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-
 let db;
-
-if (process.env.APP_ENV === 'PROD') {
-  db = new PrismaClient(); // For production, create a new instance
+if (false) {
+  db = new PrismaClient(); 
 } else {
   if (!global.db) {
-    global.db = new PrismaClient(); // Store in global for development
+    global.db = new PrismaClient(); 
   }
-  db = global.db; // Use the global instance in development
+  db = global.db; 
 }
-
 export default db;
-
-
