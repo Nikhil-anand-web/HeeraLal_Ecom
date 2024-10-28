@@ -4,7 +4,22 @@ import Pagination from '@/components/Pagination'
 import getPaginationLimit from '@/lib/getPaginationLimit'
 import ProductCategories from '@/components/ProductCategories'
 import ProductRetail from './_components/ProductRetail'
+export async function generateMetadata({ params, searchParams }, parent) {
+    // read route params
+    const title = params.slug[0].trim()
+   
+   const pre =(await parent).title.absolute
 
+   
+  
+   
+    return {
+      title: `${pre+"/"+title}`,
+      openGraph: {
+        images: ['asset/favicon.ico'],
+      },
+    }
+  }
 
 const page = async ({ params }) => {
     const categorySlug = params.slug[0].trim()

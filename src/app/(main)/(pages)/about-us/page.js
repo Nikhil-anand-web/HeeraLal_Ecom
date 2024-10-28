@@ -3,6 +3,22 @@ import React from 'react'
 
 import Image from 'next/image'
 import DangerDiv from '@/components/DangerDiv'
+export async function generateMetadata({ params, searchParams }, parent) {
+    // read route params
+ 
+   
+   const pre =(await parent).title.absolute
+   
+   
+  
+   
+    return {
+      title: `${pre+"/"+"about-us"}`,
+      openGraph: {
+        images: ['asset/favicon.ico'],
+      },
+    }
+  }
 const page = async () => {
     const ourMission = (await db.staticInfo.findFirst({
         where: {
