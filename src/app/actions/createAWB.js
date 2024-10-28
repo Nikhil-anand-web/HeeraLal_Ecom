@@ -228,7 +228,7 @@ async function createAWB(orderId, pickupTime, pickupdate, dimendarr, noOfPieces)
                         pickupTime: pickupTime,
                         pieceCount: noOfPieces,//piece count and item count
                         productCode: process.env.SHIPING_PROD_CODE,
-                        productType: 2,
+                        productType: 1,
                         subProductCode: "",
                         registerPickup: true,
                         customerAddress1: returnAddress,

@@ -95,7 +95,7 @@ const Page = async () => {
 
 
       <div className={"hide-scrollbar"} style={{ height: "90vh", overflow: "scroll", width: "100%" }}>
-        <SendAbandWhap/>
+        {/* <SendAbandWhap/> */}
         <div className="row">
           <div className="col-md-4 stretch-card grid-margin">
             <div className="card bg-gradient-danger card-img-holder text-white">
