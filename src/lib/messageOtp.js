@@ -4,7 +4,7 @@ export default async function messageOtp(otp, to, firstName) {
   const accountUsername = process.env.SMS_USERNAME;
   const accountPassword = process.env.SMS_PASSWORD;
 
-  const message = encodeURIComponent(`Hi ${firstName+"4"}, Here's your one-time password ${otp}: Enter it to complete your purchase and spice up your cooking! Keep this OTP confidential and do not share it with anyone. Thank you, Heeral Wah India Spices Team`);
+  const message = encodeURIComponent(`Hi ${firstName}, Here's your one-time password ${otp}: Enter it to complete your purchase and spice up your cooking! Keep this OTP confidential and do not share it with anyone. Thank you, Heeral Wah India Spices Team`);
   
   const url = `https://sms.dappify.tech/api.php?username=${accountUsername}&password=${accountPassword}&route=1&sender=WAHIND&mobile[]=${to}&message[]=${message}&te_id=1307172554028046531`;
 
