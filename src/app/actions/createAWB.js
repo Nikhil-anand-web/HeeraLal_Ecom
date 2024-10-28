@@ -193,7 +193,7 @@ async function createAWB(orderId, pickupTime, pickupdate, dimendarr, noOfPieces)
                     const customerName = order.CustomerMeta.firstName + " " + order.CustomerMeta.lastName
                     const customerMobile = order.CustomerMeta.mobile
                     const customerPincode = order.CustomerMeta.pinCode.toString()
-                    const customerAddress = order.CustomerMeta.address + order.CustomerMeta.city + order.CustomerMeta.state + "INDIA" + order.CustomerMeta.pinCode.toString()
+                    const customerAddress = order.CustomerMeta.address + order.CustomerMeta.city + " " + order.CustomerMeta.state+" " + "INDIA" + " " + order.CustomerMeta.pinCode.toString()
                     const returnAddress = process.env.RETURN_ADD
                     const returnContact = process.env.RETURN_CONTACT
                     const returnEmail = process.env.RETURN_EMAIL
