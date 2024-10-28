@@ -16,7 +16,7 @@ import AuthProvider from "./context/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+  title: `heeralwahindiaspices.com`,
   icons: {
     icon: '/images/favicon.ico',
   },

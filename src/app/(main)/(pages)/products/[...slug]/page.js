@@ -8,13 +8,13 @@ export async function generateMetadata({ params, searchParams }, parent) {
     // read route params
     const title = params.slug[0].trim()
    
-   const pre =(await parent).title.absolute
+
 
    
   
    
     return {
-      title: `${pre+"/"+title}`,
+      title: `${title}`,
       openGraph: {
         images: ['asset/favicon.ico'],
       },
