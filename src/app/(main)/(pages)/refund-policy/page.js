@@ -1,7 +1,12 @@
 
 import DangerDiv from '@/components/DangerDiv'
 import React from 'react'
-
+export const metadata = {
+    title: 'refund-policy',
+    icons: {
+        icon: 'asset/favicon.ico',
+    },
+};
 const page = async () => {
     const refundPolicy = (await db.staticInfo.findFirst({
         where: {

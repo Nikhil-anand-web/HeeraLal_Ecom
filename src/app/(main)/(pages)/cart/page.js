@@ -16,7 +16,12 @@ import { redirect } from 'next/navigation'
 import CheckOutButton from '@/components/CheckOutButton'
 import ApplyRefralPointsModule from '@/components/ApplyRefralPointsModule'
 import db from '@/lib/db'
-
+export const metadata = {
+    title: 'cart',
+    icons: {
+      icon: 'asset/favicon.ico',
+    },
+  };
 
 const Page = async () => {
 

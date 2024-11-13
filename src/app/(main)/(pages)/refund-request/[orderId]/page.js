@@ -4,7 +4,12 @@ import isUnderDuration from '@/lib/isUnderDuration'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image'
 import React from 'react'
-
+export const metadata = {
+  title: 'refund-request',
+  icons: {
+      icon: 'asset/favicon.ico',
+  },
+};
 const page = async ({params}) => {
   const user = await getServerSession(authOptions)
   const orderId = params.orderId

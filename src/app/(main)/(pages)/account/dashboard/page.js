@@ -5,6 +5,12 @@ import db from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import React from 'react'
+export const metadata = {
+    title: 'Dashboard',
+    icons: {
+      icon: 'asset/favicon.ico',
+    },
+  };
 
 const page = async () => {
     const user = await getServerSession(authOptions)

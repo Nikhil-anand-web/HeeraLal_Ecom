@@ -16,6 +16,22 @@ import MoreTabs from './_components/MoreTabs'
 import ComboThumbnail from '@/components/ComboThumbnail'
 import PincodeServiceabilityCheck from './_components/PincodeServiceabilityCheck'
 import db from '@/lib/db'
+export async function generateMetadata({ params, searchParams }, parent) {
+    // read route params
+    const title = params.slug
+
+
+
+
+
+
+    return {
+        title: `${title}`,
+        openGraph: {
+            images: ['asset/favicon.ico'],
+        },
+    }
+}
 const page = async ({ params }) => {
     const productSlug = params.slug
     const product = await db.product.findUnique({

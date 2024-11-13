@@ -7,24 +7,24 @@ import ProductRetail from './_components/ProductRetail'
 export async function generateMetadata({ params, searchParams }, parent) {
     // read route params
     const title = params.slug[0].trim()
-   
 
 
-   
-  
-   
+
+
+
+
     return {
-      title: `${title}`,
-      openGraph: {
-        images: ['asset/favicon.ico'],
-      },
+        title: `${title}`,
+        openGraph: {
+            images: ['asset/favicon.ico'],
+        },
     }
-  }
+}
 
 const page = async ({ params }) => {
     const categorySlug = params.slug[0].trim()
     var pageNo = params.slug[params.slug.length - 1]
-    
+
 
     const itemsPerPage = await getPaginationLimit()
     if (!pageNo || isNaN(pageNo)) {
@@ -130,7 +130,7 @@ const page = async ({ params }) => {
 
                         </div> */}
                         <div className="row">
-                            {categories.map(cat => <ProductCategories activeCat={categorySlug} imageS={cat.image[0].url} catSlug ={cat.slug} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} />)}
+                            {categories.map(cat => <ProductCategories activeCat={categorySlug} imageS={cat.image[0].url} catSlug={cat.slug} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} />)}
 
 
 

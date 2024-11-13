@@ -3,7 +3,12 @@ import VerifyPhoneForm from '@/components/clientForm/VerifyPhoneForm'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import React from 'react'
-
+export const metadata = {
+    title: 'verify-phone',
+    icons: {
+        icon: 'asset/favicon.ico',
+    },
+};
 const Page = async () => {
     const user = await getServerSession(authOptions);
 

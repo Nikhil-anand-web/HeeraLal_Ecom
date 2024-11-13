@@ -3,7 +3,12 @@ import ProductBulk from '../_components/ProductBulk'
 import Pagination from '@/components/Pagination';
 import db from '@/lib/db';
 import getPaginationLimit from '@/lib/getPaginationLimit';
-
+export const metadata = {
+    title: 'bulk-order',
+    icons: {
+      icon: 'asset/favicon.ico',
+    },
+  };
 
 const page = async ({params}) => {
     

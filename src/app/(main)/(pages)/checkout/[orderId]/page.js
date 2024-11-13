@@ -7,6 +7,12 @@ import db from '@/lib/db'
 import OrderSummary from '@/components/OrderSummary'
 import percentOf from '@/lib/percentOf'
 import CheckOutContent from '@/components/CheckOutContent'
+export const metadata = {
+    title: 'checkout',
+    icons: {
+      icon: 'asset/favicon.ico',
+    },
+  };
 const page = async ({params}) => {
     const orderId = params.orderId
  

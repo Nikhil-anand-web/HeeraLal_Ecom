@@ -7,6 +7,12 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import Image from 'next/image';
 import db from '@/lib/db';
+export const metadata = {
+    title: 'invoice',
+    icons: {
+      icon: 'asset/favicon.ico',
+    },
+  };
 const Page = async ({params}) => {
     const user = await getServerSession(authOptions)
     const orderId = params.orderId

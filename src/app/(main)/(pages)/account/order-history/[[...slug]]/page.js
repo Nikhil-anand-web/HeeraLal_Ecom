@@ -7,7 +7,12 @@ import OrderItem from '../_components/OrderItem'
 import db from '@/lib/db'
 import getPaginationLimit from '@/lib/getPaginationLimit'
 
-
+export const metadata = {
+    title: 'order-history',
+    icons: {
+      icon: 'asset/favicon.ico',
+    },
+  };
 const page = async ({ params }) => {
     const user = await getServerSession(authOptions)
     var pageNo = params.slug?.at(params?.slug?.length - 1)

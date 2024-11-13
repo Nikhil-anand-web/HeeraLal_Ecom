@@ -8,7 +8,12 @@ import getPaginationLimit from "@/lib/getPaginationLimit"
 
 
 
-
+export const metadata = {
+  title: 'faqs',
+  icons: {
+    icon: 'asset/favicon.ico',
+  },
+};
 
 const page = async ({ params }) => {
   const user = await getServerSession(authOptions)

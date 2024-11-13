@@ -3,7 +3,12 @@ import Pagination from '@/components/Pagination';
 import db from '@/lib/db';
 import getPaginationLimit from '@/lib/getPaginationLimit';
 import React from 'react'
-
+export const metadata = {
+    title: 'blogs',
+    icons: {
+      icon: 'asset/favicon.ico',
+    },
+  };
 const page = async ({ params }) => {
     var pageNo = params.slug?.at(params?.slug?.length - 1)
     if (!pageNo || isNaN(pageNo)) {

@@ -1,7 +1,12 @@
 import GetInTouchForm from '@/components/clientForm/GetInTouchForm'
 import Link from 'next/link'
 import React from 'react'
-
+export const metadata = {
+  title: 'contact-us',
+  icons: {
+    icon: 'asset/favicon.ico',
+  },
+};
 const page = async () => {
     const mapUrl = (await db.staticInfo.findFirst({
         where: {

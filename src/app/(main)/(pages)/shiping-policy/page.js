@@ -1,7 +1,12 @@
 
 import DangerDiv from '@/components/DangerDiv'
 import React from 'react'
-
+export const metadata = {
+    title: 'shiping-policy',
+    icons: {
+        icon: 'asset/favicon.ico',
+    },
+};
 const page =  async() => {
     const shipingPolicy = (await db.staticInfo.findFirst({
         where:{

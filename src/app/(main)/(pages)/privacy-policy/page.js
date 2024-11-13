@@ -1,11 +1,16 @@
 
 import DangerDiv from '@/components/DangerDiv'
 import React from 'react'
-
-const page =  async() => {
+export const metadata = {
+    title: 'privacy-policy',
+    icons: {
+        icon: 'asset/favicon.ico',
+    },
+};
+const page = async () => {
     const privacyPolicy = (await db.staticInfo.findFirst({
-        where:{
-            key:"privacyPolicy"
+        where: {
+            key: "privacyPolicy"
         }
     })).value[0].data
     return (
@@ -20,9 +25,9 @@ const page =  async() => {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="terms-policy">
-                           
-                        <DangerDiv htmlEl={privacyPolicy} />
-                            
+
+                            <DangerDiv htmlEl={privacyPolicy} />
+
 
                         </div>
                     </div>

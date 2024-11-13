@@ -5,7 +5,12 @@ import Pagination from '@/components/Pagination'
 import db from '@/lib/db'
 import getPaginationLimit from '@/lib/getPaginationLimit'
 
-
+export const metadata = {
+    title: 'recipes',
+    icons: {
+        icon: 'asset/favicon.ico',
+    },
+};
 const page = async ({params}) => {
     var pageNo = params.slug?.at(params?.slug?.length - 1)
     if (!pageNo || isNaN(pageNo)) {
