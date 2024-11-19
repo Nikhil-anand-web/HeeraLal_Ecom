@@ -16,7 +16,7 @@ async function createFAQ(formData) {
     if (user) {
         if (user.role === 1 || user.role === 2) {
             try {
-                if (user.permissions[0].complementaryContentManagment) {
+                if (user.permissions[0].complementaryContentManagement) {
 
 
 

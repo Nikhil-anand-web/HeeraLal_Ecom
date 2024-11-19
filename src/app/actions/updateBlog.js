@@ -20,7 +20,7 @@ async function updateBlog(formData, id) {
     if (user) {
         if (user.role === 1 || user.role === 2) {
             try {
-                if (user.permissions[0].complementaryContentManagment) {
+                if (user.permissions[0].complementaryContentManagement) {
                     const uploadDirectory = path.join(process.cwd(), 'asset', "blog", `${formData.get('slug')}`);
                     const urlSlug = formData.getAll('slug');
 

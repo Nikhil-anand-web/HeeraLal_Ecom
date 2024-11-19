@@ -9,7 +9,7 @@ export default async function getSearchedPublicQuery(searchTerm, itemsPerPage, p
     const user = await getServerSession(authOptions)
 
     if (user) {
-        if (user.permissions.at(0)?.complementaryContentManagment) {
+        if (user.permissions.at(0)?.complementaryContentManagement) {
             try {
                 if (searchTerm === '') {
                     return {

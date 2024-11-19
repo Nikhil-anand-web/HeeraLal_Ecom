@@ -11,7 +11,7 @@ async function deleteABlog(ids) {
     console.log(ids)
     const user = await getServerSession(authOptions)
 
-    if (user.permissions.at(0)?.complementaryContentManagment) {
+    if (user.permissions.at(0)?.complementaryContentManagement) {
         try {
 
             const delBlog = await db.blog.delete({

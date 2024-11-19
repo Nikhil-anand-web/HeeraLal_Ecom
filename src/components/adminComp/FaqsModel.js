@@ -26,7 +26,8 @@ const FaqsModel = ({ faq }) => {
       }
 
     } catch (error) {
-      toast.warning(res?.message || "something went wrong")
+      console.log(error)
+      toast.warning(error?.message || "something went wrong")
 
 
 
@@ -51,7 +52,7 @@ const FaqsModel = ({ faq }) => {
 
 
     } catch (error) {
-      toast.warning(res?.message || "something went wrong")
+      console.log(error)
 
     }
 

@@ -16,7 +16,7 @@ const page = async () => {
      
   return (
    <>
-     <h3 className="page-title"> Add a Combo</h3>
+     <h3 className="page-title"> Add a Coupon</h3>
      {user && user.permissions?.length>0&&user.permissions[0].offersAndDiscounts? <div className={"hide-scrollbar"} style={{height:"90vh",overflow:"scroll",width:"100%"}}><AddCouponForm /></div>:<div>access denied</div>}
     
    </>

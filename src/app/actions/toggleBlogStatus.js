@@ -9,7 +9,7 @@ import { revalidatePath } from 'next/cache'
     console.log(ids)
     const user = await getServerSession(authOptions)
 
-   if (user.permissions.at(0)?.complementaryContentManagment) {
+   if (user.permissions.at(0)?.complementaryContentManagement) {
     try {
         const obj = await db.blog.findUnique({
             where :{

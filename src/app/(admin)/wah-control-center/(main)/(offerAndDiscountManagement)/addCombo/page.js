@@ -21,7 +21,7 @@ const page = async () => {
     });
    
   }
-    console.log(user)
+   
      
   return (
    <>

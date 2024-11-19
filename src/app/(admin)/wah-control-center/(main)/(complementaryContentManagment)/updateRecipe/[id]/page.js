@@ -33,7 +33,7 @@ const page = async ({params}) => {
         })
 
     }
-    console.log(recipe,"ibugyihhiyhihihi")
+   
 
 
     return (

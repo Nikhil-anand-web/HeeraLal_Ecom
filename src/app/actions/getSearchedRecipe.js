@@ -9,7 +9,7 @@ export default async function getSearchedRecipe(searchTerm,pageNo,itemsPerPage) 
     const user = await getServerSession(authOptions)
   
 
-    if (user.permissions[0].complementaryContentManagment) {
+    if (user.permissions[0].complementaryContentManagement) {
 
         
         

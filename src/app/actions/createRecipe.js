@@ -16,7 +16,7 @@ async function createRecipe(formData) {
     if (user) {
         if (user.role === 1 || user.role === 2) {
             try {
-                if (user.permissions[0].complementaryContentManagment) {
+                if (user.permissions[0].complementaryContentManagement) {
                     const connect=[]
 
                      for (let i = 0; i < parseInt(formData.get('noOfProduct')); i++) {

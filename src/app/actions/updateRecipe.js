@@ -8,7 +8,7 @@ export default async function updateRecipe(formData) {
     const user = await getServerSession(authOptions)
 
 
-    if (user?.permissions[0].complementaryContentManagment) {
+    if (user?.permissions[0].complementaryContentManagement) {
 
 
 
