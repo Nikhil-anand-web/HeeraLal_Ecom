@@ -74,7 +74,8 @@
     "swr": "^2.2.5",
     "ti-icons": "^0.1.2",
     "twilio": "^5.2.2",
-    "typeahead.js": "^0.11.1"
+    "typeahead.js": "^0.11.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "eslint": "^8",
