@@ -4,15 +4,21 @@ import getAboutVarientInCart from '@/app/actions/getAboutVarientInCart'
 import incValueOfVarientByOne from '@/app/actions/incValueOfVarientByOne'
 import isOutOfStock from '@/app/actions/isOutOfStock'
 import isRemainingFew from '@/app/actions/isRemainingFew'
+import { useSession } from 'next-auth/react'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useSWRConfig } from 'swr'
-
 const ProductToCartControl = ({ varientId, style }) => {
+    const isAuthenticated = useSession().status === "authenticated";
+   
     const [noOfVarientInCart, setNoOfVarientInCart] = useState(0)
     const [isOutOfStockState, setIsOutOfStockState] = useState(false)
     const [isRemainingFewState, setIsRemainingFewState] = useState(false)
     const { mutate } = useSWRConfig()
+    const pathname = usePathname();
+   const rtr = useRouter()
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,30 +37,76 @@ const ProductToCartControl = ({ varientId, style }) => {
                 // Fetch variant information in the cart
                 const resCartData = await getAboutVarientInCart(varientId)
                 const cartItem = resCartData?.cart?.cartItem[0] || null
-                setNoOfVarientInCart(cartItem ? cartItem.qty : 0)
+                const noOfVarientCurrentInCart = JSON.parse(localStorage.getItem("cart"))?.products[varientId] || null
+
+   
+
+                setNoOfVarientInCart(cartItem ? cartItem.qty : (noOfVarientCurrentInCart && !isAuthenticated) ? noOfVarientCurrentInCart : 0)
 
                 // Check if the variant has only a few remaining
                 const resRemainingFew = await isRemainingFew(varientId)
                 setIsRemainingFewState(resRemainingFew.data?.isRemaningFew || false)
             } catch (error) {
-                console.error('Error fetching variant data:', error)
-                toast.error("Failed to load product data")
+                // console.error('Error fetching variant data:', error)
+              
             }
         }
 
         fetchData()
     }, [varientId]) // Runs whenever `varientId` changes
 
+
     const increaseTheValueToOne = async () => {
         try {
-            const res = await incValueOfVarientByOne(varientId)
 
-            if (res &&!res.success) throw res
+            if (isAuthenticated) {
+                const res = await incValueOfVarientByOne(varientId)
 
-            mutate('/action/getCartCount')
-            mutate('/action/applyReferalPoint')
+                if (res && !res.success) throw res
 
-            setNoOfVarientInCart(res?res.nwCartItem.qty:0)
+                mutate('/action/getCartCount')
+                mutate('/action/applyReferalPoint')
+
+                setNoOfVarientInCart(res ? res.nwCartItem.qty : 0)
+
+            } else {
+                console.log(localStorage.getItem("cart"))
+                const oldcart = JSON.parse(localStorage.getItem("cart") )|| { products:{} } ; // Parse or initialize
+                console.log(oldcart)
+                if (!oldcart.products) {
+                    oldcart.products={}
+                    
+                }
+              
+
+                if (oldcart?.products[varientId]) {
+                    // If the product already exists in the cart
+
+                    oldcart.products[varientId]++;
+                    setNoOfVarientInCart(oldcart.products[varientId]);
+                } else {
+                    // If the product is new
+                    console.log(varientId)
+                    oldcart.products[varientId] = 1;
+                    setNoOfVarientInCart(1);
+                }
+
+                // Save the updated cart back to localStorage
+                localStorage.setItem("cart", JSON.stringify(oldcart));
+                mutate('/action/getCartCount')
+                if (pathname.split('/').at(1) && pathname.split('/').at(1) ==="guest-cart"  ) {
+                   
+                    rtr.push("/guest-cart/"+JSON.stringify(oldcart))
+
+
+                    
+                }
+
+
+
+            }
+
+
         } catch (error) {
             console.error(error)
             toast.warning(error.message || 'Failed to increase quantity')
@@ -63,26 +115,63 @@ const ProductToCartControl = ({ varientId, style }) => {
 
     const decreaseTheValueToOne = async () => {
         try {
-            const res = await decValueOfVarientByOne(varientId)
+            if (isAuthenticated) {
+                const res = await decValueOfVarientByOne(varientId)
 
-            if (res &&!res.success) throw res
+                if (res && !res.success) throw res
 
-            mutate('/action/getCartCount')
-            mutate('/action/applyReferalPoint')
+                mutate('/action/getCartCount')
+                mutate('/action/applyReferalPoint')
 
-            setNoOfVarientInCart(res?res.nwCartItem.qty:0)
+                setNoOfVarientInCart(res ? res.nwCartItem.qty : 0)
+
+            } else {
+               
+                
+                const oldcart = JSON.parse(localStorage.getItem("cart")) || { products: {} };
+
+                // Check if the product exists in the cart
+                if (oldcart.products[varientId] > 1) {
+                    oldcart.products[varientId]--;
+                    setNoOfVarientInCart(oldcart.products[varientId]);
+                } else if (oldcart.products[varientId] ===1){
+                    delete oldcart.products[varientId]
+                    setNoOfVarientInCart(0);
+
+
+
+                }
+                else {
+                    oldcart.products[varientId] = 0; // Ensure it stays at 0
+                    setNoOfVarientInCart(0); // Update the state
+                }
+
+                // Save the updated cart back to localStorage
+                localStorage.setItem("cart", JSON.stringify(oldcart));
+                mutate('/action/getCartCount')
+                if (pathname.split('/').at(1) && pathname.split('/').at(1) ==="guest-cart"  ) {
+                   
+                    rtr.push("/guest-cart/"+JSON.stringify(oldcart))
+
+
+                    
+                }
+
+
+            }
+
         } catch (error) {
             console.error(error)
             toast.warning(error.message || 'Failed to decrease quantity')
         }
     }
 
-    
+
     if (isOutOfStockState) {
         return (
             <div>
                 <p>Out Of Stock</p>
-                
+
             </div>
         )
     }

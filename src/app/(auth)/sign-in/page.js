@@ -7,10 +7,12 @@ import Link from 'next/link'
 import sendOtps from '@/app/actions/sendOtps'
 import Spinner from '@/components/global/Spinner'
 
+
 const page = () => {
     const router = useRouter()
     const [identifire, setIdentifire] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    
     const onSubmit = async (e) => {
         e.preventDefault()
         try {
@@ -28,17 +30,17 @@ const page = () => {
                 toast.error("Wrong username or password");
             } else if (res?.ok) {
                 console.log(res)
-                toast.success(`welcome! `);
+                toast.success(`welcome!`);
 
+                
 
-
-                router.replace("/");
+                router.back();
             }
 
         } catch (error) {
             console.log(error)
 
-        }finally{
+        } finally {
             setIsLoading(false)
         }
 
@@ -54,7 +56,7 @@ const page = () => {
 
 
     }
-   
+
     return (
         <section className="login-page">
             <div className="container">
@@ -74,11 +76,15 @@ const page = () => {
                             <div className="formbutton text-center mt-4">
                                 <button className="btn">Submit</button>
                                 <div className="container mt-5">
-                                    <button onClick={(e)=>{
+                                    <button onClick={async (e) => {
                                         e.preventDefault()
-                                        signIn('google')
+                                        await signIn('google')
+                                        toast.success("welcome")
+                                       
+                                       
 
-                                    }} style={{backgroundColor:"#0d6efd"}} className="btn btn-outline-primary btn-block">
+
+                                    }} style={{ backgroundColor: "#0d6efd" }} className="btn btn-outline-primary btn-block">
                                         <i className="fab fa-google mr-2"></i> Sign in with Google
                                     </button>
                                 </div>
@@ -87,11 +93,11 @@ const page = () => {
 
 
                         </form>
-                        {isLoading&& <Spinner/>}
+                        {isLoading && <Spinner />}
 
                         Not a member? <Link href="/sign-up" className="text-success">Register Now</Link> <br />
 
-                        <Link  href={`/forgot-password/${identifire}`} className="text-success">Forgot Password</Link>
+                        <Link href={`/forgot-password/${identifire}`} className="text-success">Forgot Password</Link>
 
 
                     </div>

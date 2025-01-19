@@ -56,7 +56,7 @@ export async function middleware(request) {
         
      }
      if(token && token.role ===3 && url.pathname.startsWith('/sign-in')){
-        return NextResponse.redirect(new URL('/account/dashboard', request.url))
+        return NextResponse.redirect(new URL('/cart', request.url))
      }
      if ((!token || token.role !==3)&&url.pathname.startsWith('/account/')) {
         return NextResponse.redirect(new URL('/sign-in', request.url))

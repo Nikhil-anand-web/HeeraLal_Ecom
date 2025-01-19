@@ -38,6 +38,7 @@ export default async function getSearchedPublicQuery(searchTerm, itemsPerPage, p
                             { name: { contains: searchTerm } },
                             { message: { contains: searchTerm } },
                             { email: { contains: searchTerm } },
+                            { mobile: { contains: searchTerm } },
 
 
                         ]

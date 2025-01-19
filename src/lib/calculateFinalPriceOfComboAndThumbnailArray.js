@@ -1,6 +1,7 @@
 import calculateFinalPrice from "./calculateFinalPrice"
 
 export default function calculateFinalPriceOfComboAndThumbnailArray(combo) {
+    console.log(combo)
     var totalMrp = 0
     const percentageDiscount = parseFloat(combo.discountInPercent)
     

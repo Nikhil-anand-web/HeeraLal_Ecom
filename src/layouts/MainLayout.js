@@ -7,6 +7,7 @@ import { Suspense } from "react";
 
 import Image from "next/image";
 import logo from '../images/logo1.png'
+import SyncLocalStorage from "@/components/SyncLocalStorage";
 
 
 
@@ -32,6 +33,7 @@ export default function MainLayout({ children }) {
                 {children}
 
             </Suspense>
+            <SyncLocalStorage />
 
 
 

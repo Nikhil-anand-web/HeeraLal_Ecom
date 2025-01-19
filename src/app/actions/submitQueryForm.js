@@ -3,13 +3,13 @@ import db from "@/lib/db"
 
 
 
-export default async function submitQueryForm({name,email,message}) {
+export default async function submitQueryForm({name,email,message,mobile,fullAddress}) {
 
 
 
 
     try {
-        if (name === '' || email === ''|| message === '') {
+        if (name === '' || email === ''|| message === '' || mobile==='' || fullAddress==='') {
             return {
                 success: false,
                 message: `please fill all the fields`,
@@ -24,7 +24,9 @@ export default async function submitQueryForm({name,email,message}) {
             data:{
                 email,
                 name,
-                message
+                message,
+                fullAddress,
+                mobile
             }
         })
 

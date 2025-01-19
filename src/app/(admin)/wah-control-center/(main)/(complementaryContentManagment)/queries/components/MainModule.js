@@ -1,12 +1,6 @@
-
 "use client"
-
-
 import getSearchedPublicQuery from '@/app/actions/getSearchedPublicQuery'
 import QueryModel from '@/components/adminComp/QueryModel'
-
-
-
 import Spinner from '@/components/global/Spinner'
 import debounce from '@/lib/debounce'
 
@@ -79,7 +73,7 @@ const MainModule = ({ itemsPerPage ,pageNo}) => {
                     {filteredPublicQuery.map((obj,index) => (
                         <>
 
-                        <QueryModel createdAt={obj.createdAt} name={obj.name} message={obj.message} email={obj.email} key={index}/>
+                        <QueryModel createdAt={obj.createdAt} name={obj.name} message={obj.message} email={obj.email} key={index} mobile ={obj.mobile} fullAddress={obj.fullAddress}/>
                         
                         </>
                     ))}</div>

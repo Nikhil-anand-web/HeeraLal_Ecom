@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ExpandableInfo = ({ name, email, message,createdAt }) => {
+const ExpandableInfo = ({ name, email, message,createdAt,fullAddress,mobile }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleExpand = () => setIsOpen(!isOpen);
 
@@ -74,8 +74,17 @@ const formattedDate = createdAt.toLocaleDateString('en-US', options);
           <div>
             <p style={styles.info}><strong>Name:</strong> {name}</p>
             <p style={styles.info}><strong>Email:</strong> {email}</p>
+            <p style={styles.info}><strong>Mobile:</strong> {mobile || "not available"}</p>
             <p style={styles.message}>
               <strong>Message:</strong> {isOpen ? message : visibleMessage}
+              {isTruncated && !isOpen && (
+                <span style={styles.expandButton} onClick={toggleExpand}>
+                  Read More
+                </span>
+              )}
+            </p>
+            <p style={styles.message}>
+              <strong>FullAddress:</strong> {isOpen ? (fullAddress || "not available") : visibleMessage}
               {isTruncated && !isOpen && (
                 <span style={styles.expandButton} onClick={toggleExpand}>
                   Read More

@@ -14,12 +14,14 @@ import { headers } from 'next/headers';
 import ClientMenu from './ClientMenu';
 import db from '@/lib/db';
 import WhatsAppChannelLink from './WhatsAppChanLink';
+import CartButton from './CartButton';
 
 
 
 const Header = async (props) => {
 
   const headersList = headers();
+ 
   const domain = headersList.get('host') || "";
   const fullUrl = headersList.get('referer') || "";
 
@@ -48,8 +50,8 @@ const Header = async (props) => {
 
     orderBy: {
       displayOrder: 'asc', // Order by 'displayOrder' in ascending order
-    },select:{
-      slug:true
+    }, select: {
+      slug: true
     }
 
   })).slug
@@ -70,7 +72,7 @@ const Header = async (props) => {
           <div className="icons-group d-block d-lg-none">
             <ul className="d-flex">
               <li>
-                <CustomSearchButton  />
+                <CustomSearchButton />
 
               </li>
               <li>
@@ -91,7 +93,7 @@ const Header = async (props) => {
 
           <div className="collapse navbar-collapse " id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              
+
               <ClientMenu productWithMaxPriroty={productWithMaxPriroty} />
 
 
@@ -101,16 +103,12 @@ const Header = async (props) => {
               <li className="userlink d-none  d-lg-block">
                 <Link href="/account/dashboard"></Link> <Link href="/account/dashboard">{user?.googleProfilePic ? <Image style={{ borderRadius: "60px" }} src={user?.googleProfilePic} alt={"pic"} height={50} width={50} /> : <i className="fa-solid fa-user"></i>}</Link>
               </li>
-              <li className="shopping-cart d-none d-lg-block">
-                <Link href="/cart">
-                  <span className="number" name={"cntdis"}><CartCount /></span>
-                  <i className="fa-solid fa-bag-shopping"></i></Link>
-              </li>
+              <CartButton/>
               {/* <li className="nav-item">
                 <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
               </li> */}
-<li style={{marginLeft:"30px"}}>
-                <WhatsAppChannelLink/>
+              <li style={{ marginLeft: "30px" }}>
+                <WhatsAppChannelLink />
               </li>
 
 

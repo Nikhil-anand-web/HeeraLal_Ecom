@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `queries` ADD COLUMN `fullAddress` VARCHAR(191) NOT NULL DEFAULT '',
+    ADD COLUMN `mobile` VARCHAR(191) NOT NULL DEFAULT '';

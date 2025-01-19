@@ -5,8 +5,12 @@ import Image from 'next/image'
 import getCategories from '@/app/actions/getCategories'
 import getProductByCategoryIdAndTag from '@/app/actions/getProductByCategoryIdAndTag'
 import Spinner from './global/Spinner'
+import syncLocalCart from '@/app/actions/syncLocalCart'
+import { useRouter } from 'next/navigation'
 
 const MustHaveSection = ({ mustHaveSectionBanners }) => {
+
+  const rtr =  useRouter()
   const [categories, setcategories] = useState([])
   const [activeCategoryId, setActiveCategoryId] = useState('')
   const [productsUnderActiveCategory, setproductsUnderActiveCategory] = useState([])
@@ -75,6 +79,7 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
 
   return (
     <section className="product-tabs position-relative">
+     
       <div className="container">
         <div className="row text-center">
           <h2 className="white">The Must Have Spices</h2>

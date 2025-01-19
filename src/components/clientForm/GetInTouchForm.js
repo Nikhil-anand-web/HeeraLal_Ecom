@@ -8,10 +8,12 @@ const GetInTouchForm =  () => {
     const [name ,setName] = useState('')
     const [message , setMessage] = useState('')
     const [email,setEmail] =useState('')
+    const [mobile,setMobile] =useState('')
+    const [fullAddress,setFullAddress] =useState('')
     const clk = async(e)=>{
         e.preventDefault()
        const obj = {
-        name,email,message
+        name,email,message,mobile,fullAddress
        }
 
         try {
@@ -43,9 +45,15 @@ const GetInTouchForm =  () => {
                 <div className="form-group">
                     <input value = {email} onChange={(e)=> setEmail(e.target.value)} type="text" className="form-control" placeholder="Email" />
                 </div> 
+                <div className="form-group">
+                    <input value = {mobile} onChange={(e)=> setMobile(e.target.value)} type="text" className="form-control" placeholder="mobile" />
+                </div> 
 
                 <div className="form-group">
                     <textarea value={message} onChange={(e)=> setMessage(e.target.value)} className="form-control" placeholder="Message"></textarea>
+                </div>
+                <div className="form-group">
+                    <textarea value={fullAddress} onChange={(e)=> setFullAddress(e.target.value)} className="form-control" placeholder="fullAddress"></textarea>
                 </div>
                 <div className="formbuttton">
                     <button disabled={isLoading} type="submit" className="btn">{isLoading?"Processing":"Submit"}</button>

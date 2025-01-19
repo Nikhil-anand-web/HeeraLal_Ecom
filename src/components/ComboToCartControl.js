@@ -3,15 +3,22 @@ import decValueOfComboByOne from '@/app/actions/decValueOfComboByOne'
 import getAboutComboInCart from '@/app/actions/getAboutComboInCart'
 import incValueOfComboByOne from '@/app/actions/incValueOfComboByOne'
 import isComboOutOfStock from '@/app/actions/isComboOutOfStock'
+import { useSession } from 'next-auth/react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useSWRConfig } from 'swr'
 
 const ComboToCartControl = ({ comboId = '', style }) => {
+    const isAuthenticated = useSession().status === "authenticated";
+    const [cmbid, setcmbid] = useState(comboId)
     const [noOfComboInCart, setNoOfComboInCart] = useState(0)
     const [isOutOfStockState, setIsOutOfStockState] = useState(false)
     const { mutate } = useSWRConfig()
+    const pathname = usePathname();
+    const rtr = useRouter()
+
 
     useEffect(() => {
         const fetchComboData = async () => {
@@ -26,14 +33,15 @@ const ComboToCartControl = ({ comboId = '', style }) => {
                 } else {
                     setIsOutOfStockState(false)
                 }
+                const noOfcmbCurrentInCart = JSON.parse(localStorage.getItem("cart"))?.combos[cmbid]
 
                 // Fetch combo details in the cart
                 const resCartData = await getAboutComboInCart(comboId)
                 const cartComboItem = resCartData?.cart?.cartComboItems[0] || null
-                setNoOfComboInCart(cartComboItem ? cartComboItem.qty : 0)
+                setNoOfComboInCart(cartComboItem ? cartComboItem.qty : (noOfcmbCurrentInCart && !isAuthenticated) ? noOfcmbCurrentInCart : 0)
             } catch (error) {
                 console.error('Error fetching combo data:', error)
-                toast.error('Failed to load combo data')
+
             }
         }
 
@@ -42,14 +50,50 @@ const ComboToCartControl = ({ comboId = '', style }) => {
 
     const increaseTheValueToOne = async () => {
         try {
-            const res = await incValueOfComboByOne(comboId)
+            if (isAuthenticated) {
+                const res = await incValueOfComboByOne(comboId)
 
-            if (res &&!res.success) throw res
+                if (res && !res.success) throw res
 
-            mutate('/action/getCartCount')
-            mutate('/action/applyReferalPoint')
+                mutate('/action/getCartCount')
+                mutate('/action/applyReferalPoint')
 
-            setNoOfComboInCart(res?res.nwCartComboItem.qty:0)
+                setNoOfComboInCart(res ? res.nwCartComboItem.qty : 0)
+
+
+            } else {
+
+
+
+                let oldcart = JSON.parse(localStorage.getItem("cart")) || { combos: {} }; // Parse or initialize the object
+                if (!oldcart.combos) {
+                    oldcart.combos = {}
+
+                }
+
+                if (oldcart.combos[cmbid]) {
+                    // If the combo already exists in the cart
+                    oldcart.combos[cmbid]++;
+                    setNoOfComboInCart(oldcart.combos[cmbid]);
+                } else {
+                    // If the combo is new
+                    oldcart.combos[cmbid] = 1;
+                    setNoOfComboInCart(1);
+                }
+
+                // Save the updated cart back to localStorage
+                localStorage.setItem("cart", JSON.stringify(oldcart));
+                mutate('/action/getCartCount')
+                if (pathname.split('/').at(1) && pathname.split('/').at(1) === "guest-cart") {
+
+                    rtr.push("/guest-cart/" + JSON.stringify(oldcart))
+
+
+
+                }
+
+            }
+
         } catch (error) {
             console.error(error)
             toast.warning(error.message || 'Failed to increase combo quantity')
@@ -58,14 +102,45 @@ const ComboToCartControl = ({ comboId = '', style }) => {
 
     const decreaseTheValueToOne = async () => {
         try {
-            const res = await decValueOfComboByOne(comboId)
+            if (isAuthenticated) {
 
-            if (res &&!res.success) throw res
 
-            mutate('/action/getCartCount')
-            mutate('/action/applyReferalPoint')
+                const res = await decValueOfComboByOne(comboId)
 
-            setNoOfComboInCart(res?res.nwCartComboItem.qty:0)
+                if (res && !res.success) throw res
+
+                mutate('/action/getCartCount')
+                mutate('/action/applyReferalPoint')
+
+                setNoOfComboInCart(res ? res.nwCartComboItem.qty : 0)
+            } else {
+                let oldcart = JSON.parse(localStorage.getItem("cart")) || { combos: {} }; // Parse or initialize the object
+
+                if (oldcart.combos[cmbid] && oldcart.combos[cmbid] > 1) {
+                    // If the combo exists and has a quantity greater than 0
+                    oldcart.combos[cmbid]--;
+                    setNoOfComboInCart(oldcart.combos[cmbid]);
+                } else if (oldcart.combos[cmbid] === 1) {
+                    delete oldcart.combos[cmbid]
+                    setNoOfComboInCart(0);
+
+                } else {
+                    // If the combo doesn't exist or the quantity is already 0
+                    oldcart.combos[cmbid] = 0;
+                    setNoOfComboInCart(0);
+                }
+                if (pathname.split('/').at(1) && pathname.split('/').at(1) === "guest-cart") {
+
+                    rtr.push("/guest-cart/" + JSON.stringify(oldcart))
+
+
+
+                }
+                // Save the updated cart back to localStorage
+                localStorage.setItem("cart", JSON.stringify(oldcart));
+                mutate('/action/getCartCount')
+
+            }
         } catch (error) {
             console.error(error)
             toast.warning(error.message || 'Failed to decrease combo quantity')

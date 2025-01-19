@@ -333,6 +333,8 @@ model queries {
   id        String   @id @default(uuid())
   email     String
   name      String
+  mobile String @default("")
+  fullAddress String @default("")
   message   String   @db.LongText
   createdAt DateTime @default(now())
 }
