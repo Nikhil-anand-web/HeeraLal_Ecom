@@ -53,7 +53,7 @@ const GetInTouchForm =  () => {
                     <textarea value={message} onChange={(e)=> setMessage(e.target.value)} className="form-control" placeholder="Message"></textarea>
                 </div>
                 <div className="form-group">
-                    <textarea value={fullAddress} onChange={(e)=> setFullAddress(e.target.value)} className="form-control" placeholder="fullAddress"></textarea>
+                    <textarea value={fullAddress} onChange={(e)=> setFullAddress(e.target.value)} className="form-control" placeholder="fullAddress(optional)"></textarea>
                 </div>
                 <div className="formbuttton">
                     <button disabled={isLoading} type="submit" className="btn">{isLoading?"Processing":"Submit"}</button>

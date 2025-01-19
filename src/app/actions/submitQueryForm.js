@@ -9,7 +9,7 @@ export default async function submitQueryForm({name,email,message,mobile,fullAdd
 
 
     try {
-        if (name === '' || email === ''|| message === '' || mobile==='' || fullAddress==='') {
+        if (name === '' || email === ''|| message === '' || mobile==='' ) {
             return {
                 success: false,
                 message: `please fill all the fields`,
