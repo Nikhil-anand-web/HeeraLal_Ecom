@@ -253,7 +253,7 @@ const UpdateVarientForm = ({ productSlugs, reqVar }) => {
 
 
                                 <div className="form-group" >
-                                    <label htmlFor="weight">Weight in kg</label>
+                                    <label htmlFor="weight">Weight in grams</label>
                                     <input {...register("weight")} type="text" className="form-control" id="weight" placeholder="weight" />
                                     {errors.weight && <span>This field is required</span>}
                                 </div>

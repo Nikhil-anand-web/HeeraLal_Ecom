@@ -22,7 +22,7 @@ const VarientModelMini = ({ dataArray, shortVarientIds=[] }) => {
                     <div><strong>MRP: </strong>{data.varient.mrp}</div>
                     <div><strong>Size: </strong>{data.varient.size}</div>
                     <div><strong>Bulk: </strong>{data.varient.isBulk ? 'Yes' : 'No'}</div>
-                    <div><strong>Weight: </strong>{data.varient.weight} kg</div>
+                    <div><strong>Weight: </strong>{data.varient.weight} g</div>
                     <div><strong>Product Name: </strong>{data.varient.product.name}</div>
                     <div><strong>Varient Short: </strong>{shortComboQty===0? <span className="badge badge-success">{" Ideal "}</span> : <span className="badge badge-danger">{shortComboQty}</span>}</div>
 
