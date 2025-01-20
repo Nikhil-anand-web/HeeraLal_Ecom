@@ -192,7 +192,7 @@ const ProductToCartControl = ({ varientId, style }) => {
     return (
         <div style={style} className="pro-add-to-cart-btn">
             <button onClick={decreaseTheValueToOne}>-</button>
-            <small style={{ margin: "0 10px" }}>{noOfVarientInCart}</small>
+            <small style={{ margin: "0 5px" }}>{noOfVarientInCart}</small>
             <button onClick={increaseTheValueToOne}>+</button>
             {isRemainingFewState && (
                 <p style={{ color: "#cc524c", fontSize: "1.1rem" }}>Remaining Few</p>
