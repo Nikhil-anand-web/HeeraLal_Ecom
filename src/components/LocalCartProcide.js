@@ -12,7 +12,7 @@ const LocalCartProcide = () => {
 
     return (
         <div className="col">
-            <button type="button" onClick={onChkOut} className="mt-3 pay-now-button btn mr-5">Procide</button>
+            <button type="button" onClick={onChkOut} className="mt-3 pay-now-button btn mr-5">Proceed</button>
         </div>
     )
 }

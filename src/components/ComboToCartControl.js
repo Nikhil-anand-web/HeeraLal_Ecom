@@ -171,7 +171,8 @@ const ComboToCartControl = ({ comboId = '', style }) => {
     return (
         <div style={style} className="pro-add-to-cart-btn">
             <button onClick={decreaseTheValueToOne}> - </button>
-            {noOfComboInCart}
+
+            <small style={{ margin: "0 10px" }}> {noOfComboInCart}</small>
             <button onClick={increaseTheValueToOne}> + </button>
         </div>
     )

@@ -11,13 +11,13 @@ import { toast } from 'react-toastify'
 import { useSWRConfig } from 'swr'
 const ProductToCartControl = ({ varientId, style }) => {
     const isAuthenticated = useSession().status === "authenticated";
-   
+
     const [noOfVarientInCart, setNoOfVarientInCart] = useState(0)
     const [isOutOfStockState, setIsOutOfStockState] = useState(false)
     const [isRemainingFewState, setIsRemainingFewState] = useState(false)
     const { mutate } = useSWRConfig()
     const pathname = usePathname();
-   const rtr = useRouter()
+    const rtr = useRouter()
 
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const ProductToCartControl = ({ varientId, style }) => {
                 const cartItem = resCartData?.cart?.cartItem[0] || null
                 const noOfVarientCurrentInCart = JSON.parse(localStorage.getItem("cart"))?.products[varientId] || null
 
-   
+
 
                 setNoOfVarientInCart(cartItem ? cartItem.qty : (noOfVarientCurrentInCart && !isAuthenticated) ? noOfVarientCurrentInCart : 0)
 
@@ -48,7 +48,7 @@ const ProductToCartControl = ({ varientId, style }) => {
                 setIsRemainingFewState(resRemainingFew.data?.isRemaningFew || false)
             } catch (error) {
                 // console.error('Error fetching variant data:', error)
-              
+
             }
         }
 
@@ -71,13 +71,13 @@ const ProductToCartControl = ({ varientId, style }) => {
 
             } else {
                 console.log(localStorage.getItem("cart"))
-                const oldcart = JSON.parse(localStorage.getItem("cart") )|| { products:{} } ; // Parse or initialize
+                const oldcart = JSON.parse(localStorage.getItem("cart")) || { products: {} }; // Parse or initialize
                 console.log(oldcart)
                 if (!oldcart.products) {
-                    oldcart.products={}
-                    
+                    oldcart.products = {}
+
                 }
-              
+
 
                 if (oldcart?.products[varientId]) {
                     // If the product already exists in the cart
@@ -94,12 +94,12 @@ const ProductToCartControl = ({ varientId, style }) => {
                 // Save the updated cart back to localStorage
                 localStorage.setItem("cart", JSON.stringify(oldcart));
                 mutate('/action/getCartCount')
-                if (pathname.split('/').at(1) && pathname.split('/').at(1) ==="guest-cart"  ) {
-                   
-                    rtr.push("/guest-cart/"+JSON.stringify(oldcart))
+                if (pathname.split('/').at(1) && pathname.split('/').at(1) === "guest-cart") {
+
+                    rtr.push("/guest-cart/" + JSON.stringify(oldcart))
 
 
-                    
+
                 }
 
 
@@ -126,15 +126,15 @@ const ProductToCartControl = ({ varientId, style }) => {
                 setNoOfVarientInCart(res ? res.nwCartItem.qty : 0)
 
             } else {
-               
-                
+
+
                 const oldcart = JSON.parse(localStorage.getItem("cart")) || { products: {} };
 
                 // Check if the product exists in the cart
                 if (oldcart.products[varientId] > 1) {
                     oldcart.products[varientId]--;
                     setNoOfVarientInCart(oldcart.products[varientId]);
-                } else if (oldcart.products[varientId] ===1){
+                } else if (oldcart.products[varientId] === 1) {
                     delete oldcart.products[varientId]
                     setNoOfVarientInCart(0);
 
@@ -149,12 +149,12 @@ const ProductToCartControl = ({ varientId, style }) => {
                 // Save the updated cart back to localStorage
                 localStorage.setItem("cart", JSON.stringify(oldcart));
                 mutate('/action/getCartCount')
-                if (pathname.split('/').at(1) && pathname.split('/').at(1) ==="guest-cart"  ) {
-                   
-                    rtr.push("/guest-cart/"+JSON.stringify(oldcart))
+                if (pathname.split('/').at(1) && pathname.split('/').at(1) === "guest-cart") {
+
+                    rtr.push("/guest-cart/" + JSON.stringify(oldcart))
 
 
-                    
+
                 }
 
 
@@ -192,7 +192,7 @@ const ProductToCartControl = ({ varientId, style }) => {
     return (
         <div style={style} className="pro-add-to-cart-btn">
             <button onClick={decreaseTheValueToOne}>-</button>
-            {noOfVarientInCart}
+            <small style={{ margin: "0 10px" }}>{noOfVarientInCart}</small>
             <button onClick={increaseTheValueToOne}>+</button>
             {isRemainingFewState && (
                 <p style={{ color: "#cc524c", fontSize: "1.1rem" }}>Remaining Few</p>
