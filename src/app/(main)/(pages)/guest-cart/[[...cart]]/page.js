@@ -27,7 +27,7 @@ export const metadata = {
 const Page = async ({ params }) => {
     const user = await getServerSession(authOptions)
 
-    if (user) {
+    if (user && user.role ===3) {
 
         redirect('/cart')
 

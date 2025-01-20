@@ -21,7 +21,7 @@ import CartButton from './CartButton';
 const Header = async (props) => {
 
   const headersList = headers();
- 
+
   const domain = headersList.get('host') || "";
   const fullUrl = headersList.get('referer') || "";
 
@@ -78,9 +78,7 @@ const Header = async (props) => {
               <li>
                 <Link href="/account/dashboard"></Link> <Link href="/account/dashboard">{user?.googleProfilePic ? <Image style={{ borderRadius: "60px", height: "50px", width: "50px" }} src={user?.googleProfilePic} alt={"pic"} height={100} width={100} /> : <i className="fa-solid fa-user"></i>}</Link>
               </li>
-              <li className="shopping-cart"><Link href="/cart">
-                <span className="number"><CartCount /></span>
-                <i className="fa-solid fa-bag-shopping"></i></Link></li>
+              <CartButton />
             </ul>
 
 
@@ -103,7 +101,7 @@ const Header = async (props) => {
               <li className="userlink d-none  d-lg-block">
                 <Link href="/account/dashboard"></Link> <Link href="/account/dashboard">{user?.googleProfilePic ? <Image style={{ borderRadius: "60px" }} src={user?.googleProfilePic} alt={"pic"} height={50} width={50} /> : <i className="fa-solid fa-user"></i>}</Link>
               </li>
-              <CartButton/>
+              <CartButton />
               {/* <li className="nav-item">
                 <ShareTheSiteButton style={{ borderRadius: "21px" }} className="btn btn-success">Refer</ShareTheSiteButton>
               </li> */}

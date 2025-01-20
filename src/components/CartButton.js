@@ -8,13 +8,21 @@ import { useRouter } from 'next/navigation';
 const CartButton = () => {
    
     const rtr =  useRouter()
-    const isAuthenticated = useSession().status === "authenticated";
+    const ses = useSession();
+   
+    const isAuthenticated =  ses.status === "authenticated";
+   
+    
     const oncl = ()=>{
-        if (isAuthenticated) {
+        if (isAuthenticated && ses.data && ses.data.role ===3) {
             rtr.push("/cart")
             
+           
+            
         }else{
+            
             const crt = localStorage.getItem("cart");
+            // console.log("fkvbfiufvbvbur")
             rtr.push(`/guest-cart/${crt}`)
         }
         
