@@ -3,6 +3,7 @@ import calculateFinalPrice from '@/lib/calculateFinalPrice';
 import calculateFinalPriceOfComboAndThumbnailArray from '@/lib/calculateFinalPriceOfComboAndThumbnailArray';
 import percentOf from '@/lib/percentOf';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print';
@@ -114,7 +115,7 @@ const Invoice = ({ order,companyAddress }) => {
                                                 <td className="text-content">1</td>
                                                 <td>
                                                     <ul className="text-start item-detail">
-                                                        <li>{obj.varient.product.name}</li>
+                                                        <Link href={`/product-details/${obj.varient.product.slug}`}><li >{obj.varient.product.name}</li></Link>
                                                         <li className="text-content">weight - {obj.varient.weight} gm
                                                         </li>
                                                     </ul>
@@ -203,17 +204,13 @@ const Invoice = ({ order,companyAddress }) => {
 
                 <li>
                     <button className="btn text-white print-button rounded ms-2" onClick={handlePrint}>Print</button>
+
                     {((order.paymentStatus==1 && order.orderStatus<3)&& order.cancellationRequestStatus==0)&&<button className="btn text-white print-button rounded ms-2" onClick={()=>rtr.push(`/refundRequest/${order.orderId}`)}>Raise Cancellation Request</button>}
                     
 
                 </li>
             </ul>
-            {/* <div>
-            Cancellation request satus - {order.cancellationRequestStatus==1 && "cancellation request raised"}
-                    {order.cancellationRequestStatus==2 && "cancellation request accepted"}
-                    {order.cancellationRequestStatus==2 && "cancellation request rejected"}
-            </div> */}
-           
+            
         </div>
     )
 }

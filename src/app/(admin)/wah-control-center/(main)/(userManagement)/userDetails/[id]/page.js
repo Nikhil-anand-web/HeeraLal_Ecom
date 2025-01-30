@@ -144,17 +144,7 @@ const page = async (prop) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* <div className="tab-pane fade" id="email-tab-pane" role="tabpanel" aria-labelledby="email-tab" tabIndex="0">
-
-
-
-                                            <form className="row g-0">
-                                                <div className="col-5 col-md-3 bg-light border-bottom border-white border-3">
-                                                    <div className="p-2">First Name</div>
-                                                </div>
-                                                
-                                            </form>
-                                        </div> */}
+                                        
 
 
                                     </div>

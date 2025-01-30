@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import PrintLabel from './PrintLabel';
+import PrintInvoiceButton from './PrintInvoiceButton';
 
 const SingleOrder = ({ order, goTo = "#" }) => {
     return (
@@ -51,6 +52,8 @@ const SingleOrder = ({ order, goTo = "#" }) => {
 
             </Link>
             {order.awb &&  <PrintLabel className="btn btn-success" orderId={order.awb}/>}
+            <PrintInvoiceButton orderId={order.id} companyAddress={{value:"hello"}}/>
+            
             </div>
           
 

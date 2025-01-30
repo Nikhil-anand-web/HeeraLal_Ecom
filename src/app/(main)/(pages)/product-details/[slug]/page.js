@@ -1,23 +1,21 @@
 import React from 'react'
-import p2 from "../../../../../images/p2.webp"
-
-import p1 from "../../../../../images/p1.webp"
-
 import quality from "../../../../../images/quality.png"
 import fryingPan from "../../../../../images/frying-pan.png"
 import india from "../../../../../images/india.png"
 import Image from 'next/image'
 import CarouselComp from '@/components/CarouselComp'
-import TopSellingProduct from '@/components/TopSellingProduct'
 import RecommendedProduct from './_components/RecommendedProduct'
-import Link from 'next/link'
 import VarientControl from './_components/VarientControl'
 import MoreTabs from './_components/MoreTabs'
 import ComboThumbnail from '@/components/ComboThumbnail'
 import PincodeServiceabilityCheck from './_components/PincodeServiceabilityCheck'
 import db from '@/lib/db'
+import RatingComp from './_components/RatingComp'
+import ReviewList from './_components/ReviewList'
+import '@coreui/coreui-pro/dist/css/coreui.min.css';
+import '@coreui/coreui/dist/css/coreui.min.css';
 export async function generateMetadata({ params, searchParams }, parent) {
-    // read route params
+  
     const title = params.slug
 
 
@@ -150,7 +148,31 @@ const page = async ({ params }) => {
         }
     })
 
-    console.log(categoryProducts)
+
+    // const reviews = [
+    //     { stars: 5, message: "Excellent product!", customer: "John Doe" },
+    //     { stars: 4, message: "Very good, but can be improved.", customer: "Jane Smith" },
+    //     { stars: 3, message: "Average quality.", customer: "Mike Johnson" },
+    //     { stars: 2, message: "Not satisfied.", customer: "Chris Lee" },
+    //     { stars: 1, message: "Terrible experience!", customer: "Alex Kim" },
+    // ];
+    const reviews = await db.ratingAndReviews.findMany({
+        where: {
+           AND: [{product: {
+                slug: productSlug
+            }},{isActive:true}]
+        }, include: {
+
+            customer: {
+                select: {
+                    firstName: true,
+                    lastName: true
+
+                }
+
+            }
+        }
+    })
 
 
     return (
@@ -224,6 +246,7 @@ const page = async ({ params }) => {
                             </div>
                         </div>
                     </div>
+                    
 
                     {comboWithProduct.map((pro, index) => <ComboThumbnail key={index} combo={pro} />)}
 
@@ -240,6 +263,7 @@ const page = async ({ params }) => {
                             <h2>Other Products You May Like</h2>
                         </div>
                     </div>
+
                     <div className="row">
                         {categoryProducts.map((vari, index) => <RecommendedProduct key={index} stars={vari.product.stars} varientId={vari.id} discount={vari.discount} goTo={vari.product.slug} imageS={vari.product.thumbNail[0].url} productName={vari.product.name} price={vari.mrp} />)}
 
@@ -247,6 +271,10 @@ const page = async ({ params }) => {
 
 
                     </div>
+                    
+                    <RatingComp productSlug={productSlug} />
+                    <ReviewList reviews={reviews} />
+
 
                 </div>
             </section>

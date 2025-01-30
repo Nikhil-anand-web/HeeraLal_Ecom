@@ -36,10 +36,10 @@ model admin {
 }
 
 model user {
-  id               String    @id @default(uuid())
+  id               String             @id @default(uuid())
   firstName        String
   lastName         String
-  email            String    @unique
+  email            String             @unique
   password         String?
   address          String?
   pinCode          Int?
@@ -47,22 +47,23 @@ model user {
   state            String?
   googleId         String?
   googleProfilePic String?
-  mobile           String?   @unique
-  status           Boolean   @default(true)
+  mobile           String?            @unique
+  status           Boolean            @default(true)
   otpMobile        String?
   otpEmail         String?
-  role             Int       @default(3)
-  emailVerified    Boolean   @default(false)
-  mobileVerified   Boolean   @default(false)
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  referedBy        user?     @relation("referedBy", fields: [referedById], references: [id])
+  role             Int                @default(3)
+  emailVerified    Boolean            @default(false)
+  mobileVerified   Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  referedBy        user?              @relation("referedBy", fields: [referedById], references: [id])
   cart             cart[]
-  lastEditedBy     admin?    @relation(fields: [adminId], references: [id])
-  referedTo        user[]    @relation("referedBy")
+  lastEditedBy     admin?             @relation(fields: [adminId], references: [id])
+  referedTo        user[]             @relation("referedBy")
   referedById      String?
   referal          referal[]
   adminId          String?
+  ratingAndReviews ratingAndReviews[]
 }
 
 model globalSettings {
@@ -79,7 +80,7 @@ model globalSettings {
 model blog {
   id             String   @id @default(uuid())
   title          String
-  brief          String  @db.LongText
+  brief          String   @db.LongText
   urlSlug        String   @unique
   content        String   @db.LongText
   thumbnailImage Json
@@ -103,17 +104,17 @@ model faqs {
 }
 
 model permissions {
-  id                            String  @id @default(uuid())
-  admin                         admin   @relation(fields: [adminId], references: [id], onDelete: Cascade)
-  adminId                       String  @unique
-  userUpdate                    Boolean @default(false)
-  offersAndDiscounts            Boolean @default(false)
-  productAndInventory           Boolean @default(false)
+  id                             String  @id @default(uuid())
+  admin                          admin   @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  adminId                        String  @unique
+  userUpdate                     Boolean @default(false)
+  offersAndDiscounts             Boolean @default(false)
+  productAndInventory            Boolean @default(false)
   complementaryContentManagement Boolean @default(false) @map("complementaryContentManagment")
-  globalSetting                 Boolean @default(false)
-  siteManagement                Boolean @default(false)
-  consumerAndOrderManagement    Boolean @default(false)
-  archives                      Boolean @default(false)
+  globalSetting                  Boolean @default(false)
+  siteManagement                 Boolean @default(false)
+  consumerAndOrderManagement     Boolean @default(false)
+  archives                       Boolean @default(false)
 }
 
 model category {
@@ -131,33 +132,33 @@ model category {
   createdBy    admin      @relation(fields: [creatorId], references: [id])
   creatorId    String
   product      product[]
-  displayOrder   Int?       @unique 
+  displayOrder Int?       @unique
 }
 
 model product {
-  id           String    @id @default(uuid())
-  tags         Json?
-  stars        Int       @default(5) @db.UnsignedInt
-  category     category  @relation(fields: [categoryId], references: [id], onDelete: Cascade) //
-  categoryId   String
-  name         String
-  highLights   String
-  description  String   @db.LongText
-  slug         String    @unique
-  thumbNail    Json
-  
-  images       Json
-  status       Boolean   @default(true)
-  showOnHome   Boolean   @default(false)
-  isFeatured   Boolean   @default(false)
-  isBestSeller Boolean   @default(false)
-  isVegiterian Boolean   @default(true)
-  varient      varient[]
-  recipe       recipe[]
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  createdBy    admin     @relation(fields: [adminId], references: [id])
-  adminId      String
+  id          String   @id @default(uuid())
+  tags        Json?
+  stars       Int      @default(5) @db.UnsignedInt
+  category    category @relation(fields: [categoryId], references: [id], onDelete: Cascade) //
+  categoryId  String
+  name        String
+  highLights  String
+  description String   @db.LongText
+  slug        String   @unique
+  thumbNail   Json
+  images           Json
+  status           Boolean            @default(true)
+  showOnHome       Boolean            @default(false)
+  isFeatured       Boolean            @default(false)
+  isBestSeller     Boolean            @default(false)
+  isVegiterian     Boolean            @default(true)
+  varient          varient[]
+  recipe           recipe[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  createdBy        admin              @relation(fields: [adminId], references: [id])
+  adminId          String
+  ratingAndReviews ratingAndReviews[]
 }
 
 model varient {
@@ -254,7 +255,7 @@ model recipe {
   name         String
   ingredients  Json
   videoLink    String
-  brief String? @db.LongText
+  brief        String?   @db.LongText
   instructions String    @db.LongText
   status       Boolean   @default(true)
   products     product[]
@@ -330,11 +331,25 @@ model referal {
 }
 
 model queries {
-  id        String   @id @default(uuid())
-  email     String
-  name      String
-  mobile String @default("")
-  fullAddress String @default("")
-  message   String   @db.LongText
-  createdAt DateTime @default(now())
+  id          String   @id @default(uuid())
+  email       String
+  name        String
+  mobile      String   @default("")
+  fullAddress String   @default("")
+  message     String   @db.LongText
+  createdAt   DateTime @default(now())
+}
+
+model ratingAndReviews {
+  id           String   @id @default(uuid())
+  customer     user     @relation(fields: [userId], references: [id])
+  product      product  @relation(fields: [productId], references: [id])
+  isActive     Boolean @default(true)
+  showOnBanner Boolean @default(false)
+  message      String   @db.LongText
+  stars        Int
+  userId       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  productId    String
 }
