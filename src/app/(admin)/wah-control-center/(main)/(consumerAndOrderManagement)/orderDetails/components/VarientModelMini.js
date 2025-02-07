@@ -1,4 +1,5 @@
 import calculateFinalPrice from '@/lib/calculateFinalPrice';
+import Link from 'next/link';
 import React from 'react';
 
 const VarientModelMini = ({ dataArray, shortVarientIds=[] }) => {
@@ -17,7 +18,7 @@ const VarientModelMini = ({ dataArray, shortVarientIds=[] }) => {
                         padding: '10px',
                     }}
                 >
-                    <h3>Item {index + 1}</h3>
+                    <h3><Link href={`/product-details/${data.varient.product.slug}`} > Item {index + 1}</Link></h3>
                     <div><strong>Quantity: </strong>{data.qty}</div>
                     <div><strong>MRP: </strong>{data.varient.mrp}</div>
                     <div><strong>Size: </strong>{data.varient.size}</div>
