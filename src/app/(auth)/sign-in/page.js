@@ -97,7 +97,7 @@ const page = () => {
 
                         Not a member? <Link href="/sign-up" className="text-success">Register Now</Link> <br />
 
-                        <Link href={`/forgot-password/${identifire}`} className="text-success">Forgot Password</Link>
+                       { identifire && <Link href={`/forgot-password/${identifire}`} className="text-success">Forgot Password</Link>}
 
 
                     </div>
