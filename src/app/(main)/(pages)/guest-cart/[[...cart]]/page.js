@@ -285,7 +285,7 @@ const Page = async ({ params }) => {
                             </div>
                             <div className="d-flex row">
                                 <LocalCartProcide />
-                                <LocalCartEmpty />
+                                {/* <LocalCartEmpty /> */}
                             </div>
 
                             {freeShiping.value === 1 && <div>
