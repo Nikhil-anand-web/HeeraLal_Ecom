@@ -175,7 +175,7 @@ const Page = async ({ params }) => {
                                 <strong>Product Name</strong>
                             </div>
                             <div className="col-md-2 common-padding">Price</div>
-                            <div className="col-md-3 common-padding">Quality</div>
+                            <div className="col-md-3 common-padding">Quantity</div>
                             <div className="col-md-1 common-padding">Total</div>
 
                         </div>

@@ -189,7 +189,7 @@ const ContactInfoForm = ({ userHaveAddress, setShipingCharges, order,userPinCode
                     
 
                 <button type="submit" className="btn me-2 btn-gradient-primary" disabled={isLoading}>
-                    {isLoading ? "Redirecting..." : "Procide To Payment"}
+                    {isLoading ? "Redirecting..." : "Proceed To Payment"}
                 </button>
             </form>
         </div>
