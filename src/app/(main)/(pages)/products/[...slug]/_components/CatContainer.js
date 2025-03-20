@@ -44,7 +44,7 @@ const CatContainer = ({ categories, categorySlug }) => {
                 className="mySwiper"
             >
 
-                {categories.map(cat => <SwiperSlide style={{ margin: "10px" }}> <ProductCategories activeCat={categorySlug} imageS={cat.image[0].url} catSlug={cat.slug} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} /> </SwiperSlide>)}
+                {categories.map(cat => <SwiperSlide style={{ margin: "10px" }}> <ProductCategories mode='products' activeCat={categorySlug} imageS={cat.image[0].url} catSlug={cat.slug} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} /> </SwiperSlide>)}
 
 
 
