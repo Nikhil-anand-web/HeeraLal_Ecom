@@ -29,7 +29,7 @@
 
 
 body {
-  font-family: 'Poppins', sans-serif!important;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -156,20 +156,25 @@ body {
   text-wrap: wrap;
   text-align: left;
 }
-.active-cat:hover{
-  background-color: #313131!important;
-  
+
+.active-cat:hover {
+  background-color: #313131 !important;
+
 
 }
-.active-cat-current{
-  background-color: #313131!important;
+
+.active-cat-current {
+  background-color: #313131 !important;
 
 }
-.cat-active{
+
+.cat-active {
   background: #e3d5d0;
   color: #fff;
   border-radius: 26px;
+  min-width: 100px;
 }
+
 .heartbeat {
   animation: heartbeat 1.5s infinite;
 }
@@ -178,12 +183,15 @@ body {
   0% {
     transform: scale(1);
   }
+
   30% {
     transform: scale(1.1);
   }
+
   60% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(1.1);
   }
@@ -200,4 +208,18 @@ body {
 .brandLogo {
   display: flex;
   justify-content: center;
+}
+
+.catGal {
+  /* Default styles */
+}
+
+@media (min-width: 996px) {
+
+  /* Corrected media query */
+  .catGal {
+    width: 76%;
+  }
+
+  
 }

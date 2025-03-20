@@ -4,6 +4,8 @@ import Pagination from '@/components/Pagination'
 import getPaginationLimit from '@/lib/getPaginationLimit'
 import ProductCategories from '@/components/ProductCategories'
 import ProductRetail from './_components/ProductRetail'
+import CatContainer from './_components/CatContainer'
+
 export async function generateMetadata({ params, searchParams }, parent) {
     // read route params
     const title = params.slug[0].trim()
@@ -110,31 +112,14 @@ const page = async ({ params }) => {
 
 
                     <div className="col-md-12">
-                        <div className="row justify-content-center">
-                            <div className="col-md-4 text-center">
-                                <h1 className="mb-5">Our Categories</h1>
-
-                            </div>
-                        </div>
+                       
                         <div className="row">
                             <div className="col-md-6"></div>
                             <div className="col-md-6"></div>
                         </div>
 
-                        {/* <div className="row m-0">
-
-                            {products.map((pro, index) => <ProductRetail goto={`/product-details/${pro.slug}`} varienId={pro.varient[0].id} discount={pro.varient[0].discount} key={index} imageS={pro.thumbNail[0].url} ProductName={pro.name} Price={pro.varient[0].mrp} />)}
-
-
-
-
-                        </div> */}
-                        <div className="row">
-                            {categories.map(cat => <ProductCategories activeCat={categorySlug} imageS={cat.image[0].url} catSlug={cat.slug} categoryName={cat.categoryName} goTo={`/products/${cat.slug}`} />)}
-
-
-
-                        </div>
+                        <CatContainer categories={categories} categorySlug={categorySlug} />
+                     
                         <div className="row justify-content-center">
                             <div className="col-md-4 text-center">
                                 <h1 className="mb-5">{categorySlug === 'all' ? "All Products" : products[0].category.categoryName}</h1>

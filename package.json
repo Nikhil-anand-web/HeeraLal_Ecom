@@ -76,6 +76,7 @@
     "select2-bootstrap-theme": "0.1.0-beta.10",
     "sharp": "^0.33.5",
     "speakeasy": "^2.0.0",
+    "swiper": "^11.2.6",
     "swr": "^2.2.5",
     "ti-icons": "^0.1.2",
     "twilio": "^5.2.2",
