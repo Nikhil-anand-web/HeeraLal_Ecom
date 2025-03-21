@@ -73,6 +73,14 @@
     color: #333;
     text-decoration: none;
 }
+@media (max-width:570px){
+    .prod-container{
+        position: relative;
+        width: 175px;
+    }
+
+
+}
 .pro-img{
     margin-bottom: 20px;
 }

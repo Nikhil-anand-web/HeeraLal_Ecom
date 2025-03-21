@@ -126,7 +126,7 @@ const page = async ({ params }) => {
 
                             </div>
                         </div>
-                        <div className="row m-0">
+                        <div className=" m-0" style={{display:"flex" ,flexWrap:"wrap"}}>
 
                             {products.map((pro, index) => <ProductRetail goto={`/product-details/${pro.slug}`} varienId={pro.varient[0].id} discount={pro.varient[0].discount} key={index} imageS={pro.thumbNail[0].url} ProductName={pro.name} Price={pro.varient[0].mrp} />)}
 
