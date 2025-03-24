@@ -39,7 +39,8 @@ const CatContainer = ({ categories, categorySlug }) => {
                 slidesPerView={width >= 996 ? 5 : 3}
                 centeredSlides={true}
                 // spaceBetween={15}
-                navigation={width >= 996}
+                // navigation={width >= 996}
+                navigation={true}
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
             >
