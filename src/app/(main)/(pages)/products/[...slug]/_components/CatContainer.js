@@ -37,7 +37,7 @@ const CatContainer = ({ categories, categorySlug }) => {
             <Swiper
                 onSwiper={setSwiperRef}
                 slidesPerView={width >= 996 ? 5 : 3}
-                centeredSlides={true}
+                centeredSlides={false}
                 // spaceBetween={15}
                 // navigation={width >= 996}
                 navigation={true}
