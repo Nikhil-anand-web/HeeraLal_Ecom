@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <AuthProvider>
-        <body className={inter.className}>
+        <body id="root" className={inter.className}>
 
           {children}
 

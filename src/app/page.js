@@ -11,6 +11,7 @@ import MustHaveSection from "@/components/MustHaveSection";
 import db from "@/lib/db";
 import RatingComp from "./(main)/(pages)/product-details/[slug]/_components/RatingComp";
 import TestmonialSlider from "@/components/TestmonialSlider";
+import RecipeSlider from "@/components/RecipeSlider";
 
 export default async function Home() {
  
@@ -296,7 +297,9 @@ const sliderRooot0 = await db.slider.findMany({
 
 
         </section>
+        
         <MustHaveSection mustHaveSectionBanners={mustHaveSectionBanners} />
+        
         {/* <TestmonialSlider/> */}
         {/* <section className="product-part  pt-0">
           <div className="container">

@@ -223,3 +223,64 @@ body {
 
   
 }
+.mySwiper {
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.thumbnail {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.recipe-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.play-button{
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 33%;
+  left:37%;
+}
+@media (max-width: 450px) {
+
+  .play-button{
+    border: none;
+    background: transparent;
+    position: absolute;
+    top: 23%;
+    left:37%;
+  }
+
+  
+}
+@media (max-width: 350px) {
+
+  .play-button{
+    border: none;
+    background: transparent;
+    position: absolute;
+    top: 19%;
+    left:32%;
+  }
+
+  
+}

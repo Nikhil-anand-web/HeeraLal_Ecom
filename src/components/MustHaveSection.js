@@ -7,10 +7,11 @@ import getProductByCategoryIdAndTag from '@/app/actions/getProductByCategoryIdAn
 import Spinner from './global/Spinner'
 import syncLocalCart from '@/app/actions/syncLocalCart'
 import { useRouter } from 'next/navigation'
+import RecipeSlider from './RecipeSlider'
 
 const MustHaveSection = ({ mustHaveSectionBanners }) => {
 
-  const rtr =  useRouter()
+  const rtr = useRouter()
   const [categories, setcategories] = useState([])
   const [activeCategoryId, setActiveCategoryId] = useState('')
   const [productsUnderActiveCategory, setproductsUnderActiveCategory] = useState([])
@@ -78,16 +79,17 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
 
 
   return (
-    <section className="product-tabs position-relative">
-     
+    <section className=" position-relative">
+
+
       <div className="container">
-        <div className="row text-center">
+        {/* <div className="row text-center">
           <h2 className="white">The Must Have Spices</h2>
           <p className="white">At WAH INDIA, we believe, that natual goodness is the way to go for healthy, balanced life.</p>
-        </div>
+        </div> */}
         <div className="container">
           <div className="row">
-            <div className="d-flex justify-content-center my-3 flex-wrap">
+            {/* <div className="d-flex justify-content-center my-3 flex-wrap">
              
               {categories.map((cat, index) => <button key={index}  onClick={() => {
               
@@ -97,10 +99,10 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
               }
 
               } style={{backgroundColor:"transparent" ,border:"none",padding:"10px"}} className={` ${activeCategoryId===cat.id?"active-cat-current":""} active-cat   filter-button`} id={cat.id} data-filter="all">{cat.categoryName}</button>)}
-            </div>
-            <ProductGalary product={productsUnderActiveCategory} />
+            </div> */}
+            {/* <ProductGalary product={productsUnderActiveCategory} /> */}
             <section className="spices-add pt-0">
-              <div className="container">
+              {/* <div className="container">
                 <div className="row mb-4">
                   <div className="col-md-4">
 
@@ -112,10 +114,15 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
 
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="ban-img">
-                <Image src={mustHaveSectionBanners[2].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
+                <Image src={mustHaveSectionBanners[0].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
               </div>
+              <div style={{ display: "flex", justifyContent: "center", width: "100%" , marginTop:"60px" }}>
+                <h2>Our Famous Recipes</h2>
+              </div>
+
+              <RecipeSlider />
             </section>
 
           </div>
