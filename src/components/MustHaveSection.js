@@ -115,7 +115,9 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
                   </div>
                 </div>
               </div> */}
-              <div className="ban-img">
+
+              
+              <div className="ban-img" >
                 <Image src={mustHaveSectionBanners[0].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
               </div>
               <div style={{ display: "flex", justifyContent: "center", width: "100%" , marginTop:"60px" }}>
