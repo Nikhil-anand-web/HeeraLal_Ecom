@@ -83,13 +83,13 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
 
 
       <div className="container">
-        {/* <div className="row text-center">
+        <div className="row text-center">
           <h2 className="white">The Must Have Spices</h2>
           <p className="white">At WAH INDIA, we believe, that natual goodness is the way to go for healthy, balanced life.</p>
-        </div> */}
+        </div>
         <div className="container">
           <div className="row">
-            {/* <div className="d-flex justify-content-center my-3 flex-wrap">
+            <div className="d-flex justify-content-center my-3 flex-wrap">
              
               {categories.map((cat, index) => <button key={index}  onClick={() => {
               
@@ -99,8 +99,8 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
               }
 
               } style={{backgroundColor:"transparent" ,border:"none",padding:"10px"}} className={` ${activeCategoryId===cat.id?"active-cat-current":""} active-cat   filter-button`} id={cat.id} data-filter="all">{cat.categoryName}</button>)}
-            </div> */}
-            {/* <ProductGalary product={productsUnderActiveCategory} /> */}
+            </div>
+            <ProductGalary product={productsUnderActiveCategory} />
             <section className="spices-add pt-0">
               {/* <div className="container">
                 <div className="row mb-4">
@@ -120,9 +120,9 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
               <div className="ban-img" >
                 <Image src={mustHaveSectionBanners[0].images[0].url} alt="logo" width={18} height={9} layout="responsive" />
               </div>
-              <div style={{ display: "flex", justifyContent: "center", width: "100%" , marginTop:"60px" }}>
+              {/* <div style={{ display: "flex", justifyContent: "center", width: "100%" , marginTop:"60px" }}>
                 <h2>Our Famous Recipes</h2>
-              </div>
+              </div> */}
 
               {/* <RecipeSlider /> */}
             </section>

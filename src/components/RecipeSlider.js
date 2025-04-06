@@ -51,12 +51,12 @@ const RecipeSlider = () => {
 
     return (
         <>
-            <ModalOverlay show={show} setShow={setShow} title={ovtitle}>
+            {setShow && <ModalOverlay show={show} setShow={setShow} title={ovtitle}>
                 <div style={{ height: "50vh" }}>
                     <iframe width="100%" height="100%" src={videosrc} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 </div>
 
-            </ModalOverlay>
+            </ModalOverlay>}
 
             <Swiper
                 slidesPerView={width >= 996 ? 5 : 3}
