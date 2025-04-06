@@ -124,7 +124,7 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
                 <h2>Our Famous Recipes</h2>
               </div>
 
-              <RecipeSlider />
+              {/* <RecipeSlider /> */}
             </section>
 
           </div>

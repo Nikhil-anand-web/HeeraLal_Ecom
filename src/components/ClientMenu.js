@@ -14,7 +14,7 @@ const ClientMenu = ({productWithMaxPriroty}) => {
                 <Link className={`nav-link  ${active==='' && 'active'}`} aria-current="page" href="/">Home</Link>
               </li>
               <li  >
-                <a  className={`nav-link  ${active==='about-us' && 'active'}`} href="/about-us">Company</a>
+                <Link  className={`nav-link  ${active==='about-us' && 'active'}`} href="/about-us">Company</Link>
               </li>
               <li className="nav-item">
                 <Link className={`nav-link  ${(active==='products' || active==="categories") && 'active'}`} href={`/products/${productWithMaxPriroty}`}>Products</Link>
