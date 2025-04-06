@@ -22,7 +22,7 @@ const CartButton = () => {
         }else{
             
             const crt = localStorage.getItem("cart");
-            // console.log("fkvbfiufvbvbur")
+            
             rtr.push(`/guest-cart/${crt}`)
         }
         
