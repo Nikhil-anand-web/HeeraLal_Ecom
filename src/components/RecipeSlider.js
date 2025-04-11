@@ -29,16 +29,20 @@ const RecipeSlider = () => {
         };
 
         window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+        // return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    useEffect(async () => {
-        const res = await getNRecipe(0, 7);
-        if (res.success) {
-            setRecipes(res.data)
-        }
-
-    }, [])
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            const res = await getNRecipe(0, 7);
+            if (res.success) {
+                setRecipes(res.data);
+            }
+        };
+    
+        fetchRecipes();
+    }, []);
+    
     const onReachEnd = async () => {
         setIsLoading(true)
         const res = await getNRecipe(recipes.length, recipes.length + 3);
