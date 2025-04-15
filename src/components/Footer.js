@@ -60,12 +60,13 @@ const Footer = async () => {
     where: {
       key: "companyAddress"
     }
-  })).value
+  })).value[0].data
   const freeShiping = (await db.globalSettings.findFirst({
     where:{
       settingName:"freeShipingCartValue"
     }
   }))
+
  
   return (
     <footer className="footer">
@@ -181,7 +182,8 @@ const Footer = async () => {
                   <h4>Contact Us</h4>
                   <div className="contact d-flex mb-3">
                     <div className="contact-icons me-2"><i className="fa-solid fa-house"></i></div>
-                    <div className="contact-text">{companyAddress[0].area+","+companyAddress[1].cityAndState+","+companyAddress[2].country}</div>
+                    <DangerDiv className={"contact-text"} htmlEl={companyAddress}/>
+                    {/* <div className="contact-text">{companyAddress[0].area+","+companyAddress[1].cityAndState+","+companyAddress[2].country}</div> */}
                   </div>
 
                   <div className="contact d-flex mb-3">

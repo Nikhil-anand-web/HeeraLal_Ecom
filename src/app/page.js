@@ -259,7 +259,7 @@ const sliderRooot0 = await db.slider.findMany({
 
             </div>
 
-            <div className="row ">
+            {/* <div className="row ">
 
               <div className="col-md-12">
                 <div className="funfact pt-5  d-none d-lg-flex justify-content-center ">
@@ -290,7 +290,7 @@ const sliderRooot0 = await db.slider.findMany({
               </div>
 
 
-            </div>
+            </div> */}
             {/* <BottomBanner imageS={bottomBanner.images[0].url} /> */}
           </div>
 

@@ -27,7 +27,7 @@ const page = async () => {
     })).value[0].data
     const ourPhilosophy = (await db.staticInfo.findFirst({
         where: {
-            key: "ourApproach"
+            key: "ourPhilosophy"
         }
     })).value[0].data
     const smallFactAboutMasala = (await db.staticInfo.findFirst({
@@ -56,24 +56,24 @@ const page = async () => {
                 <div className="row aboutbox">
                     <div className="col-md-6">
                         <h5>OUR MISSION</h5>
-                        <DangerDiv className={'mb-5'} htmlEl={ourMission} />
+                        <DangerDiv style={{textAlign:"justify"}} className={'mb-5'} htmlEl={ourMission} />
 
                     </div>
 
                     <div className="col-md-6">
                         <h5>OUR STORIES</h5>
-                        <DangerDiv className={'mb-5'} htmlEl={ourStories} />
+                        <DangerDiv style={{textAlign:"justify"}} className={'mb-5'} htmlEl={ourStories} />
 
                     </div>
 
                     <div  className="col-md-6">
                         <h5>OUR APPROACH</h5>
-                        <DangerDiv className={'mb-5'} htmlEl={ourApproach} />
+                        <DangerDiv style={{textAlign:"justify"}} className={'mb-5'} htmlEl={ourApproach} />
 
                     </div>
                     <div  className="col-md-6">
                         <h5>OUR PHILOSOPHY</h5>
-                        <DangerDiv className={'mb-5'} htmlEl={ourPhilosophy} />
+                        <DangerDiv style={{textAlign:"justify"}} className={'mb-5'} htmlEl={ourPhilosophy} />
 
                     </div>
 
@@ -88,7 +88,7 @@ const page = async () => {
                     <div className="col-md-6">
                         <h3>Small Facts About Masala</h3>
 
-                        <DangerDiv htmlEl={smallFactAboutMasala} />
+                        <DangerDiv style={{textAlign:"justify"}} htmlEl={smallFactAboutMasala} />
                     </div>
                 </div>
 

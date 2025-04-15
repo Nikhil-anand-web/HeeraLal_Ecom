@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import RichTextEditor from '../RichTextEditor'
 import getEditorNeedKeysStaticData from '@/lib/getEditorNeedKeysStaticData'
+import getStaticDatabyKey from '@/app/actions/getStaticDatabyKey'
 
 const StaticDataForm = ({ statD }) => {
     const [key, setKey] = useState('')
@@ -13,10 +14,10 @@ const StaticDataForm = ({ statD }) => {
     const onsub = async (e) => {
         e.preventDefault()
         const obj = { key, value }
-        if (!value || value ==='') {
+        if (!value || value === '') {
             toast.warning("value needed")
             return
-            
+
         }
 
         try {
@@ -40,6 +41,28 @@ const StaticDataForm = ({ statD }) => {
         setValue(content); // Manually set the value for description
     };
 
+    const handelOptionChange = async (e) => {
+
+
+        try {
+            const res = await getStaticDatabyKey(e.target.value)
+            console.log(res)
+            if (!res.success) {
+                throw res
+
+            }
+            setValue(res.data)
+            setEditorValue(res.data)
+            setKey(e.target.value)
+
+        } catch (error) {
+            toast.warning(error.message)
+
+        }
+
+
+    }
+
 
 
 
@@ -52,10 +75,7 @@ const StaticDataForm = ({ statD }) => {
                     <form onSubmit={onsub}>
                         <label htmlFor="key">Key</label>
 
-                        <select required defaultValue={0} onChange={(e) => {
-                            setValue('')
-                            setEditorValue('')
-                            setKey(e.target.value)}} className="form-select" id="key">
+                        <select required defaultValue={0} onChange={handelOptionChange} className="form-select" id="key">
 
                             <option disabled value={0}>select a valid key</option>
 
@@ -68,11 +88,12 @@ const StaticDataForm = ({ statD }) => {
 
                         </select>
                         {(key && key != '') && <> <label htmlFor="key">Value</label>
-                           { !getEditorNeedKeysStaticData().includes(key)?<textarea required type='text' className="form-control" value={value} onChange={(e) => setValue(e.target.value)} />:
-                            <RichTextEditor value={editorValue} onChange={handleEditorChange} />}
-                                
-                                
-                                </>}
+                            {!getEditorNeedKeysStaticData().includes(key) ? <textarea required type='text' className="form-control" value={value} onChange={(e) => setValue(e.target.value)} /> :
+                            
+                                <RichTextEditor value={editorValue} onChange={handleEditorChange} />}
+
+
+                        </>}
                         {isLoading ? "Submitting" : <button type="submit" className={` btn me-2 btn-gradient-primary`}> Submit</button>}
 
 

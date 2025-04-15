@@ -1,4 +1,5 @@
 import GetInTouchForm from '@/components/clientForm/GetInTouchForm'
+import DangerDiv from '@/components/DangerDiv';
 import Link from 'next/link'
 import React from 'react'
 export const metadata = {
@@ -17,7 +18,7 @@ const page = async () => {
         where: {
           key: "companyAddress"
         }
-      })).value
+      })).value[0].data
       const customerService = (await db.staticInfo.findFirst({
         where: {
           key: "customerService"
@@ -79,7 +80,7 @@ const page = async () => {
                     </div>
                     <div className="address-right">
                         <h3>ADDRESS</h3>
-                        <p>{companyAddress[0].area+","+companyAddress[1].cityAndState+","+companyAddress[2].country}</p>
+                        <DangerDiv htmlEl={companyAddress}/>                        {/* <p>{companyAddress[0].area+","+companyAddress[1].cityAndState+","+companyAddress[2].country}</p> */}
                     </div>
                 </div>
 

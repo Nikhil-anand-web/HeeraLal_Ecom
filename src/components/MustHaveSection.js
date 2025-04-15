@@ -145,7 +145,7 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
             </div> */}
             {/* <ProductGalary product={productsUnderActiveCategory} /> */}
             <section className="spices-add pt-0">
-              <div className="container">
+              {/* <div className="container">
                 <div className="row mb-4">
                   <div className="col-md-4">
 
@@ -157,7 +157,7 @@ const MustHaveSection = ({ mustHaveSectionBanners }) => {
 
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               
               <div className="ban-img" >

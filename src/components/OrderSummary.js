@@ -59,7 +59,7 @@ const OrderSummary = ({ order, shipingCharges , absoluteCouponDiscount }) => {
                         <div className="col-6">Subtotal</div>
                         <div className="col-6  text-end">
                             {(absoluteCouponDiscount === 0 && order.refralDiscountAbsolute===0) ? `₹${order.subTotal}` : <div>
-                                <small style={{ color: "green" }}> ₹{(order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute).toPrecision(5)} </small>
+                                <small style={{ color: "green" }}> ₹{(order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute).toFixed(2)} </small>
 
                                 <s>₹{order.subTotal}</s>
 
@@ -69,7 +69,7 @@ const OrderSummary = ({ order, shipingCharges , absoluteCouponDiscount }) => {
 
                     <div className="row mb-2">
                         <div className="col-6">taxes</div>
-                        <div className="col-6  text-end">₹{percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute),order.taxes).toPrecision(5)}</div>
+                        <div className="col-6  text-end">₹{percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute),order.taxes).toFixed(2)}</div>
                     </div>
                     <div className="row mb-2">
                         <div className="col-6">Shiping Charges</div>
@@ -85,7 +85,7 @@ const OrderSummary = ({ order, shipingCharges , absoluteCouponDiscount }) => {
                             <div className="total-price">
                                 
                                 
-                                <span className="total-heading"> ₹{(parseFloat(shipingCharges)||parseFloat(shipingCharges)===0)? parseFloat(((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute))+(percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute),order.taxes)+parseFloat(shipingCharges))).toPrecision(5):""}</span>
+                                <span className="total-heading"> ₹{(parseFloat(shipingCharges)||parseFloat(shipingCharges)===0)? parseFloat(((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute))+(percentOf((order.subTotal - absoluteCouponDiscount-order.refralDiscountAbsolute),order.taxes)+parseFloat(shipingCharges))).toFixed(2):""}</span>
 
                             </div>
 

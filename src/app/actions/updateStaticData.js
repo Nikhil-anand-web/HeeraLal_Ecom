@@ -18,12 +18,12 @@ async function updateStaticData(obj) {
             try {
                 if (user.permissions[0].siteManagement) {
 
-                    if (obj.key == "companyAddress") {
+                    if (false) {
                         const values = obj.value.split('$')
                         const jsonTOUpdate = [
-                            {area: values.at(0)},
-                            {cityAndState: values.at(1)},
-                           { country: values.at(2)}
+                            { area: values.at(0) },
+                            { cityAndState: values.at(1) },
+                            { country: values.at(2) }
                         ]
                         await db.staticInfo.updateMany({
                             where: {
@@ -52,7 +52,7 @@ async function updateStaticData(obj) {
                                 key: obj.key
 
                             }, data: {
-                                value: [{data:obj.value}]
+                                value: [{ data: obj.value }]
 
 
                             }

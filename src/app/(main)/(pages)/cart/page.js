@@ -275,16 +275,16 @@ const Page = async () => {
                                     <div className="col-md-6 p-2 border text-end">
 
                                         {(absoluteCouponDiscount === 0 && cart.refralDiscountAbsolute === 0) ? `₹${total}` : <div>
-                                            <small style={{ color: "green" }}> ₹{(total - absoluteCouponDiscount - cart.refralDiscountAbsolute).toPrecision(5)} </small>
+                                            <small style={{ color: "green" }}> ₹{(total - absoluteCouponDiscount - cart.refralDiscountAbsolute).toFixed(2)} </small>
 
                                             <s>₹{total}</s>
 
                                         </div>}
                                     </div>
                                     <div className="col-md-6 p-2 border"><strong>Tax</strong></div>
-                                    <div className="col-md-6 p-2 border text-end"> ₹{taxAmount.toPrecision(5)}</div>
-                                    <div className="col-md-6 p-2 border"><strong>Estimated Total</strong></div>
-                                    <div className="col-md-6 p-2 border text-end"><strong>₹{((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) + taxAmount).toPrecision(5)}</strong></div>
+                                    <div className="col-md-6 p-2 border text-end"> ₹{taxAmount.toFixed(2)}</div>
+                                    <div className="col-md-6 p-2 border"><strong> Total</strong></div>
+                                    <div className="col-md-6 p-2 border text-end"><strong>₹{((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) + taxAmount).toFixed(2)}</strong></div>
                                 </div>
                             </div>
                             <div className="d-flex row">
@@ -293,7 +293,7 @@ const Page = async () => {
                             </div>
 
                            {freeShiping.value===1 && <div>
-                           { ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) )<freeShiping.dependency?<p style={{color:"green",fontWeight:"bold"}} >{`Add item worth ₹${freeShiping.dependency - ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) ).toPrecision(3)} to unlock FREE SHIPING!`}</p>:<p style={{color:"green",fontWeight:"bold"}}>FREE SHIPING unlocked</p>}
+                           { ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) )<freeShiping.dependency?<p style={{color:"green",fontWeight:"bold"}} >{`Add item worth ₹${freeShiping.dependency - ((total - absoluteCouponDiscount - cart.refralDiscountAbsolute) ).toFixed(2)} to unlock FREE SHIPING!`}</p>:<p style={{color:"green",fontWeight:"bold"}}>FREE SHIPING unlocked</p>}
                                 
                             </div>}
 
