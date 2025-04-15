@@ -211,7 +211,7 @@ const Footer = async () => {
         </div>
         <div className="row copywrite">
           <div className="col-md-12 text-center">
-            <p>Wah India All right reserved 2024</p>
+            <p>Wah India All right reserved {new Date().getFullYear()}</p>
           </div>
 
         </div>
