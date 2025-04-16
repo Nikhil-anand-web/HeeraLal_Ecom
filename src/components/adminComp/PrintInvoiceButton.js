@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
 import { useReactToPrint } from 'react-to-print';
+import DangerDiv from '../DangerDiv';
 
 const PrintInvoiceButton = ({ orderId }) => {
     const rf = useRef()
@@ -22,6 +23,7 @@ const PrintInvoiceButton = ({ orderId }) => {
             const res = await getOrderAsWhole(orderId);
             setOrder(res.order)
             setCompanyAddress(res.companyAddress)
+            console.log(res.companyAddress)
 
         }
         fetcher()
@@ -77,9 +79,7 @@ const PrintInvoiceButton = ({ orderId }) => {
                                             <div className="details-box  d-flex mb-3 justify-content-between">
                                                 <div className="address-box">
                                                     <ul>
-                                                        <li>{companyAddress.value[0].area}</li>
-                                                        <li>{companyAddress.value[1].cityAndState}</li>
-                                                        <li>{companyAddress.value[2].country}</li>
+                                                        <DangerDiv htmlEl={companyAddress.value[0].data}/>
                                                     </ul>
                                                 </div>
 
