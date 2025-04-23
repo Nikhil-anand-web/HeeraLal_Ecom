@@ -50,7 +50,7 @@ export default async function senOtp2fa(identifire) {
 
 
         console.log(tokenForEmail,"data")
-      
+         
         console.log(await resend(tokenForEmail, adminUser.email))
         return {
             message: "email has been sent to your phone and email",

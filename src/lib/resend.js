@@ -7,7 +7,7 @@ export default async function resend(otp, to) {
     // Create a Nodemailer transporter with SparkPost SMTP details
     const transporter = nodemailer.createTransport({
       host: 'smtp.sparkpostmail.com',
-      port: 587, // or use 2525 as an alternative
+      port: 2525, // or use 2525 as an alternative
       secure: false, // true for 465, false for other ports
       auth: {
         user: process.env.EMAIL_USERNAME, // your SparkPost SMTP username
