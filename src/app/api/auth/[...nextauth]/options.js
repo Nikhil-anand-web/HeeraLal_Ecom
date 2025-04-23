@@ -17,8 +17,9 @@ export const authOptions = {
 
                 const lastIp = clientIp.split(',')[0].trim();
 
-                const { identifire, password } = credentials
+                const { identifire, password, otp } = credentials
 
+   console.log(identifire)
 
                 if (sourceUrl === '/wah-control-center/sign-in') {
                     try {
@@ -31,7 +32,8 @@ export const authOptions = {
                                 ],
                             },
                             include: {
-                                permissions: true  // This will include the related permissions data
+                                permissions: true,  // This will include the related permissions data
+                                twoFactorAuthAdmin: true
                             }
                         });
 
@@ -44,8 +46,20 @@ export const authOptions = {
                             password,
                             user.password
                         );
+                        const isOtpTrue = await bcrypt.compare(
+                            otp,
+                            user.twoFactorAuthAdmin[0].otpEmail
 
-                        if (isPasswordCorrect) {
+                        );
+
+                        const isOtpExpired = (new Date().getTime() - new Date(user.twoFactorAuthAdmin[0].updatedAt).getTime()) > 1 * 60 * 1000;
+                        if (isOtpExpired) {
+                            throw new Error("otp expired");
+
+                        }
+                        console.log(user.twoFactorAuthAdmin[0].otpEmail, otp)
+
+                        if (isPasswordCorrect && isOtpTrue && !isOtpExpired) {
                             const updatedAdmin = await db.admin.update({
                                 where: { userName: user.userName },
                                 data: {
@@ -59,8 +73,8 @@ export const authOptions = {
                             return user;
 
                         } else {
-                            console.error("Incorrect password");
-                            throw new Error("Incorrect password");
+                            console.error("Incorrect password or otp");
+                            throw new Error("Incorrect password or otp");
                         }
 
 
@@ -141,7 +155,7 @@ export const authOptions = {
         GoogleProvider({
             clientId: process.env.NEXT_PUBLIC_GOOGLE_ID,
             clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET,
-            
+
         }),
     ],
     callbacks: {

@@ -45,6 +45,7 @@
     "multiparty": "^4.2.3",
     "next": "^14.2.5",
     "next-auth": "^4.24.7",
+    "next-sitemap": "^4.2.3",
     "nodemailer": "^6.9.15",
     "otp-generator": "^4.0.1",
     "owl-carousel-2": "0.0.3",

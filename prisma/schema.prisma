@@ -8,31 +8,41 @@ datasource db {
 }
 
 model admin {
-  id             String           @id @default(uuid())
-  fullName       String
-  userName       String           @unique
-  password       String
-  profilePic     Json?
-  role           Int
-  status         Int
-  lastLogin      DateTime
-  lastLoginIp    String
-  email          String?          @unique
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  gender         String           @default("0")
-  blog           blog[]
-  globalSettings globalSettings[]
-  permissions    permissions[]
-  category       category[]
-  Product        product[]
-  varient        varient[]
-  combo          combo[]
-  recipe         recipe[]
-  coupons        coupons[]
-  user           user[]
-  orders         orders[]
-  faqs           faqs[]
+  id                 String               @id @default(uuid())
+  fullName           String
+  userName           String               @unique
+  password           String
+  profilePic         Json?
+  role               Int
+  status             Int
+  lastLogin          DateTime
+  lastLoginIp        String
+  email              String?              @unique
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  gender             String               @default("0")
+  blog               blog[]
+  globalSettings     globalSettings[]
+  permissions        permissions[]
+  category           category[]
+  Product            product[]
+  varient            varient[]
+  combo              combo[]
+  recipe             recipe[]
+  coupons            coupons[]
+  user               user[]
+  orders             orders[]
+  faqs               faqs[]
+  twoFactorAuthAdmin twoFactorAuthAdmin[]
+}
+
+model twoFactorAuthAdmin {
+  id        String   @id @default(uuid())
+  otpEmail  String?
+  admin     admin    @relation(fields: [adminId], references: [id])
+  adminId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model user {
@@ -136,16 +146,16 @@ model category {
 }
 
 model product {
-  id          String   @id @default(uuid())
-  tags        Json?
-  stars       Int      @default(5) @db.UnsignedInt
-  category    category @relation(fields: [categoryId], references: [id], onDelete: Cascade) //
-  categoryId  String
-  name        String
-  highLights  String
-  description String   @db.LongText
-  slug        String   @unique
-  thumbNail   Json
+  id               String             @id @default(uuid())
+  tags             Json?
+  stars            Int                @default(5) @db.UnsignedInt
+  category         category           @relation(fields: [categoryId], references: [id], onDelete: Cascade) //
+  categoryId       String
+  name             String
+  highLights       String
+  description      String             @db.LongText
+  slug             String             @unique
+  thumbNail        Json
   images           Json
   status           Boolean            @default(true)
   showOnHome       Boolean            @default(false)
@@ -344,8 +354,8 @@ model ratingAndReviews {
   id           String   @id @default(uuid())
   customer     user     @relation(fields: [userId], references: [id])
   product      product  @relation(fields: [productId], references: [id])
-  isActive     Boolean @default(true)
-  showOnBanner Boolean @default(false)
+  isActive     Boolean  @default(true)
+  showOnBanner Boolean  @default(false)
   message      String   @db.LongText
   stars        Int
   userId       String

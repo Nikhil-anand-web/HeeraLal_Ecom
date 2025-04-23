@@ -1,7 +1,7 @@
 "use server"
 import db from "@/lib/db";
 import resend from "@/lib/resend";
-import twilioI from "@/lib/messageOtp";
+
 import speakeasy from 'speakeasy';
 import messageOtp from "@/lib/messageOtp";
 export default async function sendOtps(identifire) {
