@@ -9,12 +9,13 @@ import React from 'react'
 const page = async () => {
   const user = await getServerSession(authOptions)
 
+  const dbname = process.env.DB_NAME
   const result = await db.$queryRaw`SELECT COLUMN_NAME
   FROM INFORMATION_SCHEMA.COLUMNS
-  WHERE TABLE_SCHEMA = 'wahEcom'
+  WHERE TABLE_SCHEMA = ${dbname}
     AND TABLE_NAME = 'permissions'
     AND DATA_TYPE = 'tinyint';`;
-   
+      console.log(result)
   return (
     <>
       <h3 className="page-title"> Update a User </h3>
