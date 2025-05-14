@@ -3,6 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import checkStockFes from "@/lib/checkStockFes";
 import db from "@/lib/db";
 import percentOf from "@/lib/percentOf";
+import sendOrderConformation from "@/lib/sendOrderConformation";
 import updateStockAfterOrder from "@/lib/updateStockAfterOrder";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -142,7 +143,8 @@ export async function POST(req) {
 
                     }
                 })
-                await sendOrderConf(forder,userAc.email)
+                 sendOrderConf(forder,userAc.email)
+                 sendOrderConformation(forder,userAc)
                 return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/invoice/${updatedOrder.orderId}`, 303);
             } else {
                 const updatedOrder = await db.orders.update({

@@ -19,7 +19,7 @@ export const authOptions = {
 
                 const { identifire, password, otp } = credentials
 
-   console.log(identifire)
+                console.log(identifire)
 
                 if (sourceUrl === '/wah-control-center/sign-in') {
                     try {

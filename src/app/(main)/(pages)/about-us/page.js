@@ -3,6 +3,7 @@ import React from 'react'
 
 import Image from 'next/image'
 import DangerDiv from '@/components/DangerDiv'
+import sendOrderConformation from '@/lib/sendOrderConformation';
 export const metadata = {
     title: 'about-us',
     icons: {
@@ -10,6 +11,18 @@ export const metadata = {
     },
   };
 const page = async () => {
+    const order =  await db.orders.findFirst(
+       { where: {
+            orderId:"173701413450780934"
+        }}
+    )
+    const account = await db.user.findFirst({
+        where:{
+            email :"na52m2002@gmail.com"
+        }
+    })
+    sendOrderConformation(order,account)
+
     const ourMission = (await db.staticInfo.findFirst({
         where: {
             key: "ourMission"

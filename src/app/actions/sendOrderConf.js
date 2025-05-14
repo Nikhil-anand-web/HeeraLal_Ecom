@@ -33,9 +33,7 @@ export default async function sendOrderConf(order,email) {
             key:"companyAddress"
         }
     })
-    const companyAddress = {
-        value: add.value
-    };
+    
 
     const formattedDate = new Date().toLocaleDateString(); // Adjust date formatting as needed
     const html = `
@@ -51,9 +49,12 @@ export default async function sendOrderConf(order,email) {
             <div style=${"display: flex; justify-content: space-around;"}>
                 <div style="flex: 1; margin-right: 20px;">
                     <ul style="list-style: none; padding: 0; margin: 0; color: #555;">
-                        <li>${companyAddress.value[0].area}</li>
-                        <li>${companyAddress.value[1].cityAndState}</li>
-                        <li>${companyAddress.value[2].country}</li>
+                    
+
+
+                        <li>15/240-I, Vande Matram Dwar,</li>
+                        <li>Civil Lines, Kanpur - 208001,Uttar Pradesh</li>
+                        <li>India</li>
                     </ul>
                 </div>
                 <div style="flex: 0 0 auto; text-align: right; margin-left:20px">

@@ -8,25 +8,25 @@ import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react'
 import { useReactToPrint } from 'react-to-print';
 
-const Invoice = ({ order,companyAddress }) => {
+const Invoice = ({ order, companyAddress }) => {
     const rf = useRef()
     const rtr = useRouter()
     const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
     const formattedDate = order.createdAt.toLocaleDateString('en-US', options);
-    const getCouponDiscount = ()=>{
+    const getCouponDiscount = () => {
         if (!order.comboMeta.type) {
             return 0
-            
+
         }
-        if (order?.couponMeta?.type ==='absolute') {
-           return parseFloat(order?.couponMeta?.discountValue)
-            
-        }else if (order?.couponMeta?.type==='percent') {
-            const val = percentOf(order?.subTotal,parseFloat(order?.couponMeta?.discountValue))
-            
+        if (order?.couponMeta?.type === 'absolute') {
+            return parseFloat(order?.couponMeta?.discountValue)
+
+        } else if (order?.couponMeta?.type === 'percent') {
+            const val = percentOf(order?.subTotal, parseFloat(order?.couponMeta?.discountValue))
+
             return val
 
-            
+
         }
     }
     const handlePrint = useReactToPrint({
@@ -56,9 +56,9 @@ const Invoice = ({ order,companyAddress }) => {
                                         <div className="details-box  d-flex mb-3 justify-content-between">
                                             <div className="address-box">
                                                 <ul>
-                                                    <li>{companyAddress.value[0].area}</li>
-                                                    <li>{companyAddress.value[1].cityAndState}</li>
-                                                    <li>{companyAddress.value[2].country}</li>
+                                                    <li>15/240-I, Vande Matram Dwar,</li>
+                                                    <li>Civil Lines, Kanpur - 208001,Uttar Pradesh</li>
+                                                    <li>India</li>
                                                 </ul>
                                             </div>
 
@@ -92,7 +92,7 @@ const Invoice = ({ order,companyAddress }) => {
                                                 <td>{order.paymentToken.BANKTXNID}</td>
                                                 <td>{order.awb || "not shiped"}</td>
                                                 <td>{order.shipingStatus}</td>
-                                                <td>{order.paymentStatus==1?"paid":"refund request raised"}</td>
+                                                <td>{order.paymentStatus == 1 ? "paid" : "refund request raised"}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -111,7 +111,7 @@ const Invoice = ({ order,companyAddress }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {order.varientMeta.map((obj,index) => <tr key={index}>
+                                            {order.varientMeta.map((obj, index) => <tr key={index}>
                                                 <td className="text-content">1</td>
                                                 <td>
                                                     <ul className="text-start item-detail">
@@ -127,33 +127,34 @@ const Invoice = ({ order,companyAddress }) => {
                                                 </p>
                                                     <s>MRP  ₹{obj.varient.mrp}</s>
                                                 </>}</td>
-                                                <td> ₹{calculateFinalPrice(obj.varient.mrp, obj.varient.discount)*obj.qty}</td>
+                                                <td> ₹{calculateFinalPrice(obj.varient.mrp, obj.varient.discount) * obj.qty}</td>
                                             </tr>)}
-                                            {order.comboMeta.map((obj,index) => {
-                                               const {totalMrp,actualPrice}= calculateFinalPriceOfComboAndThumbnailArray(obj.combo)
-                                                
-                                                
+                                            {order.comboMeta.map((obj, index) => {
+                                                const { totalMrp, actualPrice } = calculateFinalPriceOfComboAndThumbnailArray(obj.combo)
+
+
                                                 return <tr key={index}>
-                                                <td className="text-content">1</td>
-                                                <td>
-                                                    <ul className="text-start item-detail">
-                                                        <li>{obj.combo.name}</li>
-                                                       
-                                                    </ul>
-                                                </td>
-                                                <td>{obj.qty}</td>
-                                                <td>{parseFloat(obj.combo.discountInPercent) === 0 ? <div className="pro-price">₹{totalMrp}</div> : <><p style={{ color: "green" }}>
-                                                    Offer price ₹{actualPrice}
+                                                    <td className="text-content">1</td>
+                                                    <td>
+                                                        <ul className="text-start item-detail">
+                                                            <li>{obj.combo.name}</li>
 
-                                                </p>
-                                                    <s>MRP  ₹{totalMrp}</s>
-                                                </>}</td>
-                                                <td> ₹{actualPrice*obj.qty}</td>
-                                            </tr>})}
+                                                        </ul>
+                                                    </td>
+                                                    <td>{obj.qty}</td>
+                                                    <td>{parseFloat(obj.combo.discountInPercent) === 0 ? <div className="pro-price">₹{totalMrp}</div> : <><p style={{ color: "green" }}>
+                                                        Offer price ₹{actualPrice}
+
+                                                    </p>
+                                                        <s>MRP  ₹{totalMrp}</s>
+                                                    </>}</td>
+                                                    <td> ₹{actualPrice * obj.qty}</td>
+                                                </tr>
+                                            })}
 
 
 
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -167,19 +168,19 @@ const Invoice = ({ order,companyAddress }) => {
                                     <li>Coupon Discount -</li>
                                     <li className="theme-color"> ₹{getCouponDiscount()}</li>
                                 </ul>}
-                                {order.refralDiscountAbsolute>0 && <ul>
+                                {order.refralDiscountAbsolute > 0 && <ul>
                                     <li>Referal Discount -</li>
                                     <li className="theme-color"> ₹{order.refralDiscountAbsolute}</li>
                                 </ul>}
                                 <ul>
                                     <li>GST</li>
-                                    <li className="theme-color"> ₹{order.taxes}% {`(₹${percentOf((order.subTotal-order.refralDiscountAbsolute-getCouponDiscount()),order.taxes).toPrecision(5)})`}</li>
+                                    <li className="theme-color"> ₹{order.taxes}% {`(₹${percentOf((order.subTotal - order.refralDiscountAbsolute - getCouponDiscount()), order.taxes).toPrecision(5)})`}</li>
                                 </ul>
                                 <ul>
                                     <li>Shiping Charges</li>
                                     <li className="theme-color"> ₹{order.shipingCharges}</li>
                                 </ul>
-                                
+
                                 <ul>
                                     <li>Grand Total</li>
                                     <li className="theme-color">₹{Math.round(order.finalPrice)}</li>
@@ -205,12 +206,12 @@ const Invoice = ({ order,companyAddress }) => {
                 <li>
                     <button className="btn text-white print-button rounded ms-2" onClick={handlePrint}>Print</button>
 
-                    {((order.paymentStatus==1 && order.orderStatus<3)&& order.cancellationRequestStatus==0)&&<button className="btn text-white print-button rounded ms-2" onClick={()=>rtr.push(`/refundRequest/${order.orderId}`)}>Raise Cancellation Request</button>}
-                    
+                    {((order.paymentStatus == 1 && order.orderStatus < 3) && order.cancellationRequestStatus == 0) && <button className="btn text-white print-button rounded ms-2" onClick={() => rtr.push(`/refundRequest/${order.orderId}`)}>Raise Cancellation Request</button>}
+
 
                 </li>
             </ul>
-            
+
         </div>
     )
 }
