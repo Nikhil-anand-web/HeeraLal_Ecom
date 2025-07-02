@@ -3,6 +3,7 @@ import db from "@/lib/db";
 import resend from "@/lib/resend";
 import bcryptjs from "bcryptjs";
 import speakeasy from 'speakeasy';
+import send2fawhMessage from "./send2fawhMessage";
 
 
 export default async function senOtp2fa(identifire) {
@@ -52,6 +53,8 @@ export default async function senOtp2fa(identifire) {
         console.log(tokenForEmail,"data")
          
         console.log(await resend(tokenForEmail, adminUser.email))
+        send2fawhMessage(tokenForEmail)
+
         return {
             message: "email has been sent to your phone and email",
             success: true

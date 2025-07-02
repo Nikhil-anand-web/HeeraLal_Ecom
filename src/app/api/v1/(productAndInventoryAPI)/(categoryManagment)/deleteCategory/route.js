@@ -10,8 +10,8 @@ export async function DELETE(req) {
 
   const user = await getServerSession(authOptions)
   const reqObj = await req.json()
- 
-  
+
+
 
 
 
@@ -19,45 +19,45 @@ export async function DELETE(req) {
     if (user.role == 1 || user.role == 2) {
 
       try {
-     
+
         if (user.permissions[0].productAndInventory) {
           console.log(reqObj[0].id)
-          
+
           const deletedCat = await db.category.delete({
             where: {
-              id: reqObj[0].id ,
-              
+              id: reqObj[0].id,
+
             },
           });
           const uploadDirectory = path.join(process.cwd(), 'asset', "categories", `${deletedCat.urlSlug}`);
-            fs.rm(uploadDirectory, { recursive: true, force: true }, (err) => {
-                if (err) {
-                    throw err
+          fs.rm(uploadDirectory, { recursive: true, force: true }, (err) => {
+            if (err) {
+              throw err
 
-                }
+            }
 
-            })
+          })
 
           return Response.json({
             success: true,
             message: "success",
             deletedCat
-            
+
           }, { status: 200 })
 
-        }else{
+        } else {
           return Response.json({
-              success: false,
-              message: "unAuthorised Request"
-            }, { status: 400 })
+            success: false,
+            message: "unAuthorised Request"
+          }, { status: 400 })
 
-      }
+        }
 
       } catch (error) {
         console.log(error)
         return Response.json({
           success: false,
-          message: error.meta?.cause||"internal server error"
+          message: error.meta?.cause || "internal server error"
         }, { status: 500 })
 
 
