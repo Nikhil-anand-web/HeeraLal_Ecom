@@ -20,7 +20,7 @@ const VerifyPhoneForm = ({ email, isphoneVerified }) => {
     const decodedEmail = decodeURIComponent(email);
     const rtr = useRouter()
     if (isphoneVerified) {
-        rtr.push('/')
+        rtr.push('/cart')
         return null
 
     }
