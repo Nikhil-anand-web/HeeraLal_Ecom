@@ -1,6 +1,5 @@
 
 import db from "@/lib/db";
-import inputcleaner from "@/lib/inputcleaner";
 import bcrypt from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google"
@@ -13,8 +12,6 @@ export const authOptions = {
             async authorize(credentials, req) {
                 const sourceUrl = req.headers?.referer.replace(req.headers?.origin, '')
                 const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress || req.connection.socket.remoteAddress;
-
-
                 const lastIp = clientIp.split(',')[0].trim();
 
                 const { identifire, password, otp } = credentials

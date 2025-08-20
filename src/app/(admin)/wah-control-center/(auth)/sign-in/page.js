@@ -21,8 +21,6 @@ const Page = () => {
     formState: { errors },
   } = useForm()
   const router = useRouter()
-
-  // Timer for disabling the OTP button
   useEffect(() => {
     let timer;
     if (isOtpButtonDisabled) {
@@ -30,14 +28,14 @@ const Page = () => {
         setOtpButtonTimer((prev) => {
           if (prev === 1) {
             clearInterval(timer);
-            setIsOtpButtonDisabled(false); // Re-enable the button after 1 minute
-            setOtpButtonTimer(60); // Reset the timer
+            setIsOtpButtonDisabled(false);
+            setOtpButtonTimer(60); 
           }
           return prev - 1;
         });
       }, 1000); // Decrement timer every second
     }
-    return () => clearInterval(timer); // Clear the timer on component unmount
+    return () => clearInterval(timer); 
   }, [isOtpButtonDisabled]);
 
   const onSubmit = async (data, event) => {

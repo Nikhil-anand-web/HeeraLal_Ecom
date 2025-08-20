@@ -52,12 +52,7 @@ export default function RootLayout({ children }) {
         <body id="root" className={inter.className}>
 
           {children}
-
-
-
-
-
-
+          
           <BootstrapClient />
 
           <ToastContainer

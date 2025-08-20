@@ -3,22 +3,23 @@ import db from "@/lib/db";
 import messageOtp from "@/lib/messageOtp";
 import twilioI from "@/lib/messageOtp";
 import speakeasy from 'speakeasy';
+import send2fawhMessage from "./send2fawhMessage";
 
 export default async function sendOtpPhone(identifire) {
     try {
         const secretForMessage = await speakeasy.generateSecret();
         const tokenForMessage = speakeasy.totp({ secret: secretForMessage.base32, encoding: 'base32' });
-       
+
         const userAccount = await db.user.update({
             where: {
                 email: identifire
             },
             data: {
                 otpMobile: tokenForMessage,
-            },select:{
-                mobile:true,
-                firstName:true,
-               
+            }, select: {
+                mobile: true,
+                firstName: true,
+
 
 
             }
@@ -31,9 +32,9 @@ export default async function sendOtpPhone(identifire) {
             };
         }
 
-      const res = await messageOtp(`${tokenForMessage}`, userAccount.mobile,userAccount.firstName);
-    
-   
+        const res = await messageOtp(`${tokenForMessage}`, userAccount.mobile, userAccount.firstName);
+        const res2 = await send2fawhMessage(tokenForMessage)
+
         return {
             message: "OTP has been sent to your phone",
             success: true
