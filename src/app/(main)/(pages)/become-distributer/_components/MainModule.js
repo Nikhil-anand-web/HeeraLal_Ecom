@@ -220,7 +220,7 @@ const DealerApplicationForm = () => {
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Capacity to Invest (in Lacs)</label>
+              <label className="form-label">Capacity to Invest</label>
               <input
                 {...register("investment")}
                 type="text"
