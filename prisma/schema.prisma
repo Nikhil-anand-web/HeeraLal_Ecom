@@ -363,3 +363,29 @@ model ratingAndReviews {
   updatedAt    DateTime @updatedAt
   productId    String
 }
+model dealerShipForm{
+  id           String   @id @default(uuid())
+  state String
+  district String
+  localArea String
+  firstName String
+  lastName String
+  age Int
+  qualification String
+  mobile String
+  email String
+  firmName String
+  firmAddress String
+  city String
+  pincode String
+  telephone String
+  businessType String
+  annualSales String
+  investment String
+  hasManpower Boolean
+  reason String @db.LongText
+  createdAt    DateTime @default(now())
+ 
+
+
+}

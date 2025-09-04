@@ -9,3 +9,5 @@ zp.zip
 .idea
 Dockerfile
 .dockerignore
+ast.zip
+database26aug.sql

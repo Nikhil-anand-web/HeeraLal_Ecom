@@ -235,6 +235,13 @@ const Sidebar = () => {
 
                   </span>
                   <span className="nav-item">
+                    <Link className="nav-link" href="/wah-control-center/dealership-applications">
+                    Dealer Applications
+                    </Link>
+
+
+                  </span>
+                  <span className="nav-item">
                     <Link className="nav-link" href="/wah-control-center/recipes">
                       Recipe
                     </Link>

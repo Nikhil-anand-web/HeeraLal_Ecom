@@ -158,6 +158,7 @@ const Footer = async () => {
                     <li><Link href="/recipes"><i className="fa-solid fa-angle-right"></i> Recipes</Link></li>
                     {/* <li><Link href="/blogs"><i className="fa-solid fa-angle-right"></i> Blogs</Link></li> */}
                     <li><Link href="/contact-us"><i className="fa-solid fa-angle-right"></i> Contact Us</Link></li>
+                    <li><Link href="/become-distributer"><i className="fa-solid fa-angle-right"></i> Become Distributer</Link></li>
 
                   </ul>
                 </div>
