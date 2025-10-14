@@ -87,7 +87,7 @@ const DatePickerAndAwb = ({ orderId }) => {
 
                             }
 
-                            } placeholder='noOfPieces'
+                            } placeholder='No of unit with unique dimention'
                         />
 
                     </FormGroup>
